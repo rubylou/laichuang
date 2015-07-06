@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <style type="text/css">
+      .required {
+        color:#CD0000;
+      }
+    </style>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="container">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3 col-xs-4 col-xs-offset-2">
+          <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我是投资人&nbsp;</button>
+        </div>
+        <div class="col-md-3 col-xs-4">
+          <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我是创业者&nbsp;</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="collapse" id="collapseExample1">
+      <div class="well">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 col-xs-12">   
+            <div class="form-group">
+              <label for="logName1"><span class="required">*</span>用户名</label>
+              <input type="text" name="mobile" class="form-control" id="logName1" placeholder="注册手机号或邮箱">
+            </div>
+            <div class="form-group">
+              <label for="logPwd1"><span class="required">*</span>密码</label>
+              <input type="password" name="pwd" class="form-control" id="logPwd1" placeholder="密码">
+            </div>
+            <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="loginInvestor()">&nbsp;提交&nbsp;</button>    
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="collapse" id="collapseExample2">
+      <div class="well">
+        <div class="innovator">
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-xs-12">   
+              <div class="form-group">
+                <label for="logName2"><span class="required">*</span>用户名</label>
+                <input type="text" name="mobile" class="form-control" id="logName2" placeholder="注册手机号或邮箱">
+              </div>
+              <div class="form-group">
+                <label for="logPwd2"><span class="required">*</span>密码</label>
+                <input type="password" name="pwd" class="form-control" id="logPwd2" placeholder="密码">
+              </div>
+              <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="loginInnovator()">&nbsp;提交&nbsp;</button>
+            </div>    
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h4 id="alert_content" style="color:#5B5B5B"></h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script src="__PUBLIC__/js/Home/Index/login.js"></script>
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+</script>
+</html>

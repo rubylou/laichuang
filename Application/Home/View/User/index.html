@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;个人主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+  	<div class="container">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-primary">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-2 col-xs-4">
+					  			<a href="#" class="thumbnail">
+							      <img src="__PUBLIC__/pic/profile.png" alt="头像" height="100px" width="100px">
+							    </a>
+					  		</div>
+							<div class="col-md-6 col-xs-6">
+								<h3>{:session('user')}</h3>
+								<p>一句话描述自己</p>
+								<p id="interests"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading" style="background:#5B5B5B;color:#FFFFFF">
+						<h3 class="panel-title">投资案例<a class="btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a></h3>
+					</div>
+				  	<div class="panel-body">
+				  		<volist name="caselist" id="cases">
+						  	<div class='row'>
+								<div class="col-md-6 col-xs-6">
+									<h4>{$cases.company}&nbsp;&nbsp;&nbsp;<span class="text-danger">{$cases.round}</span></h4>
+									<h5>代表投资主体: {$cases.investor_name}</h5>
+									<h5>此轮投资金额: {$cases.invest_amount}万{$cases.invest_cur}</h5>
+									<h5>此轮估值金额: {$cases.assess_amount}万{$cases.assess_cur}</h5>
+									<h5>投资时间: {$cases.invest_time}</h5>
+								</div>
+							</div>
+						</volist>
+						<div class="collapse" id="collapseExample1">
+							<hr>
+					        <div class="row">
+					        	<div class="col-md-8 col-md-offset-2">
+						            <div class="form-inline">
+						              <label for="company"><span class="required">*</span>公司简称</label>
+						              <input type="text" name="company" class="form-control" id="company" placeholder="例: 来创">
+						            </div>
+						            <div class="form-inline">
+						              	<label for="round"><span class="required">*</span>投资轮次</label>
+						              	<select class="form-control" name="round" id="round">
+						              	</select>
+						            </div>
+						            <div class="form-inline">
+						            	<div class="form-group">
+							              	<label>此轮投资金额</label>
+							              	<select class="form-control" id="currency1">
+							              	</select>
+							            </div>
+							            <div class="form-group">
+							            	<label>金额</label>
+							              	<div class="input-group">
+								              	<input type="text" name="amount" class="form-control" id="amount">
+									            <span class="input-group-addon" id="basic-addon2">万</span>
+									        </div>
+									    </div>
+						            </div>
+						            <div class="form-inline">
+										<label>此轮估值</label>
+										<select class="form-control" id="currency2">
+						              	</select>
+										<div class="input-group">
+											<input type="text" name="assess" class="form-control" id="assess" >
+											<span class="input-group-addon" id="basic-addon2">万</span>
+										</div>
+						            </div>
+						            <div class="form-inline">
+						              <label><span class="required">*</span>我代表的投资主体</label>
+						              <input type="text" name="investor" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
+						            </div>
+						            <div class="form-inline">
+						              <label for="investyear"><span class="required">*</span>投资时间</label>
+						              <select class="form-control" name="type" id="investyear">
+						              </select>
+						              <select class="form-control" name="type" id="investmon">
+						              </select>
+						            </div>
+						            
+						        </div>
+						    </div>
+						    <div class="row">
+						    	<div class="col-md-4 col-md-offset-2">
+						        	<button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="case_submit()">&nbsp;提交&nbsp;</button>    
+						        </div>
+						        <div class="col-md-4">
+						        	<button type="submit" class="btn btn-default form-control">&nbsp;取消&nbsp;</button>    
+						        </div>
+						    </div>
+						</div>
+			  		</div>
+			  	</div>
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							创业经历<a class="btn" href="{:U('Home/User/proEdit')}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a>
+						</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">工作经历<a class="btn"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a></h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">广告</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	
+  </div>
+</body>
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  var interests = {$interests};
+  for(var i in interests){
+  	if(interests[i]!=null){
+  		var label = $('<span></span>').text(' '+interests[i]+' ');
+  		$('#interests').append(label);
+  	}
+  }
+  var rounds = {$rounds};
+  for(var i in rounds){
+    addOption(rounds[i],i,'#round');
+  }
+
+  var currency = {$currency};
+  for(var i in currency){
+    addOption(currency[i],i,'#currency1');
+    addOption(currency[i],i,'#currency2');
+  }
+
+  for(var i=1;i<13;i++){
+  	addOption(i,i,'#investmon');
+  }
+
+  var date = new Date();
+  for(var i=date.getFullYear(); i>=1980;i--){
+  	addOption(i,i,'#investyear');
+  }
+
+  function addOption(value,index,id){
+  	var option = $('<option></option').text(value);
+    option.attr('value',index);
+    $(id).append(option);
+  }
+
+  function case_submit(){
+  	var company = 'key1='+$('#company').val()+'&';
+  	var round = 'key2='+$('#round').val()+'&';
+  	var currency1 = 'key3='+$('#currency1').val()+'&';
+  	var amount = 'key4='+$('#amount').val()+'&';
+  	var currency2 = 'key5='+$('#currency2').val()+'&';
+  	var assess = 'key6='+$('#assess').val()+'&';
+  	var investor = 'key7='+$('#investor').val()+'&';
+  	var investyear = 'key8='+$('#investyear').val()+'&';
+  	var investmon = 'key9='+$('#investmon').val()+'&';
+  	var data = company+round+currency1+amount+currency2+assess+investor+investyear+investmon;
+  	var xmlHttp = createRequest();
+  	request(xmlHttp,data,"caseAdd");
+    if(xmlHttp.responseText==200){
+    	document.location.reload();
+    }
+  	
+
+  }
+</script>
+</html>
