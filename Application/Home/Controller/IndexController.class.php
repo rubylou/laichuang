@@ -18,7 +18,9 @@ class IndexController extends Controller {
 
     public function register(){
         $fields = C('INTEREST_FIELD');
+        $fieldlen = count($fields);
         $this->field = json_encode($fields);
+        $this->fieldlen = $fieldlen;
         $this->display();
     }
 

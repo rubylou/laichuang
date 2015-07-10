@@ -119,23 +119,6 @@
 			  	</div>
 			  	<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title">
-							创业经历<a class="btn" href="{:U('Home/User/proEdit')}"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a>
-						</h3>
-					</div>
-				  	<div class="panel-body">
-					  	<div class='row'>
-							<div class="col-md-6 col-xs-6">
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
-							</div>
-						</div>
-					</div>
-			  	</div>
-			  	<div class="panel panel-primary">
-					<div class="panel-heading">
 						<h3 class="panel-title">工作经历<a class="btn"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a></h3>
 					</div>
 				  	<div class="panel-body">
@@ -204,59 +187,15 @@
 	
   </div>
 </body>
+<script src="__PUBLIC__/js/Home/User/pro.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  var interests = {$interests};
-  for(var i in interests){
-  	if(interests[i]!=null){
-  		var label = $('<span></span>').text(' '+interests[i]+' ');
-  		$('#interests').append(label);
-  	}
-  }
-  var rounds = {$rounds};
-  for(var i in rounds){
-    addOption(rounds[i],i,'#round');
-  }
-
-  var currency = {$currency};
-  for(var i in currency){
-    addOption(currency[i],i,'#currency1');
-    addOption(currency[i],i,'#currency2');
-  }
-
-  for(var i=1;i<13;i++){
-  	addOption(i,i,'#investmon');
-  }
-
-  var date = new Date();
-  for(var i=date.getFullYear(); i>=1980;i--){
-  	addOption(i,i,'#investyear');
-  }
-
-  function addOption(value,index,id){
-  	var option = $('<option></option').text(value);
-    option.attr('value',index);
-    $(id).append(option);
-  }
-
-  function case_submit(){
-  	var company = 'key1='+$('#company').val()+'&';
-  	var round = 'key2='+$('#round').val()+'&';
-  	var currency1 = 'key3='+$('#currency1').val()+'&';
-  	var amount = 'key4='+$('#amount').val()+'&';
-  	var currency2 = 'key5='+$('#currency2').val()+'&';
-  	var assess = 'key6='+$('#assess').val()+'&';
-  	var investor = 'key7='+$('#investor').val()+'&';
-  	var investyear = 'key8='+$('#investyear').val()+'&';
-  	var investmon = 'key9='+$('#investmon').val()+'&';
-  	var data = company+round+currency1+amount+currency2+assess+investor+investyear+investmon;
-  	var xmlHttp = createRequest();
-  	request(xmlHttp,data,"caseAdd");
-    if(xmlHttp.responseText==200){
-    	document.location.reload();
-    }
-  	
-
-  }
+  addInterests({$interests},"#interests");
+  addRound({$rounds},"#round");
+  addCur({$currency},"#currency1");
+  addCur({$currency},"#currency2");
+  addYM('#investyear','#investmon');
 </script>
 </html>

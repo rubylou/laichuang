@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;项目主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+  	<div class="container">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-primary">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-2 col-xs-4">
+					  			<a href="#" class="thumbnail">
+							      <img src="__PUBLIC__/pic/profile.png" alt="头像" height="100px" width="100px">
+							    </a>
+					  		</div>
+							<div class="col-md-6 col-xs-6">
+								<h3>{$info.project_name}</h3>
+								<p>{$info.project_brief}</p>
+								<p id="interests"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>{$info.project_type}</p>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							项目介绍
+						</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<p id="details"></p>
+					</div>
+			  	</div>
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">创业团队</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">融资情况</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">团队成员</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">广告</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class='row'>
+							<div class="col-md-6 col-xs-6">
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+								<h5>党支部</h5>
+								<h5>入党日期／推优日期</h5>
+								<h4>姓名</h4>
+								<h5>学号</h5>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	
+  </div>
+</body>
+
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  $("#details")[0].innerHTML = unescape('{$info.project_intro}');
+</script>
+</html>

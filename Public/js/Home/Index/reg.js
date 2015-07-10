@@ -3,8 +3,72 @@ function selectCollpase(id1,id2){
   $(id2).attr('class','collapse');
 }
 
+function initializeField(rows,field){
+  for(var i=0;i<=rows;i++){
+    $('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
+  }
+
+  for(var i in field){
+    addLabel(i,field);
+    addOption(i,field);
+  }
+}
+
+function addInterest(id,field){
+  var exist = $("#choices").contents().filter("#field"+id);
+  if(exist.text()==field[id]){
+    alert("已添加");
+  }
+  else{
+    var label = $('<span></span>').text(field[id]);
+    label.addClass('btn btn-default label label-primary');
+    label.attr('value',id);
+    label.attr("id","field"+id);
+    label.click(function(){
+      addLabel(id,field);
+      $(this).remove();
+    });
+    $('#choices').append(label);
+  }
+}
+
+function addLabel(id,field){
+  var exist = $("#conditions").contents().filter("#field"+id);
+  if(exist.text()==field[id]){
+    alert("已添加");
+  }
+  else{
+    var label = $('<span></span>').text(field[id]);
+    label.addClass('btn btn-default label label-danger');
+    label.attr('value',id);
+    label.attr("id","field"+id);
+    label.click(function(){
+      if($("#choices").children().length==5){
+        alert("选择已达上限");
+      }
+      else{
+        addInterest(id,field);
+        $(this).remove();
+      }
+    });
+
+    var row = parseInt(id/8);
+    if(id%8==0){
+      --row;
+    }
+    $('#row'+row).append(label);
+  }
+}
+
+function addOption(id,field){
+  var option = $('<option></option').text(field[id]);
+  option.attr('value',id);
+  $('#regField2').append(option);
+}
+
+
 function submitInvestor(){
-  if(checkPwd('#regPwd1','#regPwdfirm1')&&checkEmail('#regEmail1')&&checkPhone('#regMobile1')&&checkName('#regName1')){
+  if(checkValue("#regTitle1",100,0,"请填写职位")&&checkValue("#regCompany1",100,0,"请填写公司名称")&&checkPwd('#regPwd1','#regPwdfirm1')&&checkEmail('#regEmail1')&&checkPhone('#regMobile1')&&checkName('#regName1')){
     var xmlHttp = createRequest();
 
     var status = 'value=investor&';

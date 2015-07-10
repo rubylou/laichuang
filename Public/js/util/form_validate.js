@@ -67,6 +67,18 @@ function checkName(id){
 	}
 }
 
+function checkValue(id,max,min,notice){
+	if($(id).val().length>min && $(id).val().length<max){
+		return true;
+	}
+	else{
+		$(id).val('');
+		$(id).attr('placeholder',notice);
+		$(id).focus();
+		return false;
+	}
+}
+
 function checkNickname(id){
 	if($(id).val().length>0){
 		return true;

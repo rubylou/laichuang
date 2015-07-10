@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>内容管理员</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+</head>
+<body>
+	<include file="./Public/tpl/navbar_admin.html" />
+	<div class="container">
+		<div class="page-header">
+	      <!-- 页面标题 -->
+	    	<h3>资讯列表</h3>
+	    </div>
+	    <div class="row">
+            <div class="col-md-10 col-xs-12">
+                <div class="text-right">
+                    <a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="写文章" href="__URL__/articleEdit"/><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                </div>
+            </div>
+        </div>
+	</div>
+</body>
+<script>
+    $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+</script>
+
+</html>

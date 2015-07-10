@@ -10,7 +10,7 @@ function regsubmit(){
   else{
     if(checkPwd(pwd,pwdfirm)){
       pwd = CryptoJS.SHA1($(pwd).val());
-      pwdfirm = CryptoJS.SHA1($(pwdfirm)val());
+      pwdfirm = CryptoJS.SHA1($(pwdfirm).val());
       var xmlHttp = createRequest();
       var data = 'id='+$('#regUser').val()+'&key1='+pwd+'&key2='+pwdfirm+'&key3='+$('#regType').val();
       request(xmlHttp,data,"adminSave");
