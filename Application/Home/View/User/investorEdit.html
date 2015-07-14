@@ -9,7 +9,6 @@
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
-    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
@@ -35,10 +34,10 @@
 								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
 								<div class="row">
 									<div class="col-md-6">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$user.business}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
 									</div>
 									<div class="col-md-2 col-md-offset-3 text-right">
-										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/innovator/val/{$user.user_id}">预览</a>
+										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/investor/val/{$user.user_id}">预览</a>
 									</div>
 								</div>
 							</div>
@@ -47,26 +46,108 @@
 			  	</div>
 			</div>
 		</div>
+	</div>
+	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">
-							创业经历<a class="btn" href="{:U('Home/User/proEdit')}"><span class="glyphicon glyphicon-plus theme-white" aria-hidden="true"></span></a>
-						</h3>
+						<h3 class="panel-title">投资案例<a class="btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1"><span class="glyphicon glyphicon-plus theme-white" aria-hidden="true"></span></a></h3>
 					</div>
 				  	<div class="panel-body">
-				  		<volist name="prolist" id="projects">
-							<div class="panel">
+				  		<div class="collapse" id="collapseExample1">
+							<hr>
+							<div class="form-horizontal">
+							  <div class="form-group">
+							    <label for="company" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>公司简称</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="company" placeholder="例: 来创">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="round" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>投资轮次</label>
+							    <div class="col-md-4">
+				              		<select class="form-control" id="round">
+				              		</select>
+				              	</div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="currency1" class="col-md-2 col-md-offset-1 control-label">此轮投资金额</label>
+							    <div class="col-md-2">
+							    	<select class="form-control" id="currency1">
+							    	</select>
+							    </div>
+							    <div class="col-md-3">
+					              	<div class="input-group">
+						              	<input type="text" class="form-control" id="amount">
+							            <span class="input-group-addon" id="basic-addon2">万</span>
+							        </div>
+							    </div>
+				  			  </div>
+
+							  <div class="form-group">
+							    <label for="currency2" class="col-md-2 col-md-offset-1 control-label">此轮估值</label>
+								<div class="col-md-2">
+									<select class="form-control" id="currency2">
+				              		</select>
+				              	</div>
+				              	<div class="col-md-3">
+									<div class="input-group">
+										<input type="text" class="form-control" id="assess" >
+										<span class="input-group-addon" id="basic-addon2">万</span>
+									</div>
+								</div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="investor" class="col-md-3 control-label"><span class="required">*</span>我代表的投资主体</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="investyear" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>投资时间</label>
+							    <div class="col-md-3">
+							    	<div class="input-group">
+							        	<select class="form-control" id="investyear">
+							            </select>
+							            <span class="input-group-addon" id="basic-addon2">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2">
+						        	<div class="input-group">
+						        		<select class="form-control" id="investmon">
+						            	</select>
+						            	<span class="input-group-addon" id="basic-addon2">月</span>
+						            </div>
+						        </div>
+							  </div>
+							</div>
+
+						    <div class="row">
+						    	<div class="col-md-3 col-md-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="case_submit()">&nbsp;提交&nbsp;</button>    
+						        </div>
+						        <div class="col-md-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
+						        </div>
+						    </div>
+						    <hr>
+						</div>
+				  		<volist name="caselist" id="cases">
+				  			<div class="panel">
 				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px" onclick="javascript: window.location.href = '../Case/info/key/{$projects.project_id}'">
+										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
 								  		</div>
 										<div class="col-md-6 col-xs-6">
-											<p class="theme-h4">{$projects.project_name}</p>
-											<p>{$projects.project_brief}</p>
-											<p><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$projects.project_type}</p>
+											<p class="theme-h4">{$cases.company}</p>
+											<p>{$cases.investor_name}</p>
+											<p><span class="text-danger">{$cases.round}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额{$cases.invest_amount}万{$cases.invest_cur}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-2 col-xs-2">
 											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
@@ -76,7 +157,8 @@
 								</div>
 							</div>
 						</volist>
-					</div>
+						
+			  		</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
@@ -187,7 +269,7 @@
 						<h3 class="panel-title">个人资料</h3>
 					</div>
 				  	<div class="panel-body">
-				  		<!--<form method="post" action="__URL__/cardSave" enctype="multipart/form-data" id="card_form" style="display:none">
+				  		<form method="post" action="__URL__/cardSave" enctype="multipart/form-data" id="card_form" style="display:none">
 						    <input type="file" name="mycard" id="mycard" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#mycard','#card_form')"/>
 						</form>
 						<br>
@@ -201,7 +283,7 @@
 								<img class="thumbnail" src="{$user.mycard}" height="162" width="288"></img>
 							</div>
 						</div>
-						<hr>-->
+						<hr>
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">链接社交账号</p>
@@ -221,17 +303,22 @@
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  addInterests({$interests},"#interests");
+  addRound({$rounds},"#round");
+  addCur({$currency},"#currency1");
+  addCur({$currency},"#currency2");
+  addYM('#investyear','#investmon',1980);
   addYM('#startyear','#startmon',1960);
   addYM('#endyear','#endmon',1960);
 
-  function upload(){
-  	return $("#profile").click();
+  function upload(id){
+  	return $(id).click();
   }
 
-  function finish_upload(){
-  	var result =$("#profile").val().match(/\.[^\.]+/g);
+  function finish_upload(id1,id2){
+  	var result =$(id1).val().match(/\.[^\.]+/g);
   	if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
-  		$("#profile_form").submit();
+  		$(id2).submit();
   	}
   	else{
 		alert('请上传图片文件！');

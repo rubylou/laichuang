@@ -14,6 +14,12 @@ function initializeField(rows,field){
   }
 }
 
+function initailizeCity(city){
+  for(var i in city){
+    addCity(i,city);
+  }
+}
+
 function addInterest(id,field){
   var exist = $("#choices").contents().filter("#field"+id);
   if(exist.text()==field[id]){
@@ -21,7 +27,7 @@ function addInterest(id,field){
   }
   else{
     var label = $('<span></span>').text(field[id]);
-    label.addClass('btn btn-default label label-primary');
+    label.addClass('btn btn-default label label-default theme-btn');
     label.attr('value',id);
     label.attr("id","field"+id);
     label.click(function(){
@@ -39,7 +45,7 @@ function addLabel(id,field){
   }
   else{
     var label = $('<span></span>').text(field[id]);
-    label.addClass('btn btn-default label label-danger');
+    label.addClass('btn btn-default label theme-bg theme-white');
     label.attr('value',id);
     label.attr("id","field"+id);
     label.click(function(){
@@ -66,6 +72,11 @@ function addOption(id,field){
   $('#regField2').append(option);
 }
 
+function addCity(id,field){
+  var option = $('<option></option').text(field[id]);
+  option.attr('value',id);
+  $('#regCity2').append(option);
+}
 
 function submitInvestor(){
   if(checkValue("#regTitle1",100,0,"请填写职位")&&checkValue("#regCompany1",100,0,"请填写公司名称")&&checkPwd('#regPwd1','#regPwdfirm1')&&checkEmail('#regEmail1')&&checkPhone('#regMobile1')&&checkName('#regName1')){
@@ -122,7 +133,7 @@ function submitInvestor(){
 }
 
 function submitInnovator(){
-  if(checkPwd('#regPwd2','#regPwdfirm2')&&checkNickname('#regNickname2')&&checkEmail('#regEmail2')&&checkPhone('#regMobile2')&&checkName('#regName2')){
+  if(checkPwd('#regPwd2','#regPwdfirm2')&&checkBirth('#regBirth2')&&checkNickname('#regNickname2')&&checkEmail('#regEmail2')&&checkPhone('#regMobile2')&&checkName('#regName2')){
     var xmlHttp = createRequest();
     var status = 'value=innovator&';
     var name = 'key1='+$('#regName2').val()+'&';
@@ -134,12 +145,10 @@ function submitInnovator(){
       var gender = 'key5='+$('#regGender2').val()+'&';
       var birth = 'key6='+$('#regBirth2').val()+'&';
       var city = 'key7='+$('#regCity2').val()+'&';
-      var edu = 'key8='+$('#regEdu2').val()+'&';
       var field = 'key9='+$('#regField2').val()+'&';
-      var experience = 'key10='+$('#regExperience2').val()+'&';
       var pwd = 'key11='+CryptoJS.SHA1($('#regPwd2').val())+'&';
       var pwdfirm = 'key12='+CryptoJS.SHA1($('#regPwdfirm2').val())+'&';
-      var data = status+name+email+mobile+nickname+gender+birth+city+edu+field+experience+pwd+pwdfirm;
+      var data = status+name+email+mobile+nickname+gender+birth+city+field+pwd+pwdfirm;
       var xmlHttp = createRequest();
       request(xmlHttp,data,"userSave");
       if(xmlHttp.responseText==200){

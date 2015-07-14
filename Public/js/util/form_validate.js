@@ -55,6 +55,18 @@ function checkPhone(id){
 	};
 }
 
+function checkBirth(id){
+	var reg = /\d{4}\-\d{2}\-\d{2}$/i;
+	if (reg.test($(id).val())) {
+		return true;
+	}else{
+		$(id).val('');
+		$(id).attr('placeholder','不符合yyyy-mm-dd格式');
+		$(id).focus();
+		return false;
+	};
+}
+
 function checkName(id){
 	if($(id).val().length>0){
 		return true;
