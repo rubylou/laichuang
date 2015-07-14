@@ -99,10 +99,11 @@
 </body>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/util/editor.js"></script>
-<script src="__PUBLIC__/js/Home/User/pro.js"></script>
+<script src="__PUBLIC__/js/Home/User/edit.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   var um = editorInitialize("myEditor");
-  optionInitialize({$field});
+  var field = {$field};
+  optionInitialize(field);
 </script>
 </html>

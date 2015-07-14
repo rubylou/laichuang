@@ -1,3 +1,4 @@
+
 function optionInitialize(value){
   var field = value;
   for(var i in field){
@@ -26,6 +27,25 @@ function submitProject(){
     request(xmlHttp,data,"proSave");
     if(xmlHttp.responseText==200){
       window.location.href="index";
+    }
+  }
+}
+
+function submitJob(){
+  var xmlHttp = createRequest();
+  if(checkValue("#title",20,0,'职位不能为空')&&checkValue("#company2",20,0,'公司名称不能为空')&&checkValue("#job_info",80,0,"职位描述不能为空")){
+    var title = "key1="+$("#title").val()+"&";
+    var company = "key2="+$("#company2").val()+"&";
+    var startyear = "key3="+$("#startyear").val()+"&";
+    var startmon = "key4="+$("#startmon").val()+"&";
+    var endyear = "key5="+$("#endyear").val()+"&";
+    var endmon = "key6="+$("#endmon").val()+"&";
+    var info = "key7="+$("#job_info").val()+"&";
+    var now = "key8="+document.getElementById('untilnow').checked+'&';
+    var data = title+company+startyear+startmon+endyear+endmon+info+now;
+    request(xmlHttp,data,"jobSave");
+    if(xmlHttp.responseText==200){
+      document.location.reload();
     }
   }
 }

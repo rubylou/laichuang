@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧|{$p.article_title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="container">
+    <div class="well">
+      <div class="row">
+        <div class="col-md-9">
+          <h2>{$p.article_title}</h2>
+          <p>{$p.admin_id}&nbsp;&middot;&nbsp;{$p.article_time}</p>
+          <p id="contents"></p>
+          <hr>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  $("#contents")[0].innerHTML = unescape('{$p.article_content}');
+</script>
+</html>

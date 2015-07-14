@@ -17,21 +17,36 @@
 <body>
   <include file="./Public/tpl/navbar_home.html" />
   <div class="well">
-  	<div class="container">
+  	<div class="container" style="margin-top:70px">
 	    <div class="row">
 			<div class="col-md-12 col-xs-12">
-				<div class="panel panel-primary">
+				<div class="panel panel-default theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
 					  		<div class="col-md-2 col-xs-4">
-					  			<a href="#" class="thumbnail">
+					  			<a href="#" class="thumbnail theme-outline">
+					  				<form method="post" action="__URL__/logoSave" enctype="multipart/form-data" id="profile_form">
+									    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')"/>
+									</form>
 							      <img src="__PUBLIC__/pic/profile.png" alt="头像" height="100px" width="100px">
 							    </a>
 					  		</div>
-							<div class="col-md-6 col-xs-6">
-								<h3>{$info.project_name}</h3>
-								<p>{$info.project_brief}</p>
-								<p id="interests"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>{$info.project_type}</p>
+							<div class="col-md-10 col-xs-8">
+								<p class="theme-h3 hide-edit">{$info.project_name}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+								<p class="hide-edit">{$info.project_brief}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+								<div class="row">
+									<div class="col-md-6">
+										<div id="interests" class="hide-edit"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$info.project_type}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></div>
+									</div>
+									<div class="col-md-2 col-md-offset-3 text-right">
+										<if condition="$follow eq false">
+											<a class="btn btn-default theme-btn-inverse form-control" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<else/>
+											<a class="btn btn-default theme-btn form-control" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+										</if>
+										
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -40,49 +55,73 @@
 		</div>
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
-			  	<div class="panel panel-primary">
-					<div class="panel-heading">
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
 						<h3 class="panel-title">
 							项目介绍
+							<a class="btn" href="#"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a>
 						</h3>
 					</div>
 				  	<div class="panel-body">
 				  		<p id="details"></p>
 					</div>
 			  	</div>
-			  	<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">创业团队</h3>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">创业团队<a class="btn"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
 					</div>
 				  	<div class="panel-body">
-					  	<div class='row'>
-							<div class="col-md-6 col-xs-6">
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
+				  		<div class="panel">
+				  			<div class="panel-body">
+							  	<div class='row'>
+									<div class="col-md-1">
+										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="javascript:window.location.href='../User/innovator/val/{$info.project_admin}'"/>
+									</div>
+									<div class="col-md-2">
+										<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
+										<p>&nbsp;&nbsp;&nbsp;创始人<p>
+									</div>
+									<div class="col-md-1">
+										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									</div>
+								</div>
 							</div>
 						</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<p>{$info.project_member}</p>
+				  				</div>
+				  			</div>
+				  		</div>
 					</div>
 			  	</div>
-			  	<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">融资情况</h3>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">融资情况<a class="btn"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
 					</div>
 				  	<div class="panel-body">
-					  	<div class='row'>
-							<div class="col-md-6 col-xs-6">
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
+					  	<div class="panel">
+				  			<div class="panel-body">
+							  	<div class='row'>
+									<div class="col-md-1">
+										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									</div>
+								</div>
 							</div>
 						</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<p>{$info.project_fi}</p>
+				  				</div>
+				  			</div>
+				  		</div>
 					</div>
 			  	</div>
-			  	<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h3 class="panel-title">团队成员</h3>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">已有投资人</h3>
 					</div>
 				  	<div class="panel-body">
 					  	<div class='row'>
@@ -97,31 +136,19 @@
 			  	</div>
 			</div>
 			<div class="col-md-4 col-xs-12">
-				<div class="panel panel-default">
+				<div class="panel panel-default theme-outline">
 					<div class="panel-heading">
-						<h3 class="panel-title">广告</h3>
+						<h3 class="panel-title">其他说明</h3>
 					</div>
 				  	<div class="panel-body">
-					  	<div class='row'>
-							<div class="col-md-6 col-xs-6">
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
-								<h4>姓名</h4>
-								<h5>学号</h5>
-								<h5>党支部</h5>
-								<h5>入党日期／推优日期</h5>
-								<h4>姓名</h4>
-								<h5>学号</h5>
+						<div class="row">
+							<div class="col-md-12">
+								<p class="theme-h4">招聘信息</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p class="theme-h4">融资需求</p>
 							</div>
 						</div>
 					</div>
@@ -132,9 +159,18 @@
 	
   </div>
 </body>
-
+ <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   $("#details")[0].innerHTML = unescape('{$info.project_intro}');
+
+  function followPro(id,value){
+  	var xmlHttp = createRequest();
+  	request(xmlHttp,"key="+value,"proFollow?val="+id);
+    if(xmlHttp.responseText==200){
+      document.location.reload();
+    }
+  	
+  }
 </script>
 </html>

@@ -12,28 +12,34 @@
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
-    <style type="text/css">
-      .required {
-        color:#CD0000;
-      }
-    </style>
   </head>
-
+  <style>
+    .jumbotron{
+      background:url(/lcb/Public/pic/indexbg.jpg);
+      background-size: cover; 
+      -moz-background-size: cover;
+      height:400px;
+    }
+  </style>
 <body>
   <include file="./Public/tpl/navbar_home.html" />
-  <div class="container">
-    <div class="page-header">
+  <div class="jumbotron">
+    <div class="container">
       <div class="row">
-        <div class="col-md-3 col-md-offset-3 col-xs-4 col-xs-offset-2">
-          <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我要投资&nbsp;</button>
+        <h1 class="text-center item-container"><span class="theme-white">一起来创吧</span></h1>
+      </div>
+      <div class="row">
+        <div class="col-md-3 col-md-offset-3 col-xs-6">
+          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我要投资&nbsp;</button>
         </div>
-        <div class="col-md-3 col-xs-4">
-          <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我要创业&nbsp;</button>
+        <div class="col-md-3 col-xs-6">
+          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我要创业&nbsp;</button>
         </div>
       </div>
     </div>
+  </div>
 
-
+  <div class="container">
     <div class="collapse" id="collapseExample1">
       <div class="well">
         <div class="row">
@@ -84,7 +90,7 @@
             <label for="regPwdfirm1"><span class="required">*</span>确认密码</label>
             <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm1" placeholder="确认密码">
           </div>  
-          <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="submitInvestor()">&nbsp;提交&nbsp;</button>    
+          <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInvestor()">&nbsp;提交&nbsp;</button>    
           </div>
         </div>
       </div>
@@ -123,21 +129,14 @@
                 <input type="text" name="birth" class="form-control" id="regBirth2" placeholder="格式: yyyy-mm-dd">
               </div>
               <div class="form-group">
-                <label for="regCity2">城市</label>
-                <input type="text" name="city" class="form-control" id="regCity2" placeholder="">
-              </div>
-              <div class="form-group">
-                <label for="regEdu2">教育背景</label>
-                <input type="text" name="edu" class="form-control" id="regEdu2" placeholder="">
-              </div>
-              <div class="form-group">
-                <label for="regField2">行业</label>
-                <select class="form-control" name="field" id="regField2">
+                <label for="regCity2">地区</label>
+                <select class="form-control" name="field" id="regCity2">
                 </select>
               </div>
               <div class="form-group">
-                <label for="regExperience2">工作经历</label>
-                <textarea rows="3" name="experience" class="form-control" id="regExperience2" placeholder="简要介绍工作经历"></textarea>
+                <label for="regField2"><span class="required">*</span>行业</label>
+                <select class="form-control" name="field" id="regField2">
+                </select>
               </div>
               <hr>
               <div class="form-group">
@@ -149,7 +148,7 @@
                 <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm2" placeholder="确认密码">
               </div>
               
-              <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="submitInnovator()">&nbsp;提交&nbsp;</button>    
+              <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInnovator()">&nbsp;提交&nbsp;</button>    
             </div>
           </div>
         </div>
@@ -161,10 +160,10 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <h4 id="alert_content" style="color:#5B5B5B"></h4>
+            <h4 id="alert_content" class="theme-color"></h4>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+            <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm">确定</button>
           </div>
         </div>
       </div>
@@ -176,7 +175,11 @@
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   var field = {$field};
+  var city = {$city};
   var rows = ({$fieldlen})/6;
   initializeField(rows,field);
+  initailizeCity(city);
+
+  
 </script>
 </html>

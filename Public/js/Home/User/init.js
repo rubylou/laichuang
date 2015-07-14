@@ -3,7 +3,7 @@
     for(var i in interests){
       if(interests[i]!=null){
         var label = $('<span></span>').text(' '+interests[i]+' ');
-        $(id).append(label);
+        $(id).find(".glyphicon-tag").after(label);
       }
     }
   }
@@ -22,13 +22,13 @@
     }
   }
   
-  function addYM(year,month){
+  function addYM(year,month,start){
     for(var i=1;i<13;i++){
       addOption(i,i,month);
     }
 
     var date = new Date();
-    for(var i=date.getFullYear(); i>=1980;i--){
+    for(var i=date.getFullYear(); i>=start;i--){
       addOption(i,i,year);
     }
 

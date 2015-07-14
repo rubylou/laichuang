@@ -4,6 +4,36 @@ use Think\Controller;
 use Think\Model;
 class IndexController extends Controller {
     public function index(){
+        $Form = new Model();
+        $result = $Form->query('select * from admin_articles limit 3');
+        foreach ($result as $key => $value) {
+            $result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
+            $result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
+            $result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
+            $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
+            $result[$key]['info'] = getPic($result[$key]['article_content']);
+            $origin = $result[$key]['info'];
+            if($origin!=null){
+                $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
+                //ThinkImage类方法
+                $image = new \Think\Image(); 
+                $image->open($origin);
+                $unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)->save($thumb);
+
+                if($unlink !== false){
+                    $result[$key]['thumb'] = '/lcb'.substr($thumb,1);
+                }
+                else{
+                    $result[$key]['thumb'] = '';
+                }
+
+            }else{
+                $result[$key]['thumb'] = '';
+            }
+        }
+        //dump($result);
+        $this->vo = $result;
+        $this->assign("list",$result);
     	$this->display();
     }
 
@@ -21,6 +51,8 @@ class IndexController extends Controller {
         $fieldlen = count($fields);
         $this->field = json_encode($fields);
         $this->fieldlen = $fieldlen;
+        $city = C("PROVINCE_CODE");
+        $this->city = json_encode($city);
         $this->display();
     }
 
@@ -35,7 +67,7 @@ class IndexController extends Controller {
         if(mysql_real_escape_string($_POST['value'])==='1'){
             $name = mysql_real_escape_string($_POST['key1']);
             $pwd = mysql_real_escape_string($_POST['key2']);
-            $result = $Form->query('select user_id, name from investor_personal where mobile="%s" or email="%s"',$name,$name);
+            $result = $Form->query('select user_id, name, portrait from investor_personal where mobile="%s" or email="%s"',$name,$name);
             if($result){
                 $id = $result[0]['user_id'];
                 $safety = $Form->query('select user_pwd from investor_security where user_id="%s"',$id);
@@ -43,6 +75,7 @@ class IndexController extends Controller {
                     $_SESSION['user'] = $result[0]['name'];
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '1';
+                    $_SESSION['portrait'] = $result[0]['portrait'];
                     echo 200;
                 }
                 else{
@@ -56,7 +89,7 @@ class IndexController extends Controller {
         else if(mysql_real_escape_string($_POST['value'])==='2'){
             $name = mysql_real_escape_string($_POST['key1']);
             $pwd = mysql_real_escape_string($_POST['key2']);
-            $result = $Form->query('select user_id,name from entrepreneur_personal where phone="%s" or email="%s"',$name,$name);
+            $result = $Form->query('select user_id,name, portrait from entrepreneur_personal where phone="%s" or email="%s"',$name,$name);
             if($result){
                 $id = $result[0]['user_id'];
                 $safety = $Form->query('select user_pwd from entrepreneur_security where user_id="%s"',$id);
@@ -64,6 +97,7 @@ class IndexController extends Controller {
                     $_SESSION['user'] = $result[0]['name'];
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '2';
+                    $_SESSION['portrait'] = $result[0]['portrait'];
                     echo 200;
                 }
                 else{
@@ -121,9 +155,9 @@ class IndexController extends Controller {
                 $exist = $Form->query('select user_id from entrepreneur_personal where user_id = "%s"',$id);
             }
             $result = $Form->execute('insert into entrepreneur_personal 
-                (user_id,name,email,phone,nickname,gender,birthday,city,education,business,experience,reg_time,reg_status)
-                values ("%s","%s","%s","%s","%s",%d,"%s","%s","%s",%d,"%s",
-                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key8'],$_POST['key9'],$_POST['key10'],$regTime,0);
+                (user_id,name,email,phone,nickname,gender,birthday,city,business,reg_time,reg_status)
+                values ("%s","%s","%s","%s","%s",%d,"%s",%d,%d,
+                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key9'],$regTime,0);
             if($result){
                 $safety = $Form->execute('insert into entrepreneur_security (user_id,user_pwd) 
                     values ("%s","%s")',$id,$_POST['key11']);

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧|资讯</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="container">
+	<volist name="list" id="vo">
+		<div class="row">
+			<div class="col-md-2">
+				<if condition="$vo.thumb neq ''">
+					<img src="{$vo.thumb}" alt="资讯图片" height="135" width="240"/>
+				</if>
+			</div>
+			<div class="col-md-9 col-md-offset-1">
+				<a class="btn text-success" style="font-size:18px;" href="__URL__/detail/p/{$vo.article_id}"><strong>{$vo.article_title}</strong></a>
+				<h3><small>{$vo.admin_id}&nbsp;&middot;&nbsp;{$vo.article_time}</small></h3>
+
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-md-10">
+				<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo.article_visits}&nbsp;)&nbsp;</small></h5>
+			</div>
+		</div>
+		<hr>
+	</volist>
+  	
+  </div>
+</body>
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+</script>
+</html>

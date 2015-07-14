@@ -9,6 +9,7 @@
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
@@ -24,14 +25,14 @@
 				  	<div class="panel-body">
 					  	<div class='row'>
 					  		<div class="col-md-1 col-xs-4 text-center">
-							    <image class="thumbnail theme-profile" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+							    <img class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
 							<div class="col-md-11 col-xs-6">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{:session('user')}</p>
 								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己</p>
 								<div class="row">
 									<div class="col-md-6">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
+										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$user.business}</p>
 									</div>
 									<div class="col-md-2 col-md-offset-3 text-right">
 										<if condition="$follow eq false">
@@ -39,42 +40,41 @@
 											<else/>
 											<a class="btn btn-default form-control theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
 										</if>
+										
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 			  	</div>
 			</div>
 		</div>
-	</div>
-	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">投资案例</h3>
+						<h3 class="panel-title">
+							创业经历<a class="btn" href="{:U('Home/User/proEdit')}"></a>
+						</h3>
 					</div>
 				  	<div class="panel-body">
-				  		<volist name="caselist" id="cases">
-				  			<div class="panel">
-				  				<div class="panel-body">
+				  		<volist name="prolist" id="projects">
+							<div class="panel">
+				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
+										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px" onclick="javascript: window.location.href = '../Case/info/key/{$projects.project_id}'">
 								  		</div>
 										<div class="col-md-6 col-xs-6">
-										<p class="theme-h4">{$cases.company}</p>
-											<p>{$cases.investor_name}</p>
-											<p><span class="text-danger">{$cases.round}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额{$cases.invest_amount}万{$cases.invest_cur}</p>
+											<p class="theme-h4">{$projects.project_name}</p>
+											<p>{$projects.project_brief}</p>
+											<p><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$projects.project_type}</p>
 										</div>
 									</div>
 								</div>
 							</div>
 						</volist>
-						
-			  		</div>
+					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
@@ -83,7 +83,7 @@
 				  	<div class="panel-body">
 						<volist name="joblist" id="jobs">
 							<div class="panel">
-					  			<div class="panel-body">
+					  			<div class="panel-body hide-edit">
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-6">
 											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
@@ -106,7 +106,7 @@
 				  	<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
-								<p class="theme-h4">社交账号</p>
+								<p class="theme-h4">链接社交账号</p>
 							</div>
 						</div>
 					</div>
@@ -118,9 +118,11 @@
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/Home/User/edit.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  addInterests({$interests},"#interests");
+
 </script>
 </html>
