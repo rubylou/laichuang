@@ -4,7 +4,7 @@ use Think\Controller;
 use Think\Model;
 class AuditController extends Controller {
     public function index(){
-    	dump($_SESSION);
+    	//dump($_SESSION);
     	$this->display();   
     }
 

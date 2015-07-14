@@ -19,41 +19,53 @@
   <div class="container">
     <div class="page-header">
       <!-- 页面标题 -->
-      <h3>待审核列表</h3>
+      <h3>审核管理列表</h3>
     </div>
     <div class="row">
       <div class="col-md-12 col-xs-12">
         <div role="tabpanel">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#project" aria-controls="project" role="tab" data-toggle="tab">项目列表</a></li>
-            <li role="presentation"><a href="#investor" aria-controls="investor" role="tab" data-toggle="tab">投资人列表</a></li>
-            <li role="presentation"><a href="#innovator" aria-controls="innovator" role="tab" data-toggle="tab">创业者列表</a></li> 
+            <li role="presentation" class="active"><a href="#projectVerify" aria-controls="projectVerify" role="tab" data-toggle="tab">项目审核</a></li>
+            <li role="presentation" ><a href="#projectManage" aria-controls="projectManage" role="tab" data-toggle="tab">项目管理</a></li>
+
+            <li role="presentation"><a href="#investorVerify" aria-controls="investorVerify" role="tab" data-toggle="tab">投资人审核</a></li>
+            <li role="presentation"><a href="#investorManage" aria-controls="investorManage" role="tab" data-toggle="tab">投资人管理</a></li>
+
+            <li role="presentation"><a href="#investorCompanyVerify" aria-controls="investorCompanyVerify" role="tab" data-toggle="tab">投资机构审核</a></li>
+            <li role="presentation"><a href="#investorCompanyManage" aria-controls="investorCompanyManage" role="tab" data-toggle="tab">投资机构管理</a></li>
+            
+            <li role="presentation"><a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab">创业者审核</a></li> 
+            <li role="presentation"><a href="#innovatorManage" aria-controls="innovatorManage" role="tab" data-toggle="tab">创业者管理</a></li>
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane active" id="project">
-            </div>
-            <div role="tabpanel" class="tab-pane" id="investor"> 
+            <div role="tabpanel" class="tab-pane active" id="projectVerify">
               <div style="height:500px; overflow:scroll;">
                 <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
-                  <tr>
-                    <th class="text-center">管理员id</th>
-                    <th class="text-center">管理员类别</th>
-                    <th class="text-center">操作</th>
-                  </tr>
                   
-                  <volist name="list" id="vo">
-                    <tr>
-                      <td class="text-center">{$vo.admin_id}</td>
-                      <td class="text-center">{$vo.admin_type}</td>
-                      <td class="text-center"><a data-toggle="tooltip" data-placement="top" title="修改" class="btn" href="__URL__/adminEdit?key={$vo.admin_id}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a><a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href="__URL__/adminDel?key={$vo.admin_id}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></a></td>
-                    </tr>
-                  </volist> 
                 </table>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane" id="innovator">
+            <div role="tabpanel" class="tab-pane active" id="projectManage">
+            </div>
+            
+
+            <div role="tabpanel" class="tab-pane active" id="investorVerify">
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="investorManage">
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane active" id="investorCompanyVerify">
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="investorCompanyManage">
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="innovatorVerify">
+            </div>
+            <div role="tabpanel" class="tab-pane" id="innovatorManage">
             </div>
           </div>
         </div>
