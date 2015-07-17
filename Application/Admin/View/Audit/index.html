@@ -12,6 +12,7 @@
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+
   </head>
 
 <body>
@@ -35,7 +36,7 @@
             <li role="presentation"><a href="#investorCompanyVerify" aria-controls="investorCompanyVerify" role="tab" data-toggle="tab">投资机构审核</a></li>
             <li role="presentation"><a href="#investorCompanyManage" aria-controls="investorCompanyManage" role="tab" data-toggle="tab">投资机构管理</a></li>
             
-            <li role="presentation"><a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab">创业者审核</a></li> 
+            <li role="presentation"><a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab" onclick="">创业者审核</a></li> 
             <li role="presentation"><a href="#innovatorManage" aria-controls="innovatorManage" role="tab" data-toggle="tab">创业者管理</a></li>
           </ul>
           <!-- Tab panes -->
@@ -43,7 +44,7 @@
             <div role="tabpanel" class="tab-pane active" id="projectVerify">
               <div style="height:500px; overflow:scroll;">
                 <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
-                  
+
                 </table>
               </div>
             </div>
@@ -64,6 +65,17 @@
 
 
             <div role="tabpanel" class="tab-pane" id="innovatorVerify">
+              <div style="height:500px; overflow:scroll;">
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
+                 <tr>
+                    <th class="text-center">用户id</th>
+                    <th class="text-center">昵称</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">手机</th>
+                    <th class="text-center">操作</th>
+                  </tr> 
+                </table>
+              </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="innovatorManage">
             </div>
@@ -76,4 +88,5 @@
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 </script>
+<script src="__PUBLIC__/js/Admin/Audit/index.js"></script>
 </html>
