@@ -3,6 +3,24 @@ function modalShow(content,container,value){
   $('#'+container).modal('show');
 }
 
+function hideCollapse(id){
+  	$(id).collapse('hide');
+  	$(id).find('input[type="text"]').each(function(){
+  		$(this).val('');
+  	});
+  	$(id).find('input[type="checkbox"]').each(function(){
+  		$(this).attr('checked',false);
+  	});
+  	$(id).find('select').each(function(){
+  		$(this).attr('disabled',false);
+  		$(this).children().first().attr('selected','selected');
+  	});
+  	$(id).find('textarea').each(function(){
+  		$(this).val('');
+  	})
+}
+
+
 function checkPwdfirm(pwd, pwdfirm){
 	if(pwd==pwdfirm){
 		return true;

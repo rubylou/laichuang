@@ -32,6 +32,7 @@ function submitProject(){
 }
 
 function submitJob(){
+  var id = $('#editJob_input').val();
   var xmlHttp = createRequest();
   if(checkValue("#title",20,0,'职位不能为空')&&checkValue("#company2",20,0,'公司名称不能为空')&&checkValue("#job_info",80,0,"职位描述不能为空")){
     var title = "key1="+$("#title").val()+"&";
@@ -43,7 +44,12 @@ function submitJob(){
     var info = "key7="+$("#job_info").val()+"&";
     var now = "key8="+document.getElementById('untilnow').checked+'&';
     var data = title+company+startyear+startmon+endyear+endmon+info+now;
-    request(xmlHttp,data,"jobSave");
+    if(id.length>0){
+      request(xmlHttp,data+"c="+id,'jobSave');
+    }
+    else{
+      request(xmlHttp,data,"jobSave");
+    }
     if(xmlHttp.responseText==200){
       document.location.reload();
     }
@@ -51,6 +57,7 @@ function submitJob(){
 }
 
 function case_submit(){
+  var id = $('#editCase_input').val();
   var xmlHttp = createRequest();
   if(checkValue("#company",30,0,'投资公司不能为空') && checkValue("#investor",50,0,'投资代表主体不能为空')){
     var company = 'key1='+$('#company').val()+'&';
@@ -63,7 +70,12 @@ function case_submit(){
     var investyear = 'key8='+$('#investyear').val()+'&';
     var investmon = 'key9='+$('#investmon').val()+'&';
     var data = company+round+currency1+amount+currency2+assess+investor+investyear+investmon;
-    request(xmlHttp,data,"caseAdd");
+    if(id.length>0){
+      request(xmlHttp,data+"c="+id,'caseSave');
+    }
+    else{
+      request(xmlHttp,data,"caseSave");
+    }
     if(xmlHttp.responseText==200){
       document.location.reload();
     }

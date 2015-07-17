@@ -30,8 +30,26 @@
 							    <input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
 							<div class="col-md-11 col-xs-6">
-								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{:session('user')}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
-								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+								<p class="theme-h3 hide-edit">
+									<span>&nbsp;&nbsp;&nbsp;{:session('user')}</span>
+									<a class="btn" style="display:none" onclick="editName()">
+										<span class="glyphicon glyphicon-pencil theme-color"></span>
+									</a>
+									<input type="hidden" id="user_name" value="{:session('user')}" class="theme-form-control-1"/>
+									<a id="saveName" class="btn btn-default" onclick="saveName()" style="display:none">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</p>
+								<p class="hide-edit">
+									<span>&nbsp;&nbsp;&nbsp;一句话描述自己</span>
+									<a class="btn" style="display:none" onclick="editBrief()">
+										<span class="glyphicon glyphicon-pencil theme-color"></span>
+									</a>
+									<input type="hidden" id="user_brief" value="" class="theme-form-control-4"/>
+									<a id="saveBrief" class="btn btn-default" onclick="saveBrief()" style="display:none">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</p>
 								<div class="row">
 									<div class="col-md-6">
 										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
@@ -40,6 +58,17 @@
 										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/investor/val/{$user.user_id}">预览</a>
 									</div>
 								</div>
+								
+								<div class="form-group">
+					                <label for="conditions">感兴趣领域(最多选5个)</label>
+					                <div id="conditions">
+					                </div>
+					                <div class="row"></div>
+					                <label for="choices">已选择:</label>
+					                <div id="choices">
+					                </div>
+					            </div>
+							       
 							</div>
 						</div>
 					</div>
@@ -131,6 +160,7 @@
 						    	<div class="col-md-3 col-md-offset-3">
 						        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="case_submit()">&nbsp;提交&nbsp;</button>    
 						        </div>
+						        <input type="hidden" id="editCase_input"/>
 						        <div class="col-md-3">
 						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
 						        </div>
@@ -150,8 +180,8 @@
 											<p><span class="text-danger">{$cases.round}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额{$cases.invest_amount}万{$cases.invest_cur}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-2 col-xs-2">
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
+											<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delCase('{$cases.case_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
@@ -236,6 +266,7 @@
 						    	<div class="col-md-3 col-md-offset-3">
 						        	<button type="submit" class="btn btn-default form-control theme-btn-inverse" onclick="submitJob()">&nbsp;提交&nbsp;</button>    
 						        </div>
+						        <input type="hidden" id="editJob_input"/>
 						        <div class="col-md-3">
 						        	<button type="submit" class="btn btn-default form-control theme-btn" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</button>    
 						        </div>
@@ -253,8 +284,8 @@
 											<p>{$jobs.job_info}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
+											<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
@@ -286,6 +317,11 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-12">
+								<p class="theme-h4">财产信息或公司信息</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
 								<p class="theme-h4">链接社交账号</p>
 							</div>
 						</div>
@@ -294,7 +330,31 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="delCaseBtn">
+			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delCase_confirm">确定</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delCase_cancel">取消</button>
+			      <input type="hidden" id="delCase_input" />
+			  </div>
+			  <div id="delJobBtn">
+			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
+			      <input type="hidden" id="delJob_input" />
+			  </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
@@ -302,39 +362,221 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  addInterests({$interests},"#interests");
-  addRound({$rounds},"#round");
-  addCur({$currency},"#currency1");
-  addCur({$currency},"#currency2");
-  addYM('#investyear','#investmon',1980);
-  addYM('#startyear','#startmon',1960);
-  addYM('#endyear','#endmon',1960);
+	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	addInterests({$interests},"#interests");
+	addRound({$rounds},"#round");
+	addCur({$currency},"#currency1");
+	addCur({$currency},"#currency2");
+	addYM('#investyear','#investmon',1980);
+	addYM('#startyear','#startmon',1960);
+	addYM('#endyear','#endmon',1960);
 
-  function upload(id){
-  	return $(id).click();
-  }
+	var field = {$field};
+	var rows = ({$fieldlen})/12;
+	initializeField(rows,field);
 
-  function finish_upload(id1,id2){
-  	var result =$(id1).val().match(/\.[^\.]+/g);
-  	if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
-  		$(id2).submit();
-  	}
-  	else{
-		alert('请上传图片文件！');
+	function initializeField(rows,field){
+	  for(var i=0;i<=rows;i++){
+	    $('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
+	  }
+
+	  for(var i in field){
+	    addLabel(i,field);
+	  }
 	}
-  }
+	function addInterest(id,field){
+		var exist = $("#choices").contents().filter("#field"+id);
+		if(exist.text()==field[id]){
+			alert("已添加");
+		}
+		else{
+			var label = $('<span></span>').text(field[id]);
+			label.addClass('btn btn-default label label-default theme-btn');
+			label.attr('value',id);
+			label.attr("id","field"+id);
+			label.click(function(){
+			  addLabel(id,field);
+			  $(this).remove();
+			});
+			$('#choices').append(label);
+		}
+	}
 
-  function disableEnd(value){
-  	if(value){
-  		$("#endyear").attr("disabled",true);
-  		$("#endmon").attr("disabled",true);
+  	function addLabel(id,field){
+		var exist = $("#conditions").contents().filter("#field"+id);
+		if(exist.text()==field[id]){
+			alert("已添加");
+		}
+		else{
+			var label = $('<span></span>').text(field[id]);
+			label.addClass('btn btn-default label theme-bg theme-white');
+			label.attr('value',id);
+			label.attr("id","field"+id);
+			label.click(function(){
+			  if($("#choices").children().length==5){
+			    alert("选择已达上限");
+			  }
+			  else{
+			    addInterest(id,field);
+			    $(this).remove();
+			  }
+			});
+
+			var row = parseInt(id/12);
+			if(id%8==0){
+			  --row;
+			}
+			$('#row'+row).append(label);
+		}
   	}
-  	else{
-  		$("#endyear").removeAttr("disabled");
-  		$("#endmon").removeAttr("disabled");
-  	}
-  }
+
+	function upload(id){
+		return $(id).click();
+	}
+
+	function finish_upload(id1,id2){
+		var result =$(id1).val().match(/\.[^\.]+/g);
+		if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
+			$(id2).submit();
+		}
+		else{
+			alert('请上传图片文件！');
+		}
+	}
+
+	function disableEnd(value){
+		if(value){
+			$("#endyear").attr("disabled",true);
+			$("#endmon").attr("disabled",true);
+		}
+		else{
+			$("#endyear").removeAttr("disabled");
+			$("#endmon").removeAttr("disabled");
+		}
+	}
+
+	$('#delCase_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'c='+$("#delCase_input").val(),"delCase");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	$('#delCase_cancel').click(function(){
+		$('#delCase_input').val('');
+	});
+
+	function delCase(id){
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#delCaseBtn').show();
+		$('#delCase_input').val(id);
+		modalShow('alert_content','myModal','确认删除该投资案例?');
+	}
+
+	$('#delJob_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'c='+$("#delJob_input").val(),"delJob");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	$('#delJob_cancel').click(function(){
+		$('#delJob_input').val('');
+	});
+
+	function delJob(id){
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#delJobBtn').show();
+		$('#delJob_input').val(id);
+		modalShow('alert_content','myModal','确认删除该工作经历?');
+	}
+
+	function editCase(id){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'c='+id,"editCase");
+		var info = JSON.parse(xmlHttp.responseText);
+		$('#collapseExample1').collapse('show');
+		$('#company').val(info.company);
+		$('#round').children('option').each(function(){
+			if($(this).val()==info.round){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#amount').val(info.invest_amount);
+		$('#currency1').children('option').each(function(){
+			if($(this).val()==info.invest_cur){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#assess').val(info.assess_amount);
+		$('#currency2').children('option').each(function(){
+			if($(this).val()==info.assess_cur){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#investor').val(info.investor_name);
+		$('#investyear').children('option').each(function(){
+			if($(this).val()==info.year){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#investmon').children('option').each(function(){
+			if($(this).val()==info.mon){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#editCase_input').val(id);
+		
+	}
+
+	function editJob(id){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'c='+id,"editJob");
+		var info = JSON.parse(xmlHttp.responseText);
+		$('#collapseExample2').collapse('show');
+		$("#title").val(info.job_title);
+		$('#company2').val(info.job_company);
+		$('#startyear').children('option').each(function(){
+			if($(this).val()==info.startyear){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#startmon').children('option').each(function(){
+			if($(this).val()==info.startmon){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#endyear').children('option').each(function(){
+			if($(this).val()==info.endyear){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#endmon').children('option').each(function(){
+			if($(this).val()==info.endmon){
+				$(this).attr('selected','selected');
+			}
+		});
+		$('#job_info').val(info.job_info);
+		$('#editJob_input').val(id);
+	}
+
+	function editName(){
+		$('#user_name').attr('type','text');
+		$('#saveName').show();
+	}
+
+	function saveName(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'name='+$('#user_name').val(),"editInfo");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	}
+
+	function editBrief(){
+		$('#user_brief').attr('type','text');
+		$('#saveBrief').show();
+	}
 
 </script>
 </html>

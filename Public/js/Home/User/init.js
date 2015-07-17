@@ -2,7 +2,7 @@
     var interests = value;
     for(var i in interests){
       if(interests[i]!=null){
-        var label = $('<span></span>').text(' '+interests[i]+' ');
+        var label = $('<span></span>').text(' '+interests[i]['interest_field']+' ');
         $(id).find(".glyphicon-tag").after(label);
       }
     }

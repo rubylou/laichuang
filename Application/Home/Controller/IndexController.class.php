@@ -127,9 +127,15 @@ class IndexController extends Controller {
                 $exist = $Form->query('select user_id from investor_personal where user_id = "%s"',$id);
             }
             $result = $Form->execute('insert into investor_personal 
-                (user_id,name,mobile,email,company,title,user_type,reg_time,reg_status,interests)
+                (user_id,name,mobile,email,company,title,user_type,reg_time,reg_status)
                 values ("%s","%s","%s","%s","%s","%s",%d,
-                "%s",%d,"%s")',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$regTime,0,$_POST['key9']);
+                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$regTime,0);
+            $interests = $_POST['key9'];
+            $interests = explode(',', $interests);
+            for($i=0;$i<count($interests)-1;$i++){
+                $temp = $Form->execute('replace into interest_investor (id, interest_field) values ("%s",%d)',$id,$interests[$i]);
+            }
+
             if($result){
                 $safety = $Form->execute('insert into investor_security (user_id,user_pwd) 
                     values ("%s","%s")',$id,$_POST['key7']);
@@ -155,9 +161,9 @@ class IndexController extends Controller {
                 $exist = $Form->query('select user_id from entrepreneur_personal where user_id = "%s"',$id);
             }
             $result = $Form->execute('insert into entrepreneur_personal 
-                (user_id,name,email,phone,nickname,gender,birthday,city,business,reg_time,reg_status)
-                values ("%s","%s","%s","%s","%s",%d,"%s",%d,%d,
-                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key9'],$regTime,0);
+                (user_id,name,email,phone,nickname,gender,birthday,city,reg_time,reg_status)
+                values ("%s","%s","%s","%s","%s",%d,"%s",%d,
+                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$regTime,0);
             if($result){
                 $safety = $Form->execute('insert into entrepreneur_security (user_id,user_pwd) 
                     values ("%s","%s")',$id,$_POST['key11']);
