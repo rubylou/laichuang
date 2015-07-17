@@ -48,7 +48,7 @@ class UserController extends Controller {
         if(!session('?type') || !session('?id')){
             $this->redirect('Index/login');
         }
-        
+
         $id = I('get.val',0);
         if(!$id){
             $this->redirect('Index/index');
@@ -56,20 +56,19 @@ class UserController extends Controller {
 
         $Form = new Model();
         $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief, project_type 
-                from project_info where project_admin='%s'", $_SESSION['id']);
+                from project_info where project_admin='%s'", $id);
         if($projects){
             $fields = C('INTEREST_FIELD');
             foreach ($projects as $key => $value) {
                 $projects[$key]['project_type'] = $fields[$value['project_type']];
             }
         }
-        $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$_SESSION['id']);
+        $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$id);
         $user[0]['business'] = $fields[$user[0]['business']];
         $this->user = $user[0];
-        //dump($this->user);
         $this->projects = $projects;
         $this->assign('prolist',$projects);
-        $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$_SESSION['id']);
+        $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$id);
         if($jobs){
             foreach ($jobs as $key => $value) {
                 $jobs[$key]['job_start'] = substr($value['job_start'], 0,7);
@@ -91,14 +90,13 @@ class UserController extends Controller {
 
         $Form = new Model();
         if($_SESSION['type']==='1'){
-            $result = $Form->query('select interests from investor_personal where user_id="%s"', $_SESSION['id']);
+            $result = $Form->query('select interest_field from interest_investor where id="%s"', $_SESSION['id']);
             if($result){
-                $interests = explode(',',$result[0]['interests']);
                 $fields = C('INTEREST_FIELD');
-                foreach ($interests as $key => $value) {
-                    $interests[$key] = $fields[$value];
+                foreach ($result as $key => $value) {
+                    $result[$key]['interest_field'] = $fields[$value['interest_field']];
                 }
-                $this->interests = json_encode($interests);
+                $this->interests = json_encode($result);
             }
 
             $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$_SESSION['id']);
@@ -110,6 +108,9 @@ class UserController extends Controller {
                     $cases[$key]['invest_cur'] = $cur[$value['invest_cur']];
                     $cases[$key]['assess_cur'] = $cur[$value['assess_cur']];
                     $cases[$key]['invest_time'] = substr($value['invest_time'], 0,7);
+                    if($value['invest_amount']==0){
+                        $cases[$key]['invest_amount'] = '-未知-';
+                    }
                 }
                 $this->cases = $cases;
                 $this->assign('caselist',$cases);
@@ -128,6 +129,10 @@ class UserController extends Controller {
             $this->user = $user[0];
             $this->rounds = json_encode(C('INVEST_ROUND'));
             $this->currency = json_encode(C('CURRENCY_CODE'));
+            $fields = C('INTEREST_FIELD');
+            $fieldlen = count($fields);
+            $this->field = json_encode($fields);
+            $this->fieldlen = $fieldlen;
         }
         $this->display();
     }
@@ -143,14 +148,13 @@ class UserController extends Controller {
         }
 
         $Form = new Model();
-        $result = $Form->query('select interests from investor_personal where user_id="%s"',$id);
+        $result = $Form->query('select interest_field from interest_investor where id="%s"', $_SESSION['id']);
         if($result){
-            $interests = explode(',',$result[0]['interests']);
             $fields = C('INTEREST_FIELD');
-            foreach ($interests as $key => $value) {
-                $interests[$key] = $fields[$value];
+            foreach ($result as $key => $value) {
+                $result[$key]['interest_field'] = $fields[$value['interest_field']];
             }
-            $this->interests = json_encode($interests);
+            $this->interests = json_encode($result);
         }
 
         $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$id);
@@ -162,6 +166,9 @@ class UserController extends Controller {
                 $cases[$key]['invest_cur'] = $cur[$value['invest_cur']];
                 $cases[$key]['assess_cur'] = $cur[$value['assess_cur']];
                 $cases[$key]['invest_time'] = substr($value['invest_time'], 0,7);
+                if($value['invest_amount']==0){
+                    $cases[$key]['invest_amount'] = '-未知-';
+                }
             }
             $this->cases = $cases;
             $this->assign('caselist',$cases);
@@ -206,12 +213,12 @@ class UserController extends Controller {
                 if($_SESSION['type']=="1"){
                     $success = $Form->execute('update investor_personal set portrait="%s" 
                         where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$info['profile']['savename'],$_SESSION['id']);
-                    header("Location: investor");
+                    header("Location: investorEdit");
                 }
                 else{
                     $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
                         where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$info['profile']['savename'],$_SESSION['id']);
-                    header("Location: index");
+                    header("Location: innovator");
                 }
             }
         }
@@ -289,50 +296,130 @@ class UserController extends Controller {
         $Form = new Model();
         $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
         $user_id= $_SESSION['id'];
-        $job = $user_id.$seed;
-        $exist = $Form->query('select job_id from user_job where job_id = "%s"',$job);
-        while($exist){
-            $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-            $job = $user_id.$seed;
-            $exist = $Form->query('select job_id from user_job where job_id = "%s"',$job);
-        }
-        if($_POST['key8']==='true'){
-            $result = $Form->execute('insert into user_job (job_id,user_id,job_title,job_company,job_start,job_end,job_info) 
-        values ("%s","%s","%s","%s","%s","%s","%s")',$job,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',date('Y-m-d'),$_POST['key7']);
+        if(count($_POST['c'])>0){
+            $job = $_POST['c'];
+            if($_POST['key8']==='true'){
+                $result = $Form->execute('update user_job set job_title="%s",job_company="%s",job_start="%s",job_end="%s",
+                    job_info="%s" where job_id="%s"',$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',date('Y-m-d'),$_POST['key7'],$job);
+            }
+            else{
+                $result = $Form->execute('update user_job set job_title="%s",job_company="%s",job_start="%s",job_end="%s",
+                    job_info="%s" where job_id="%s"',$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',$_POST['key5'].'-'.$_POST['key6'].'-00',$_POST['key7'],$job);
+            }
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
         }
         else{
-            $result = $Form->execute('insert into user_job (job_id,user_id,job_title,job_company,job_start,job_end,job_info) 
-        values ("%s","%s","%s","%s","%s","%s","%s")',$job,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',$_POST['key5'].'-'.$_POST['key6'].'-00',$_POST['key7']);
+            $job = $user_id.$seed;
+            $exist = $Form->query('select job_id from user_job where job_id = "%s"',$job);
+            while($exist){
+                $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
+                $job = $user_id.$seed;
+                $exist = $Form->query('select job_id from user_job where job_id = "%s"',$job);
+            }
+            if($_POST['key8']==='true'){
+                $result = $Form->execute('insert into user_job (job_id,user_id,job_title,job_company,job_start,job_end,job_info) 
+            values ("%s","%s","%s","%s","%s","%s","%s")',$job,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',date('Y-m-d'),$_POST['key7']);
+            }
+            else{
+                $result = $Form->execute('insert into user_job (job_id,user_id,job_title,job_company,job_start,job_end,job_info) 
+            values ("%s","%s","%s","%s","%s","%s","%s")',$job,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00',$_POST['key5'].'-'.$_POST['key6'].'-00',$_POST['key7']);
+            }
+            
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
         }
         
+    }
+
+    public function caseSave(){
+        $Form = new Model();
+        $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
+        $user_id= $_SESSION['id'];
+        if(count($_POST['c'])>0){
+            $caseid = $_POST['c'];
+            $result = $Form->execute('update investor_case set company = "%s",round = %d,
+                invest_cur=%d,invest_amount=%d,assess_cur=%d,assess_amount=%d,investor_name="%s",invest_time="%s" 
+                where case_id = "%s"',$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key8'].'-'.$_POST['key9'].'-00',$caseid);
+            if($result){
+                echo 200;
+            }
+            else{
+                echo 400;
+            }
+        }
+        else{
+            $caseid = $user_id.$seed;
+            $exist = $Form->query('select case_id from investor_case where case_id = "%s"',$caseid);
+            while($exist){
+                $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
+                $caseid = $user_id.$seed;
+                $exist = $Form->query('select case_id from investor_case where case_id = "%s"',$caseid);
+            }
+            $result = $Form->execute('insert into investor_case (case_id,user_id,company,round,
+                invest_cur,invest_amount,assess_cur,assess_amount,investor_name,invest_time) 
+            values ("%s","%s","%s",%d,%d,%d,%d,%d,"%s","%s")',$caseid,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key8'].'-'.$_POST['key9'].'-00');
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+        
+        
+    }
+
+    public function delCase(){
+        $Form = new Model();
+        $result = $Form->execute('delete from investor_case where case_id = "%s"',$_POST['c']);
         if($result){
             echo 200;
         }
-        else {
+        else{
             echo 400;
         }
     }
 
-    public function caseAdd(){
+    public function delJob(){
         $Form = new Model();
-        $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-        $user_id= $_SESSION['id'];
-        $caseid = $user_id.$seed;
-        $exist = $Form->query('select case_id from investor_case where case_id = "%s"',$caseid);
-        while($exist){
-            $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-            $caseid = $user_id.$seed;
-            $exist = $Form->query('select case_id from investor_case where case_id = "%s"',$caseid);
-        }
-        $result = $Form->execute('insert into investor_case (case_id,user_id,company,round,
-            invest_cur,invest_amount,assess_cur,assess_amount,investor_name,invest_time) 
-        values ("%s","%s","%s",%d,%d,%d,%d,%d,"%s","%s")',$caseid,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key8'].'-'.$_POST['key9'].'-00');
+        $result = $Form->execute('delete from user_job where job_id = "%s"',$_POST['c']);
         if($result){
             echo 200;
         }
-        else {
+        else{
             echo 400;
         }
+    }
+
+    public function editCase(){
+        $Form = new Model();
+        $result = $Form->query('select * from investor_case where case_id = "%s"',$_POST['c']);
+        $result[0]['year'] = substr($result[0]['invest_time'], 0,4);
+        $result[0]['mon'] = intval(substr($result[0]['invest_time'], 5,2));
+        echo json_encode($result[0]);
+    }
+
+    public function editJob(){
+        $Form = new Model();
+        $result = $Form->query('select * from user_job where job_id = "%s"',$_POST['c']);
+        $result[0]['startyear'] = substr($result[0]['job_start'], 0,4);
+        $result[0]['startmon'] = intval(substr($result[0]['job_strart'], 5,2));
+        $result[0]['endyear'] = substr($result[0]['job_end'], 0,4);
+        $result[0]['endmon'] = intval(substr($result[0]['job_end'], 5,2));
+        echo json_encode($result[0]);
+    }
+
+    public function editInfo(){
+        dump($_POST);
     }
 }
 ?>

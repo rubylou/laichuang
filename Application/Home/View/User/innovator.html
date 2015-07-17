@@ -28,7 +28,7 @@
 							    <img class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
 							<div class="col-md-11 col-xs-6">
-								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{:session('user')}</p>
+								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.nickname}</p>
 								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己</p>
 								<div class="row">
 									<div class="col-md-6">
@@ -102,6 +102,23 @@
 				<div class="panel panel-default theme-outline">
 					<div class="panel-heading">
 						<h3 class="panel-title">个人资料</h3>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<p class="theme-h4">基本信息</p>
+								<p>性别</p>
+								<p>生日</p>
+								<p>地区</p>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-12">
+								<p class="theme-h4">教育背景</p>
+							</div>
+						</div>
 					</div>
 				  	<div class="panel-body">
 						<div class="row">
