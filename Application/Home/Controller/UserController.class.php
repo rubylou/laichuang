@@ -98,6 +98,9 @@ class UserController extends Controller {
                 }
                 $this->interests = json_encode($result);
             }
+            else{
+                $this->interests = json_encode(null);
+            }
 
             $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$_SESSION['id']);
             if($cases){
@@ -419,7 +422,112 @@ class UserController extends Controller {
     }
 
     public function editInfo(){
-        dump($_POST);
+        $Form = new Model();
+        if(count($_POST['name'])>0 && $_SESSION['type']==1){
+            $result = $Form->execute('update investor_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['id']);
+            if($result){
+                echo 200;
+                $_SESSION['user'] = $_POST['name'];
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['brief'])>0 && $_SESSION['type']==1){
+            $result = $Form->execute('update investor_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['id']);
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['sns'])>0 && $_SESSION['type']==1){
+            $result = $Form->execute('update investor_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['id']);
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['field'])>0 && $_SESSION['type']==1){
+            $interests = $_POST['field'];
+            $interests = explode(',', $interests);
+
+            $result = $Form->execute('delete from interest_investor where id="%s"',$_SESSION['id']);
+
+            for($i=0;$i<count($interests)-1;$i++){
+                $temp = $Form->execute('replace into interest_investor (id, interest_field) values ("%s",%d)',$_SESSION['id'],$interests[$i]);
+            }
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['company'])>0 && $_SESSION['type']==1){
+            $result = $Form->execute('update investor_personal set company="%s" where user_id="%s"',$_POST['company'],$_SESSION['id']);
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['title'])>0 && $_SESSION['type']==1){
+            $result = $Form->execute('update investor_personal set title="%s" where user_id="%s"',$_POST['title'],$_SESSION['id']);
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['name'])>0 && $_SESSION['type']==2){
+            $result = $Form->execute('update entrepreneur_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['id']);
+            if($result){
+                echo 200;
+                $_SESSION['user'] = $_POST['name'];
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['brief'])>0 && $_SESSION['type']==2){
+            $result = $Form->execute('update entrepreneur_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['id']);
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+
+        if(count($_POST['field'])>0 && $_SESSION['type']==2){
+            $interests = $_POST['field'];
+            $interests = explode(',', $interests);
+
+            $result = $Form->execute('delete from interest_entrepreneur where id="%s"',$_SESSION['id']);
+
+            for($i=0;$i<count($interests)-1;$i++){
+                $temp = $Form->execute('replace into interest_entrepreneur (id, interest_field) values ("%s",%d)',$_SESSION['id'],$interests[$i]);
+            }
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
     }
 }
 ?>

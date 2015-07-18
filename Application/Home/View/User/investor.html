@@ -28,7 +28,9 @@
 					  		</div>
 							<div class="col-md-11 col-xs-6">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.name}</p>
-								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己</p>
+								<p class="hide-edit">
+									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
+								</p>
 								<div class="row">
 									<div class="col-md-6">
 										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
@@ -104,9 +106,22 @@
 						<h3 class="panel-title">个人资料</h3>
 					</div>
 				  	<div class="panel-body">
+				  		<div class="row">
+							<div class="col-md-9">
+								<p class="theme-h4">基本信息</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;公司: {$user.company}</small>
+								</p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;职位: {$user.title}</small></p>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">社交账号</p>
+								<p>&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-link theme-color"></span>
+	 								<a class="btn theme-logo" href="{$user.sns_id}"><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+								</p>
 							</div>
 						</div>
 					</div>
