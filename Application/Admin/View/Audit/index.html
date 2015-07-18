@@ -12,12 +12,15 @@
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/js/util/angular.min.js"></script>
+    <script src="__PUBLIC__/js/util/angular-route.js"></script>
+    <script src="__PUBLIC__/js/Admin/Audit/index.js"></script>
 
   </head>
 
 <body>
   <include file="./Public/tpl/navbar_admin.html" />
-  <div class="container">
+  <div class="container" ng-app="mytableapp" ng-controller="tableController" >
     <div class="page-header">
       <!-- 页面标题 -->
       <h3>审核管理列表</h3>
@@ -30,13 +33,15 @@
             <li role="presentation" class="active"><a href="#projectVerify" aria-controls="projectVerify" role="tab" data-toggle="tab">项目审核</a></li>
             <li role="presentation" ><a href="#projectManage" aria-controls="projectManage" role="tab" data-toggle="tab">项目管理</a></li>
 
-            <li role="presentation"><a href="#investorVerify" aria-controls="investorVerify" role="tab" data-toggle="tab">投资人审核</a></li>
+            <li role="presentation" ng-click="InvestorsPsVerifiedTabClick()">
+              <a href="#investorVerify" aria-controls="investorVerify" role="tab" data-toggle="tab">投资人审核</a></li>
             <li role="presentation"><a href="#investorManage" aria-controls="investorManage" role="tab" data-toggle="tab">投资人管理</a></li>
 
             <li role="presentation"><a href="#investorCompanyVerify" aria-controls="investorCompanyVerify" role="tab" data-toggle="tab">投资机构审核</a></li>
             <li role="presentation"><a href="#investorCompanyManage" aria-controls="investorCompanyManage" role="tab" data-toggle="tab">投资机构管理</a></li>
             
-            <li role="presentation"><a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab" onclick="">创业者审核</a></li> 
+            <li role="presentation"  ng-click="InnovatorsVerifiedTabClick()">
+              <a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab" >创业者审核</a></li> 
             <li role="presentation"><a href="#innovatorManage" aria-controls="innovatorManage" role="tab" data-toggle="tab">创业者管理</a></li>
           </ul>
           <!-- Tab panes -->
@@ -53,6 +58,26 @@
             
 
             <div role="tabpanel" class="tab-pane active" id="investorVerify">
+              <div style="height:500px; overflow:scroll;">
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;" >
+                 <tr>
+                    <th class="text-center">用户id</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">公司</th>
+                    <th class="text-center">手机</th>
+                    <th class="text-center">操作</th>
+                  </tr> 
+                   <tr ng-repeat="x in unverifiedInvestorPs" >
+                    <td class="text-center">{{x.user_id}}</td>
+                    <td class="text-center">{{ x.name}}</td>
+                    <td class="text-center">{{ x.company }}</td>
+                    <td class="text-center">{{ x.mobile}}</td>
+                    <td class="text-center">
+                      <a data-toggle="tooltip" data-placement="top" title="审核" class="btn" href={{"__URL__/auditInvestorPsVerify?key="+x.user_id}}><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInvestorPsDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
+                  </tr>
+                </table>
+              </div>
             </div>
             <div role="tabpanel" class="tab-pane active" id="investorManage">
             </div>
@@ -64,9 +89,9 @@
             </div>
 
 
-            <div role="tabpanel" class="tab-pane" id="innovatorVerify">
+            <div role="tabpanel" class="tab-pane" id="innovatorVerify" >
               <div style="height:500px; overflow:scroll;">
-                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;" >
                  <tr>
                     <th class="text-center">用户id</th>
                     <th class="text-center">昵称</th>
@@ -74,6 +99,15 @@
                     <th class="text-center">手机</th>
                     <th class="text-center">操作</th>
                   </tr> 
+                   <tr ng-repeat="x in unverifiedInnovators" >
+                    <td class="text-center">{{x.user_id}}</td>
+                    <td class="text-center">{{ x.nickname}}</td>
+                    <td class="text-center">{{ x.name }}</td>
+                    <td class="text-center">{{ x.phone}}</td>
+                    <td class="text-center">
+                      <a data-toggle="tooltip" data-placement="top" title="审核" class="btn" href={{"__URL__/auditInnovatorVerify?key="+x.user_id}}><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInnovatorDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
+                  </tr>
                 </table>
               </div>
             </div>
@@ -88,5 +122,4 @@
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 </script>
-<script src="__PUBLIC__/js/Admin/Audit/index.js"></script>
 </html>
