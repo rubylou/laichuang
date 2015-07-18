@@ -1,1 +1,136 @@
-hello audit inps
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;投资人管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/js/util/angular.min.js"></script>
+    <script src="__PUBLIC__/js/util/angular-route.js"></script>
+    <script src="__PUBLIC__/js/Admin/Audit/auditInvestorPsVerify.js"></script>
+    <script type="text/javascript">init({$userInfo},{$jobInfo});</script>
+  </head>
+
+<body  >
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="well" ng-app="myinvespapp" ng-controller="userController">
+  	<div class="container" style="margin-top:70px">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-primary theme-outline">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-1 col-xs-4 text-center" >
+							    <image class="thumbnail theme-profile" src={{userInfo.portrait}} alt="头像" height="90px" width="90px">
+					  		</div>
+							<div class="col-md-11 col-xs-6">
+								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.name}</p>
+								<p class="hide-edit">
+									<span>&nbsp;&nbsp;&nbsp;{{userInfo.brief}}</span>
+								</p>
+							</div>
+
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">工作经历</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<div ng-repeat="x in jobInfo">
+				  			<div class="panel">
+					  			<div class="panel-body">
+								  	<div class='row'>
+										<div class="col-md-6 col-xs-6">
+											<p class="theme-h4"><strong>{{x.job_title}}</strong></p>
+											<p class="theme-h4">{{x.job_company}}</p>
+											<p>{{x.job_start}}至{{x.job_end}}</p>
+											<p>{{x.job_info}}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+				  		</div>
+			
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">个人资料</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+							<div class="col-md-9">
+								<p class="theme-h4">基本信息</p>
+
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;姓名: {{userInfo.name}}</small>
+								</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;手机: {{userInfo.mobile}}</small>
+								</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;邮箱: {{userInfo.email}}</small>
+								</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;注册投资人类型: {{type}}</small>
+								</p>
+
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;公司: {{userInfo.company}}</small>
+								</p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;职位: {{userInfo.title}}</small></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<p class="theme-h4">社交账号</p>
+								<p>&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-link theme-color"></span>
+	 								<a class="btn theme-logo" href={{userInfo.sns_id}}><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+								</p>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<form>
+  			<div class="form-group">
+    			<label for="verifyresult">审核结果</label>
+    			<select class="form-control" id="everifyresult"  ng-model="result" >
+  						<option value=1 selected = "selected">审核通过</option>
+  						<option value=0 >审核不通过</option>
+				</select>
+  			</div>
+  			<div class="form-group">
+   			 	<label for="note">审核意见</label>
+    			<input type="text" class="form-control" id="note" placeholder="审核通过"  ng-model="verifynote">
+ 			</div>
+  			
+  			<button  class="btn btn-default" ng-click="submit()">提交结果</button>
+		</form>
+		
+	</div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+</html>
