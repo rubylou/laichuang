@@ -1,9 +1,11 @@
 $('.hide-edit').hover(function(){
-	$(this).find('a').first().show();
+	$(this).find('a.show-edit').show();
 });
 
 $('.hide-edit').mouseleave(function(){
-	$(this).find('a').first().hide();
+	$(this).find('a.show-edit').hide();
+	$(this).find('input:text').attr('type','hidden');
+	$(this).find('a').hide();
 });
 
 $('.dropdown-toggle').hover(function(){
