@@ -1,9 +1,10 @@
-function editorInitialize(id){
+function editorInitialize(id,content){
 	//实例化编辑器
 	var um = UE.getEditor(id);
 	UE.getEditor(id).ready(function() {
 	  //this是当前创建的编辑器实例
-	  this.setContent('项目图文介绍');
+	  var text = content?content:'项目图文介绍';
+	  this.setContent(text);
 	});
 	return um;
 }

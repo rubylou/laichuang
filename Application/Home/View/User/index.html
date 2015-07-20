@@ -61,12 +61,11 @@
 				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px" onclick="javascript: window.location.href = '../Case/info/key/{$projects.project_id}'">
+										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px" onclick="javascript: window.location.href = '../Case/infoEdit?key={$projects.project_id}'">
 								  		</div>
 										<div class="col-md-6 col-xs-6">
 											<p class="theme-h4">{$projects.project_name}</p>
 											<p>{$projects.project_brief}</p>
-											<p><span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$projects.project_type}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-2 col-xs-2">
 											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a>

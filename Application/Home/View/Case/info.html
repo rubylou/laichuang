@@ -9,9 +9,7 @@
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
   </head>
 
 <body>
@@ -24,29 +22,23 @@
 				  	<div class="panel-body">
 					  	<div class='row'>
 					  		<div class="col-md-1">
-				  				<form method="post" action="__URL__/logoSave?p={$info.project_id}" enctype="multipart/form-data" id="profile_form">
-								    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
-								</form>
-						      	<input type="image" src="{$info.project_logo}" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" onclick="upload('#profile')">
+						      	<image src="{$info.project_logo}" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" />
 							   
 					  		</div>
-							<div class="col-md-10 col-xs-8">
-								<p class="theme-h3 hide-edit">&nbsp;&nbsp;{$info.project_name}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
-								<p class="hide-edit">&nbsp;&nbsp;&nbsp;{$info.project_brief}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+							<div class="col-md-11 col-xs-8">
+								<p class="theme-h3">&nbsp;&nbsp;{$info.project_name}</p>
+								<p>&nbsp;&nbsp;&nbsp;{$info.project_brief}</p>
 								<div class="row">
 									<div class="col-md-6">
-										<div id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$info.project_type}<a class="btn" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a></div>
+										<p id="interests">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
 									</div>
-									<!--<div class="col-md-2 col-md-offset-3 text-right">
+									<div class="col-md-2 col-md-offset-3 text-right">
 										<if condition="$follow eq false">
-											<a class="btn btn-default theme-btn-inverse form-control" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<a class="btn btn-default theme-btn-inverse form-control" onclick="followPro({$info.project_id},'FOLLOWING','__URL__/proFollow')">关注</a>
 											<else/>
-											<a class="btn btn-default theme-btn form-control" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+											<a class="btn btn-default theme-btn form-control" onclick="followPro({$info.project_id},'UNFOLLOW','__URL__/proFollow')">已关注</a>
 										</if>
 										
-									</div>-->
-									<div class="col-md-2 col-md-offset-3 text-right">
-										<a class="btn btn-default form-control theme-btn-inverse" href="#">预览</a>
 									</div>
 								</div>
 							</div>
@@ -59,78 +51,53 @@
 			<div class="col-md-8 col-xs-12">
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">
-							项目介绍
-							<a class="btn" href="#"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a>
-						</h3>
+						<h3 class="panel-title">项目介绍</h3>
 					</div>
 				  	<div class="panel-body">
-				  		<p id="details"></p>
+				  		<div class="row">
+				  			<div class="col-md-12">
+				  				<p id="details"></p>
+				  			</div>
+				  		</div>
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">创业团队<a class="btn"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
+						<h3 class="panel-title">创业团队</h3>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
 									<div class="col-md-1">
-										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="javascript:window.location.href='../User/innovator/val/{$info.project_admin}'"/>
+										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
 									</div>
 									<div class="col-md-2">
 										<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
 										<p>&nbsp;&nbsp;&nbsp;创始人<p>
 									</div>
-									<div class="col-md-1">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-profile" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
-									</div>
 								</div>
 								<div class="row">
 									<volist name="memberlist" id="vo">
-										<div class="col-md-1 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})"/>
-										</div>
-										<div class="col-md-2 theme-nav">
-											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
-											<p>&nbsp;&nbsp;&nbsp;{$vo.title}<p>
+										<div class="memberField">
+											<div class="col-md-1 theme-nav">
+												<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})"/>
+											</div>
+											<div class="col-md-2 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
+												<p>&nbsp;&nbsp;&nbsp;{$vo.title}<p>
+											</div>
 										</div>
 									</volist>
-								</div>
-								<div class="row">
-									<div class="collapse" id="collapseExample2">
-										<hr>
-										<div class="form-horizontal">
-										  <div class="form-group">
-										    <label for="member" class="col-md-3 control-label"><span class="required">*</span>成员账号</label>
-										    <div class="col-md-7">
-									        	<input type="text" class="form-control" id="member" placeholder="手机号或邮箱">
-									        </div>
-										  </div>
-										  <div class="form-group">
-										    <label for="title" class="col-md-3 control-label"><span class="required">*</span>成员职位</label>
-										    <div class="col-md-7">
-									        	<input type="text" class="form-control" id="title" placeholder="CEO,CTO等">
-									        </div>
-										  </div>
-										</div>
-									    <div class="row">
-									    	<div class="col-md-3 col-md-offset-3">
-									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addMember()">&nbsp;提交&nbsp;</a>    
-									        </div>
-									        <div class="col-md-3">
-									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</a>    
-									        </div>
-									    </div>
-									</div>
 								</div>
 							</div>
 						</div>
 						<div class="panel">
 				  			<div class="panel-body">
 				  				<div class='row'>
-				  					<p>{$info.project_member}</p>
+				  					<div class="col-md-12">
+					  					<p id="project_member"></p>
+									</div>
 				  				</div>
 				  			</div>
 				  		</div>
@@ -138,113 +105,29 @@
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">融资情况<a class="btn"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
+						<h3 class="panel-title">融资情况</h3>
 					</div>
 				  	<div class="panel-body">
-					  	<div class="panel">
-				  			<div class="panel-body">
-				  				<div class='row'>
-									<div class="col-md-1">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-profile" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
-									</div>
-								</div>
-				  				<div class="collapse" id="collapseExample1">
-									<hr>
-									<div class="form-horizontal">
-									  <div class="form-group">
-									    <label for="round" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>投资轮次</label>
-									    <div class="col-md-4">
-						              		<select class="form-control" id="round">
-						              		</select>
-						              	</div>
-									  </div>
-
-									  <div class="form-group">
-									    <label for="currency1" class="col-md-2 col-md-offset-1 control-label">此轮投资金额</label>
-									    <div class="col-md-2">
-									    	<select class="form-control" id="currency1">
-									    	</select>
-									    </div>
-									    <div class="col-md-3">
-							              	<div class="input-group">
-								              	<input type="text" class="form-control" id="amount">
-									            <span class="input-group-addon" id="basic-addon2">万</span>
-									        </div>
-									    </div>
-						  			  </div>
-
-									  <div class="form-group">
-									    <label for="currency2" class="col-md-2 col-md-offset-1 control-label">此轮估值</label>
-										<div class="col-md-2">
-											<select class="form-control" id="currency2">
-						              		</select>
-						              	</div>
-						              	<div class="col-md-3">
-											<div class="input-group">
-												<input type="text" class="form-control" id="assess" >
-												<span class="input-group-addon" id="basic-addon2">万</span>
-											</div>
-										</div>
-									  </div>
-
-									  <div class="form-group">
-									    <label for="investor" class="col-md-3 control-label"><span class="required">*</span>投资主体</label>
-									    <div class="col-md-7">
-								        	<input type="text" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
-								        </div>
-									  </div>
-
-									  <div class="form-group">
-									    <label for="investyear" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>投资时间</label>
-									    <div class="col-md-3">
-									    	<div class="input-group">
-									        	<select class="form-control" id="investyear">
-									            </select>
-									            <span class="input-group-addon" id="basic-addon2">年</span>
-									        </div>
-								        </div>
-								        <div class="col-md-2">
-								        	<div class="input-group">
-								        		<select class="form-control" id="investmon">
-								            	</select>
-								            	<span class="input-group-addon" id="basic-addon2">月</span>
-								            </div>
-								        </div>
-									  </div>
-									</div>
-
-								    <div class="row">
-								    	<div class="col-md-3 col-md-offset-3">
-								        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="fi_submit({$info.project_id})">&nbsp;提交&nbsp;</button>    
-								        </div>
-								        <div class="col-md-3">
-								        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
-								        </div>
-								    </div>
-								</div>
-							</div>
-						</div>
 						<div class="panel">
 				  			<div class="panel-body">
 				  				<volist name="filist" id="profi">
-					  				<div class='row hide-edit'>
+					  				<div class='row'>
 					  					<div class="col-md-6 col-xs-6">
 											<p class="theme-h4 text-danger">{$profi.round}</p>
 											<p>{$profi.investor_name}</p>
 											<p><span class="theme-small">{$profi.invest_time}</span>&nbsp;|&nbsp;投资金额{$profi.invest_amount}万{$profi.invest_cur}</p>
 										</div>
-										<div class="col-md-2 col-md-offset-4 col-xs-2">
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
-											<a class="btn btn-default" style="display:none"><span class="glyphicon glyphicon-trash theme-color"></span></a>
-										</div>
+										
 					  				</div>
 					  			</volist>
 				  			</div>
 				  		</div>
-						<div class="panel">
+				  		<div class="panel">
 				  			<div class="panel-body">
 				  				<div class='row'>
-				  					<p>{$info.project_fi}</p>
+				  					<div class="col-md-12">
+					  					<p id="project_fi"></p>
+									</div>
 				  				</div>
 				  			</div>
 				  		</div>
@@ -257,20 +140,20 @@
 				  	<div class="panel-body">
 					  	<div class="panel">
 				  			<div class="panel-body">
-							  	<div class='row'>
-									<div class="col-md-1">
-										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
-									</div>
+								<div class="row">
+									<volist name="investorlist" id="it">
+										<div class="investorField">
+											<div class="col-md-1 theme-nav">
+												<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
+											</div>
+											<div class="col-md-2 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
+											</div>
+										</div>
+									</volist>
 								</div>
 							</div>
 						</div>
-						<div class="panel">
-				  			<div class="panel-body">
-				  				<div class='row'>
-				  					<p>{$info.project_investor}</p>
-				  				</div>
-				  			</div>
-				  		</div>
 					</div>
 			  	</div>
 			</div>
@@ -281,94 +164,97 @@
 					</div>
 				  	<div class="panel-body">
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-9">
 								<p class="theme-h4">招聘信息</p>
-								<p>{$info.project_recruit}</p>
+								<p id="project_recruit"></p>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-9">
 								<p class="theme-h4">融资需求</p>
-								<p>{$info.project_require}</p>
+								<p id="project_require"></p>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
-								<p class="theme-h4">浏览量:&nbsp;&nbsp;{$info.project_visits}</p>
-							</div>
+							<if condition="session('type') eq 1">
+								<div class="col-md-6 col-md-offset-3">
+									<a class="btn btn-default theme-btn-inverse form-control">我要投资</a>
+								</div>
+							</if>
+							<if condition="session('type') eq 2">
+								<div class="col-md-6 col-md-offset-3">
+									<a class="btn btn-default theme-btn-inverse form-control">我要加入</a>
+								</div>
+							</if>
 						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<p class="theme-h4">关注量:&nbsp;&nbsp;{$info.project_watches}</p>
+					</div>
+			  	</div>
+
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">类似项目</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<volist name="prolist" id="familiar">
+				  			<div class="row">
+					  			<div class="col-md-2 theme-nav">
+									<input type="image" class="thumbnail theme-profile" src="{$familiar.project_logo}" height="60px" width="60px" onclick=""/>
+								</div>
+								<div class="col-md-9 theme-nav">
+									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$familiar.project_name}</p>
+								</div>
 							</div>
-						</div>
+				  		</volist>
+				  		<div class="row">
+				  			<div class="col-md-11 text-right">
+				  				<a class="btn">更多...</a>
+				  			</div>
+				  		</div>
 					</div>
 			  	</div>
 			</div>
 		</div>
 	</div>
-	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script src="__PUBLIC__/js/Home/Case/edit.js"></script>
-<script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  $("#details")[0].innerHTML = unescape('{$info.project_intro}');
-  addRound({$rounds},"#round");
-  addCur({$currency},"#currency1");
-  addCur({$currency},"#currency2");
-  addYM('#investyear','#investmon',1980);
+	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	$('input[data-toggle=popover]').popover({'html':true});
+	$('input[data-toggle=popover]').mouseover(function(){$(this).popover('show');}); 
+	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+	
+	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
+	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
+	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
+	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
+	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
+	addInterests({$interests},"#interests");
 
-  function upload(id){
-  	return $(id).click();
-  }
-
-  function followPro(id,value){
-  	var xmlHttp = createRequest();
-  	request(xmlHttp,"key="+value,"proFollow?val="+id);
-    if(xmlHttp.responseText==200){
-      document.location.reload();
-    }
-  	
-  }
-
-  function finish_upload(id1,id2){
-  	var result =$(id1).val().match(/\.[^\.]+/g);
-  	if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
-  		$(id2).submit();
-  	}
-  	else{
-		alert('请上传图片文件！');
+	function openUser(id){
+	  window.open("{:U('Home/User/innovator/val/"+id+"')}");
 	}
-  }
 
-  function addMember(){
-	var xmlHttp = createRequest();
-	var member = "key1="+$("#member").val()+"&";
-	var title = "key2="+$("#title").val()+"&";
-	var pro = "p={$info.project_id}&";
-	data = member+title+pro;
-    request(xmlHttp,data,"__URL__/queryUser");
-    if(xmlHttp.responseText==200){
-    	document.location.reload();
-    }
-    else if(xmlHttp.responseText==404){
-    	$('#member').val('');
-    	$('#member').attr('placeholder','用户不存在');
-    	$("#member").focus();
-    }
-    else if(xmlHttp.responseText==409){
-    	$('#member').val('');
-    	$('#member').attr('placeholder','该用户为创始人');
-    	$("#member").focus();
-    }
-  }
-
-  function openUser(id){
-  	window.open("{:U('Home/User/innovator/val/"+id+"')}");
-  }
+	function openInvestor(id){
+	  window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
 </script>
 </html>
