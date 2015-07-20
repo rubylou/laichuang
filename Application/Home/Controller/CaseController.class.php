@@ -5,11 +5,8 @@ use Think\Model;
 class CaseController extends Controller {
 	public function index(){
 		$Form = new Model();
-		$result = $Form->query('select project_id, project_name, project_logo, project_brief, project_type, name from project_info inner join entrepreneur_personal on project_admin = user_id');
-		foreach ($result as $key => $value) {
-			$result[$key]['project_type'] = C('INTEREST_FIELD')[$value['project_type']];
-		}
-
+		$result = $Form->query('select project_id, project_name, project_logo, project_brief, name from project_info inner join entrepreneur_personal on project_admin = user_id');
+		
 		$this->vo = $result;
 		$this->assign("list",$result);
 		$this->display();

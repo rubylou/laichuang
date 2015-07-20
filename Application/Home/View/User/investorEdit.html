@@ -156,6 +156,20 @@
 						    </div>
 						    <hr>
 						</div>
+						<div class="panel">
+			  				<div class="panel-body">
+								<div class="row">
+									<volist name="prolist" id="pros">
+										<div class="col-md-1 theme-nav">
+											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick=""/>
+										</div>
+										<div class="col-md-2 theme-nav">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+										</div>
+									</volist>
+								</div>
+							</div>
+						</div>
 				  		<volist name="caselist" id="cases">
 				  			<div class="panel">
 				  				<div class="panel-body hide-edit">
@@ -176,6 +190,7 @@
 								</div>
 							</div>
 						</volist>
+						
 						
 			  		</div>
 			  	</div>
@@ -282,6 +297,7 @@
 						</volist>
 					</div>
 			  	</div>
+			  	
 			</div>
 			<div class="col-md-4 col-xs-12">
 				<div class="panel panel-default theme-outline">
@@ -359,6 +375,23 @@
 	 					</div>
 					</div>
 			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">关注项目</h3>
+					</div>
+					<div class="panel-body">
+						<volist name="watchlist" id="watch">
+				  			<div class="row">
+					  			<div class="col-md-2 theme-nav">
+									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick=""/>
+								</div>
+								<div class="col-md-9 theme-nav">
+									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
+								</div>
+							</div>
+				  		</volist>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -410,6 +443,7 @@
 <script src="__PUBLIC__/js/Home/User/edit.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 	var field = {$field};
