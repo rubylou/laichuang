@@ -37,13 +37,14 @@
               <a href="#investorVerify" aria-controls="investorVerify" role="tab" data-toggle="tab">投资人审核</a></li>
             <li role="presentation" ng-click="InvestorsManageTabClick()">
               <a href="#investorManage" aria-controls="investorManage" role="tab" data-toggle="tab">投资人管理</a></li>
-
+<!--
             <li role="presentation"><a href="#investorCompanyVerify" aria-controls="investorCompanyVerify" role="tab" data-toggle="tab">投资机构审核</a></li>
             <li role="presentation"><a href="#investorCompanyManage" aria-controls="investorCompanyManage" role="tab" data-toggle="tab">投资机构管理</a></li>
-            
+-->
             <li role="presentation"  ng-click="InnovatorsVerifiedTabClick()">
               <a href="#innovatorVerify" aria-controls="innovatorVerify" role="tab" data-toggle="tab" >创业者审核</a></li> 
-            <li role="presentation"><a href="#innovatorManage" aria-controls="innovatorManage" role="tab" data-toggle="tab">创业者管理</a></li>
+            <li role="presentation" ng-click="InnovatorsManageTabClick()">
+              <a href="#innovatorManage" aria-controls="innovatorManage" role="tab" data-toggle="tab">创业者管理</a></li>
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
@@ -133,6 +134,26 @@
               </div>
             </div>
             <div role="tabpanel" class="tab-pane" id="innovatorManage">
+              <div style="height:500px; overflow:scroll;">
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;" >
+                 <tr>
+                    <th class="text-center">用户id</th>
+                    <th class="text-center">昵称</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">手机</th>
+                    <th class="text-center">操作</th>
+                  </tr> 
+                   <tr ng-repeat="x in manageInnovators" >
+                    <td class="text-center">{{x.user_id}}</td>
+                    <td class="text-center">{{ x.nickname}}</td>
+                    <td class="text-center">{{ x.name }}</td>
+                    <td class="text-center">{{ x.phone}}</td>
+                    <td class="text-center">
+                      <a data-toggle="tooltip" data-placement="top" title="审核" class="btn" href={{"__URL__/auditInnovatorVerify?key="+x.user_id}}><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInnovatorDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
+                  </tr>
+                </table>
+              </div>
             </div>
           </div>
         </div>

@@ -10,7 +10,11 @@ class AuditController extends Controller {
 
 
 
-
+    public function fetchInnovator(){
+        $Form = new Model();
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal");
+        echo json_encode($user);
+    }
     public function fetchInnovatorUnderVerified(){
         $Form = new Model();
         $status=C(UNDERVIRIFIED);
