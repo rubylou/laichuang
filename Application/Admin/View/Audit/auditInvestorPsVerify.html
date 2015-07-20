@@ -15,7 +15,7 @@
     <script src="__PUBLIC__/js/util/angular.min.js"></script>
     <script src="__PUBLIC__/js/util/angular-route.js"></script>
     <script src="__PUBLIC__/js/Admin/Audit/auditInvestorPsVerify.js"></script>
-    <script type="text/javascript">init({$userInfo},{$jobInfo});</script>
+    <script type="text/javascript">init({$userInfo},{$jobInfo},{$cases});</script>
   </head>
 
 <body  >
@@ -46,6 +46,30 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">投资案例</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<div ng-repeat="x in cases">
+				  			<div class="panel">
+				  				<div class="panel-body">
+								  	<div class='row'>
+								  		<div class="col-md-2 col-xs-4">
+										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
+								  		</div>
+										<div class="col-md-6 col-xs-6">
+										<p class="theme-h4">{{x.company}}</p>
+											<p>{{x.investor_name}}</p>
+											<p><span class="text-danger">{{x.round}}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{{x.invest_time}}</span>&nbsp;|&nbsp;投资金额{{x.invest_amount}}万{{x.invest_cur}}</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+			  		</div>
+			  	</div>
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
 						<h3 class="panel-title">工作经历</h3>
@@ -117,7 +141,7 @@
   			<div class="form-group">
     			<label for="verifyresult">审核结果</label>
     			<select class="form-control" id="everifyresult"  ng-model="result" >
-  						<option value=1 selected = "selected">审核通过</option>
+  						<option value=2 selected = "selected">审核通过</option>
   						<option value=0 >审核不通过</option>
 				</select>
   			</div>
