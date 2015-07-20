@@ -13,14 +13,9 @@ class UserController extends Controller {
 
         if($_SESSION['type']==='2'){
             $Form = new Model();
-            $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief, project_type 
+            $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
                 from project_info where project_admin='%s'", $_SESSION['id']);
-            if($projects){
-                $fields = C('INTEREST_FIELD');
-                foreach ($projects as $key => $value) {
-                    $projects[$key]['project_type'] = $fields[$value['project_type']];
-                }
-            }
+
             $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$_SESSION['id']);
             $user[0]['business'] = $fields[$user[0]['business']];
             $this->user = $user[0];
@@ -55,14 +50,9 @@ class UserController extends Controller {
         }
 
         $Form = new Model();
-        $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief, project_type 
+        $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
                 from project_info where project_admin='%s'", $id);
-        if($projects){
-            $fields = C('INTEREST_FIELD');
-            foreach ($projects as $key => $value) {
-                $projects[$key]['project_type'] = $fields[$value['project_type']];
-            }
-        }
+        
         $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$id);
         $user[0]['business'] = $fields[$user[0]['business']];
         $this->user = $user[0];
@@ -283,8 +273,11 @@ class UserController extends Controller {
             $exist = $Form->query('select project_id from project_info where project_id = "%s"',$project);
         }
         $result = $Form->execute('insert into project_info (project_id,project_admin,project_name,project_logo,project_brief,
-            project_member,project_fi,project_type,project_other,project_intro) 
-        values ("%s","%s","%s","%s","%s","%s","%s",%d,"%s","%s")',$project,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$_POST['key8']);
+            project_member,project_fi,project_require,project_intro) 
+        values ("%s","%s","%s","%s","%s","%s","%s","%s","%s")',$project,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key7'],$_POST['key8']);
+        
+        $temp = $Form->execute('replace into interest_project (id, interest_field) values ("%s",%d)',$project,$_POST['key6']);
+
         if($result){
             echo 200;
         }
