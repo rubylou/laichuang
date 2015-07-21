@@ -13,15 +13,22 @@ class UserController extends Controller {
 
         if($_SESSION['type']==='2'){
             $Form = new Model();
+
+            //创业项目
             $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
                 from project_info where project_admin='%s'", $_SESSION['id']);
-
-            $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$_SESSION['id']);
-            $user[0]['business'] = $fields[$user[0]['business']];
-            $this->user = $user[0];
-            //dump($this->user);
             $this->projects = $projects;
             $this->assign('prolist',$projects);
+
+
+            $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$_SESSION['id']);
+            $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
+            $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
+
+            $this->user = $user[0];
+            //dump($this->user);
+           
+            //工作经历
             $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$_SESSION['id']);
             if($jobs){
                 foreach ($jobs as $key => $value) {
@@ -31,6 +38,35 @@ class UserController extends Controller {
                 $this->jobs = $jobs;
                 $this->assign('joblist',$jobs);
             }
+            //教育背景
+            $edu = $Form->query('select * from user_edu where user_id="%s"',$_SESSION['id']);
+            if($edu){
+                $edu[0]['degree'] = C('DEGREE_CODE')[$edu[0]['degree']];
+                $edu[0]['year'] = intval(substr($edu[0]['start'],0,4));
+                $edu[0]['mon'] = intval(substr($edu[0]['start'],5,2));
+                $this->edu = $edu[0];
+            }
+
+            //所在行业
+            $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $_SESSION['id']);
+            if($result){
+                $fields = C('INTEREST_FIELD');
+                foreach ($result as $key => $value) {
+                    $result[$key]['interest_field'] = $fields[$value['interest_field']];
+                }
+                $this->interests = json_encode($result);
+            }
+            else{
+                $this->interests = json_encode(null);
+            }
+
+            $fields = C('INTEREST_FIELD');
+            $fieldlen = count($fields);
+            $this->field = json_encode($fields);
+            $this->fieldlen = $fieldlen;
+
+            $city = C('PROVINCE_CODE');
+            $this->city = json_encode($city);
         }
         else{
             header("Location: investorEdit");
@@ -49,15 +85,41 @@ class UserController extends Controller {
             $this->redirect('Index/index');
         }
 
+        //创业项目
         $Form = new Model();
         $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
                 from project_info where project_admin='%s'", $id);
-        
-        $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$id);
-        $user[0]['business'] = $fields[$user[0]['business']];
-        $this->user = $user[0];
         $this->projects = $projects;
         $this->assign('prolist',$projects);
+
+        $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$id);
+        $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
+        $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
+        $this->user = $user[0];
+
+        //所在行业
+        $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $_SESSION['id']);
+        if($result){
+            $fields = C('INTEREST_FIELD');
+            foreach ($result as $key => $value) {
+                $result[$key]['interest_field'] = $fields[$value['interest_field']];
+            }
+            $this->interests = json_encode($result);
+        }
+        else{
+            $this->interests = json_encode(null);
+        }
+
+        //教育背景
+        $edu = $Form->query('select * from user_edu where user_id="%s"',$_SESSION['id']);
+        if($edu){
+            $edu[0]['degree'] = C('DEGREE_CODE')[$edu[0]['degree']];
+            $edu[0]['year'] = intval(substr($edu[0]['start'],0,4));
+            $edu[0]['mon'] = intval(substr($edu[0]['start'],5,2));
+            $this->edu = $edu[0];
+        }
+
+        //工作经历
         $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$id);
         if($jobs){
             foreach ($jobs as $key => $value) {
@@ -80,6 +142,7 @@ class UserController extends Controller {
 
         $Form = new Model();
         if($_SESSION['type']==='1'){
+            //感兴趣领域
             $result = $Form->query('select interest_field from interest_investor where id="%s"', $_SESSION['id']);
             if($result){
                 $fields = C('INTEREST_FIELD');
@@ -227,7 +290,7 @@ class UserController extends Controller {
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
             $upload->rootPath = './Public/upload/pic/profile/'; // 设置附件上传根目录
             $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
-             $upload->saveName = $_SESSION['id']."profile";
+            $upload->saveName = $_SESSION['id']."profile";
             $upload->replace = true;
             $upload->subName = '';
             // 上传文件 
@@ -238,19 +301,25 @@ class UserController extends Controller {
                 $src = $upload->rootPath.$upload->savePath.$info['profile']['savename'];
                 $image = new \Think\Image(); 
                 $image->open($src);
-                $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$info['profile']['savename'];
+                $filename = explode('.', $info['profile']['savename']);
+                $filename = $filename[0].'.png';
+
+                $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
+                //dump($thumbName);
+
                 $result = $image->thumb(100, 100,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
+                //dump($result);
                 if($result){
                     $Form = new Model();
                     if($_SESSION['type']=="1"){
                         $success = $Form->execute('update investor_personal set portrait="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$info['profile']['savename'],$_SESSION['id']);
+                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: investorEdit");
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$info['profile']['savename'],$_SESSION['id']);
-                        header("Location: innovator");
+                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                        header("Location: index");
                     }
                 }
             }
@@ -279,19 +348,21 @@ class UserController extends Controller {
                 $src = $upload->rootPath.$upload->savePath.$info['mycard']['savename'];
                 $image = new \Think\Image(); 
                 $image->open($src);
-                $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$info['mycard']['savename'];
+                $filename = explode('.', $info['mycard']['savename']);
+                $filename = $filename[0].'.png';
+                $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
                 $result = $image->thumb(288, 162,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
                 if($result){
                     $Form = new Model();
                     if($_SESSION['type']=="1"){
                         $success = $Form->execute('update investor_personal set mycard="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$info['mycard']['savename'],$_SESSION['id']);
-                        header("Location: investor");
+                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                        header("Location: investorEdit");
                         
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set mycard="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$info['mycard']['savename'],$_SESSION['id']);
+                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: index");
                     }
                 }
@@ -487,6 +558,19 @@ class UserController extends Controller {
         echo json_encode($result[0]);
     }
 
+    public function editEdu(){
+        //dump($_POST);
+        $Form = new Model();
+        $result = $Form->execute('replace into user_edu (user_id, school, degree, start) 
+        values ("%s","%s",%d,"%s")',$_SESSION['id'],$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00');
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
+    }
+
     public function editInfo(){
         if(session('?type') && session('?id')){
             $Form = new Model();
@@ -595,7 +679,48 @@ class UserController extends Controller {
                     echo 400;
                 }
             }
+
+            if(count($_POST['sns'])>0 && $_SESSION['type']==2){
+                $result = $Form->execute('update entrepreneur_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['id']);
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
+
+            if(count($_POST['gender'])>0 && $_SESSION['type']==2){
+                $result = $Form->execute('update entrepreneur_personal set gender="%s" where user_id="%s"',$_POST['gender'],$_SESSION['id']);
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
+
+            if(count($_POST['birth'])>0 && $_SESSION['type']==2){
+                $result = $Form->execute('update entrepreneur_personal set birthday="%s" where user_id="%s"',$_POST['birth'],$_SESSION['id']);
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
+
+            if(count($_POST['city'])>0 && $_SESSION['type']==2){
+                $result = $Form->execute('update entrepreneur_personal set city="%s" where user_id="%s"',$_POST['city'],$_SESSION['id']);
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
         }
+
         else{
             echo 401;
         }

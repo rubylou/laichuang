@@ -49,21 +49,6 @@ function followPro(id,value,url){
   }
 }
 
-
-function finish_upload(id1,id2){
-  var result =$(id1).val().match(/\.[^\.]+/g);
-  if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
-    $(id2).submit();
-  }
-  else{
-    alert('请上传图片文件！');
-  }
-}
-
-function upload(id){
-  return $(id).click();
-}
-
 function editName(){
   $('#pro_name').attr('type','text');
   $('#saveName').show();

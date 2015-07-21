@@ -52,7 +52,12 @@
 								</p>
 								<div class="row">
 									<div class="col-md-6">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span><a class="btn show-edit" style="display:none" onclick="editField()"><span class="glyphicon glyphicon-pencil theme-color"></span></a></p>
+										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;
+											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+											<a class="btn show-edit" style="display:none" onclick="editField()">
+												<span class="glyphicon glyphicon-pencil theme-color"></span>
+											</a>
+										</p>
 									</div>
 									<div class="col-md-2 col-md-offset-3 text-right">
 										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/investor/val/{$user.user_id}">预览</a>
@@ -161,7 +166,7 @@
 								<div class="row">
 									<volist name="prolist" id="pros">
 										<div class="col-md-1 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick=""/>
+											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
 										</div>
 										<div class="col-md-2 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
@@ -351,6 +356,50 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">财产信息或公司信息</p>
+								<div class="form-group">
+					              <label for="companyType"><span class="required">*</span>公司性质</label>
+					              <select class="form-control" id="companyType">
+					                <option value="1">国有企业</option>
+					                <option value="2">民营企业</option>
+					                <option value="3">三资企业</option>
+					                <option value="4">其他企业</option>
+					              </select>
+					            </div>
+					            <div class="form-group">
+					              <label><span class="required">*</span>营业执照</label>
+									<form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="license_form">
+									    <input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#license','#license_form')"/>
+									</form>
+								</div>
+								<div class="form-group">
+					              <label><span class="required">*</span>组织机构代码证</label>
+									<form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="code_form">
+									    <input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#companyCode','#code_form')"/>
+									</form>
+								</div>
+								<div class="form-group">
+					              <label><span class="required">*</span>近三年财务报表</label>
+									<form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="statement_form">
+									    <input type="file" name="statement" id="statement" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#statement','#statement_form')"/>
+									</form>
+								</div>
+								<div class="form-group">
+					              <label><span class="required">*</span>财产证明</label>
+									<form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="finance_form">
+									    <input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#finance','#finance_form')"/>
+									</form>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<label><span class="required">*</span>说明</label>
+										<div id="financeInfo">
+						  					<textarea rows='5' id="pro_require" class="theme-form-control-8"></textarea>
+											<a class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="" style="vertical-align: bottom;">
+												<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+											</a>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div class="row">
@@ -383,7 +432,7 @@
 						<volist name="watchlist" id="watch">
 				  			<div class="row">
 					  			<div class="col-md-2 theme-nav">
-									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick=""/>
+									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
 								</div>
 								<div class="col-md-9 theme-nav">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
@@ -457,285 +506,9 @@
 	addYM('#startyear','#startmon',1960);
 	addYM('#endyear','#endmon',1960);
 
-	function initializeField(rows,field){
-	  for(var i=0;i<=rows;i++){
-	    $('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
-	  }
-
-	  for(var i in field){
-	    addLabel(i,field);
-	  }
+	function openProject(id){
+	  window.open("{:U('Home/Case/info/key/"+id+"')}");
 	}
-	function addInterest(id,field){
-		var exist = $("#choices").contents().filter("#field"+id);
-		if(exist.text()==field[id]){
-			alert("已添加");
-		}
-		else{
-			var label = $('<span></span>').text(field[id]);
-			label.addClass('btn btn-default label label-default theme-btn');
-			label.attr('value',id);
-			label.attr("id","field"+id);
-			label.click(function(){
-			  addLabel(id,field);
-			  $(this).remove();
-			});
-			$('#choices').append(label);
-		}
-	}
-
-  	function addLabel(id,field){
-		var exist = $("#conditions").contents().filter("#field"+id);
-		if(exist.text()==field[id]){
-			alert("已添加");
-		}
-		else{
-			var label = $('<span></span>').text(field[id]);
-			label.addClass('btn btn-default label theme-bg theme-white');
-			label.attr('value',id);
-			label.attr("id","field"+id);
-			label.click(function(){
-			  if($("#choices").children().length==5){
-			    alert("选择已达上限");
-			  }
-			  else{
-			    addInterest(id,field);
-			    $(this).remove();
-			  }
-			});
-
-			var row = parseInt(id/8);
-			if(id%8==0){
-			  --row;
-			}
-			$('#row'+row).append(label);
-		}
-  	}
-
-	function upload(id){
-		return $(id).click();
-	}
-
-	function finish_upload(id1,id2){
-		var result =$(id1).val().match(/\.[^\.]+/g);
-		if(RegExp.lastMatch == '.png' || RegExp.lastMatch == '.jpg' || RegExp.lastMatch == '.jpeg' || RegExp.lastMatch == '.gif'){
-			$(id2).submit();
-		}
-		else{
-			alert('请上传图片文件！');
-		}
-	}
-
-	function disableEnd(value){
-		if(value){
-			$("#endyear").attr("disabled",true);
-			$("#endmon").attr("disabled",true);
-		}
-		else{
-			$("#endyear").removeAttr("disabled");
-			$("#endmon").removeAttr("disabled");
-		}
-	}
-
-	$('#delCase_confirm').click(function(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+$("#delCase_input").val(),"delCase");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-	});
-	$('#delCase_cancel').click(function(){
-		$('#delCase_input').val('');
-	});
-
-	function delCase(id){
-		$('.modal-footer').find('div').hide();
-		$('#editField').hide();
-		$('.modal-footer').find('div').filter('#delCaseBtn').show();
-		$('#delCase_input').val(id);
-		modalShow('alert_content','myModal','确认删除该投资案例?');
-	}
-
-	$('#delJob_confirm').click(function(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+$("#delJob_input").val(),"delJob");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-	});
-	$('#delJob_cancel').click(function(){
-		$('#delJob_input').val('');
-	});
-
-	function delJob(id){
-		$('.modal-footer').find('div').hide();
-		$('#editField').hide();
-		$('.modal-footer').find('div').filter('#delJobBtn').show();
-		$('#delJob_input').val(id);
-		modalShow('alert_content','myModal','确认删除该工作经历?');
-	}
-
-	function editCase(id){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+id,"editCase");
-		var info = JSON.parse(xmlHttp.responseText);
-		$('#collapseExample1').collapse('show');
-		$('#company').val(info.company);
-		$('#round').children('option').each(function(){
-			if($(this).val()==info.round){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#amount').val(info.invest_amount);
-		$('#currency1').children('option').each(function(){
-			if($(this).val()==info.invest_cur){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#assess').val(info.assess_amount);
-		$('#currency2').children('option').each(function(){
-			if($(this).val()==info.assess_cur){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#investor').val(info.investor_name);
-		$('#investyear').children('option').each(function(){
-			if($(this).val()==info.year){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#investmon').children('option').each(function(){
-			if($(this).val()==info.mon){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#editCase_input').val(id);
-		
-	}
-
-	function editJob(id){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+id,"editJob");
-		var info = JSON.parse(xmlHttp.responseText);
-		$('#collapseExample2').collapse('show');
-		$("#title").val(info.job_title);
-		$('#company2').val(info.job_company);
-		$('#startyear').children('option').each(function(){
-			if($(this).val()==info.startyear){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#startmon').children('option').each(function(){
-			if($(this).val()==info.startmon){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#endyear').children('option').each(function(){
-			if($(this).val()==info.endyear){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#endmon').children('option').each(function(){
-			if($(this).val()==info.endmon){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#job_info').val(info.job_info);
-		$('#editJob_input').val(id);
-	}
-
-	function editName(){
-		$('#user_name').attr('type','text');
-		$('#saveName').show();
-	}
-
-	function saveName(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'name='+$('#user_name').val(),"editInfo");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			$('#user_name').val('');
-			$('#user_name').attr('placeholder','姓名带有特殊字符');
-			$('#user_name').focus();
-		}
-	}
-
-	function editBrief(){
-		$('#user_brief').attr('type','text');
-		$('#saveBrief').show();
-	}
-
-	function saveBrief(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'brief='+$('#user_brief').val(),"editInfo");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			$('#user_brief').val('');
-			$('#user_brief').attr('placeholder','简介带有特殊字符');
-			$('#user_brief').focus();
-		}
-	}
-
-	function editField(){
-		$('#editField').show();
-		$('.modal-footer').find('div').hide();
-		$('.modal-footer').find('div').filter('#editFieldBtn').show();
-		modalShow('alert_content','myModal','请重新选择感兴趣领域(最多选5个)');
-	}
-
-	$('#editField_confirm').click(function(){
-		var field = 'field=';
-		$('#choices').children().each(function(){
-			field = field + $(this).attr('value') + ',';
-		});
-		field = field + "&";
-		var xmlHttp = createRequest();
-		request(xmlHttp,field,"editInfo");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-	});
-
-	function editBasics(){
-		var xmlHttp = createRequest();
-		var basics = "company="+$('#editCompany').val()+"&";
-		basics += "title="+$('#editTitle').val()+"&";
-		request(xmlHttp,basics,"editInfo");
-		if(xmlHttp.responseText.match('200')){
-			document.location.reload();
-		}
-		else{
-			$('#collapseExample3').collapse('hide');
-			$('#editCompany').val('');
-			$('#editTitle').val('');
-		}
-	}
-
-	function editSNS(){
-		var xmlHttp = createRequest();
-		if($("#editSNS").val().match('weibo.com')){
-			var sns = "sns="+$("#editSNS").val()+"&";
-			request(xmlHttp,sns,"editInfo");
-			if(xmlHttp.responseText==200){
-				document.location.reload();
-			}
-			else{
-				$('#collapseExample4').collapse('hide');
-				$('#editSNS').val('');
-			}
-		}
-		else{
-			$('#editSNS').val('');
-			$('#editSNS').attr('placeholder','URL无效');
-			$('#editSNS').focus();
-		}
-	}
-
-	
 
 </script>
 </html>

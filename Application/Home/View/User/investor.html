@@ -23,10 +23,10 @@
 				<div class="panel panel-primary theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-4 text-center">
+					  		<div class="col-md-1 col-xs-12 text-center">
 							    <image class="thumbnail theme-profile" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
-							<div class="col-md-11 col-xs-6">
+							<div class="col-md-11 col-xs-12">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.name}</p>
 								<p class="hide-edit">
 									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
@@ -37,9 +37,9 @@
 									</div>
 									<div class="col-md-2 col-md-offset-3 text-right">
 										<if condition="$follow eq false">
-											<a class="btn btn-default form-control theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<a class="btn btn-default form-control theme-nav theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
 											<else/>
-											<a class="btn btn-default form-control theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+											<a class="btn btn-default form-control theme-nav theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
 										</if>
 									</div>
 								</div>
@@ -63,10 +63,10 @@
 			  				<div class="panel-body">
 								<div class="row">
 									<volist name="prolist" id="pros">
-										<div class="col-md-1 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick=""/>
+										<div class="col-md-1 col-xs-3 theme-nav">
+											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
 										</div>
-										<div class="col-md-2 theme-nav">
+										<div class="col-md-2 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
 										</div>
 									</volist>
@@ -78,9 +78,9 @@
 				  				<div class="panel-body">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
+										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="80px" width="80px">
 								  		</div>
-										<div class="col-md-6 col-xs-6">
+										<div class="col-md-6 col-xs-8">
 										<p class="theme-h4">{$cases.company}</p>
 											<p>{$cases.investor_name}</p>
 											<p><span class="text-danger">{$cases.round}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额{$cases.invest_amount}万{$cases.invest_cur}</p>
@@ -101,7 +101,7 @@
 							<div class="panel">
 					  			<div class="panel-body">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-6">
+										<div class="col-md-6 col-xs-12">
 											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
 											<p class="theme-h4">{$jobs.job_company}</p>
 											<p>{$jobs.job_start}至{$jobs.job_end}</p>
@@ -121,7 +121,7 @@
 					</div>
 				  	<div class="panel-body">
 				  		<div class="row">
-							<div class="col-md-9">
+							<div class="col-md-9 col-xs-12">
 								<p class="theme-h4">基本信息</p>
 								<p class="theme-h4">
 									<small>&nbsp;&nbsp;公司: {$user.company}</small>
@@ -130,7 +130,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-12">
+							<div class="col-md-12 col-xs-12">
 								<p class="theme-h4">社交账号</p>
 								<p>&nbsp;&nbsp;
 									<span class="glyphicon glyphicon-link theme-color"></span>
@@ -147,10 +147,10 @@
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">
 				  			<div class="row">
-					  			<div class="col-md-2 theme-nav">
-									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick=""/>
+					  			<div class="col-md-2 col-xs-3 theme-nav">
+									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
 								</div>
-								<div class="col-md-9 theme-nav">
+								<div class="col-md-9 col-xs-8 theme-nav">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
 								</div>
 							</div>
@@ -166,7 +166,11 @@
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  addInterests({$interests},"#interests");
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	addInterests({$interests},"#interests");
+
+  	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+ 	}
 </script>
 </html>

@@ -24,21 +24,21 @@
 				<div class="panel panel-primary theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-4 text-center">
+					  		<div class="col-md-1 col-xs-12 text-center">
 							    <img class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
-							<div class="col-md-11 col-xs-6">
+							<div class="col-md-11 col-xs-12">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.nickname}</p>
-								<p class="hide-edit">&nbsp;&nbsp;&nbsp;一句话描述自己</p>
+								<p class="hide-edit">&nbsp;&nbsp;&nbsp;{$user.brief}</p>
 								<div class="row">
-									<div class="col-md-6">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;{$user.business}</p>
+									<div class="col-md-6 col-xs-12">
+										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
 									</div>
-									<div class="col-md-2 col-md-offset-3 text-right">
+									<div class="col-md-2 col-md-offset-3 col-xs-12 text-right">
 										<if condition="$follow eq false">
-											<a class="btn btn-default form-control theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<a class="btn btn-default form-control theme-nav theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
 											<else/>
-											<a class="btn btn-default form-control theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+											<a class="btn btn-default form-control theme-nav theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
 										</if>
 										
 									</div>
@@ -53,9 +53,7 @@
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">
-							创业经历<a class="btn" href="{:U('Home/User/proEdit')}"></a>
-						</h3>
+						<h3 class="panel-title">创业项目</h3>
 					</div>
 				  	<div class="panel-body">
 				  		<volist name="prolist" id="projects">
@@ -63,9 +61,9 @@
 				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px" onclick="javascript: window.location.href = '../Case/info/key/{$projects.project_id}'">
+										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="80px" width="80px" onclick="openProject('{$projects.project_id}')">
 								  		</div>
-										<div class="col-md-6 col-xs-6">
+										<div class="col-md-6 col-xs-8">
 											<p class="theme-h4">{$projects.project_name}</p>
 											<p>{$projects.project_brief}</p>
 										</div>
@@ -84,7 +82,7 @@
 							<div class="panel">
 					  			<div class="panel-body hide-edit">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-6">
+										<div class="col-md-6 col-xs-12">
 											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
 											<p class="theme-h4">{$jobs.job_company}</p>
 											<p>{$jobs.job_start}至{$jobs.job_end}</p>
@@ -106,9 +104,11 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">基本信息</p>
-								<p>性别</p>
-								<p>生日</p>
-								<p>地区</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;性别: {$user.gender}</small>
+								</p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;生日: {$user.birthday}</small></p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;地区: {$user.city}</small></p>
 							</div>
 						</div>
 					</div>
@@ -116,13 +116,22 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">教育背景</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;{$edu.school}</small>
+								</p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.degree}</small></p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.year}年{$edu.mon}月入学</small></p>
 							</div>
 						</div>
 					</div>
 				  	<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
-								<p class="theme-h4">链接社交账号</p>
+								<p class="theme-h4">社交账号</p>
+								<p>
+									<a><span class="glyphicon glyphicon-link theme-color"></span></a>
+	 								<a class="btn theme-logo" href="{$user.sns_id}"><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -138,7 +147,11 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	addInterests({$interests},"#interests");
 
+  	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+ 	}
 </script>
 </html>

@@ -108,6 +108,7 @@ ul li.active {
 .theme-nav {
 	margin-top:10px; 
 	margin-bottom:10px;
+  vertical-align: middle;
 }
 
 .required {

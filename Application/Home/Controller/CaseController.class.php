@@ -5,7 +5,7 @@ use Think\Model;
 class CaseController extends Controller {
 	public function index(){
 		$Form = new Model();
-		$result = $Form->query('select project_id, project_name, project_logo, project_brief, name from project_info inner join entrepreneur_personal on project_admin = user_id');
+		$result = $Form->query('select project_id, project_name, project_logo, project_brief, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id');
 		
 		$this->vo = $result;
 		$this->assign("list",$result);
@@ -155,7 +155,7 @@ class CaseController extends Controller {
         }
 
         //类似项目
-        $familiar = $Form->query('select distinct familiar.id,project_name, project_logo from interest_project as original 
+        $familiar = $Form->query('select distinct familiar.id as project_id,project_name, project_logo from interest_project as original 
             inner join interest_project as familiar on original.interest_field = familiar.interest_field 
             inner join project_info on familiar.id = project_id
             where original.id = "%s" and familiar.id <> "%s" limit 5',$id, $id);
@@ -229,13 +229,15 @@ class CaseController extends Controller {
 	            $src = $upload->rootPath.$upload->savePath.$info['profile']['savename'];
 	            $image = new \Think\Image(); 
 	            $image->open($src);
-	            $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$info['profile']['savename'];
+                $filename = explode('.', $info['profile']['savename']);
+                $filename = $filename[0].'.png';
+	            $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
 	            $result = $image->thumb(100, 100,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
 	            if($result){
 	                $Form = new Model();
                     $success = $Form->execute('update project_info set project_logo="%s" 
-                        where project_id="%s"','/lcb/Public/upload/pic/logo/'.$upload->savePath.'thumb_'.$info['profile']['savename'],I('get.p'));
-                    header("Location: info/key/".I('get.p'));
+                        where project_id="%s"','/lcb/Public/upload/pic/logo/'.$upload->savePath.'thumb_'.$filename,I('get.p'));
+                    header("Location: infoEdit/key/".I('get.p'));
 	            }
 	        }
 		}  

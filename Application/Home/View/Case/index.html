@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/theme.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
@@ -18,39 +19,45 @@
 	<div style="height:600px;">
 		<table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
 			<tr class="active">
-				<th class="text-center">项目</th>
-				<th class="text-center">创始人</th>
-				<th class="text-center">行业</th>
-				
+				<th>项目</th>
+				<th>创始人</th>
 			</tr>
 
 			<volist name="list" id="vo">
 				<tr>
 					<td>
 						<div class="row">
-			    			<div class="col-md-3">
-					    		 <a href="#" class="thumbnail">
-					    		 	<img src="__PUBLIC__/pic/profile.png" width="80px" height="80px"/>
-					    		 </a>
+			    			<div class="col-md-1 col-xs-3">
+					    		<input type="image" class="thumbnail theme-profile theme-nav" src="{$vo.project_logo}" width="80px" height="80px" onclick="openProject('{$vo.project_id}')" />
 					    	</div>
-			    			<div class="col-md-9" style="padding:20px">
-					    		<p><a class="btn" href="__URL__/info?key={$vo.project_id}">{$vo.project_name}</a></p>
-					    		<p><small>{$vo.project_brief}</small></p>
+			    			<div class="col-md-9 col-xs-9">
+					    		<p><a class="btn theme-color theme-h4 theme-nav" href="__URL__/info?key={$vo.project_id}">&nbsp;&nbsp;&nbsp;{$vo.project_name}</a></p>
+					    		<p class="theme-color">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo.project_brief}</p>
 					    	</div>
 				    	</div>
 				    </td>
-					<td class="text-center" style="padding:30px">
-						<a class="btn">{$vo.name}</a>
+					<td>
+						<div class="row">
+			    			<div class="col-md-1 col-xs-2">
+					    		<input type="image" class="thumbnail theme-profile theme-nav" src="{$vo.portrait}" width="48" height="48px" onclick="" />
+					    	</div>
+			    			<div class="col-md-3 col-xs-6">
+					    		<p><a class="btn theme-color theme-h4 theme-nav" href="">&nbsp;&nbsp;&nbsp;{$vo.name}</a></p>
+					    	</div>
+				    	</div>
 					</td>
-					<td class="text-center" style="padding:30px">{$vo.project_type}</td>
-					
 				</tr>
 			</volist>
 		</table>
   	</div>
   </div>
 </body>
+ <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+
+  	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
 </script>
 </html>
