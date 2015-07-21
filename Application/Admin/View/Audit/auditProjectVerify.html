@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;项目主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/util/angular.min.js"></script>
+    <script src="__PUBLIC__/js/util/angular-route.js"></script>
+    <script src="__PUBLIC__/js/Admin/Audit/auditProjectVerify.js"></script>
+    <script type="text/javascript">init({$project_id});</script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-default theme-outline">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-1">
+						      	<image src="{$info.project_logo}" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" />
+							   
+					  		</div>
+							<div class="col-md-11 col-xs-8">
+								<p class="theme-h3">&nbsp;&nbsp;{$info.project_name}</p>
+								<p>&nbsp;&nbsp;&nbsp;{$info.project_brief}</p>
+								<div class="row">
+									<div class="col-md-6">
+										<p id="interests">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
+									</div>
+									<div class="col-md-2 col-md-offset-3 text-right">
+										
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">项目介绍</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-12">
+				  				<p id="details"></p>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">创业团队</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="panel">
+				  			<div class="panel-body">
+							  	<div class='row'>
+									<div class="col-md-1">
+										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+									</div>
+									<div class="col-md-2">
+										<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
+										<p>&nbsp;&nbsp;&nbsp;创始人<p>
+									</div>
+								</div>
+								<div class="row">
+									<volist name="memberlist" id="vo">
+										<div class="memberField">
+											<div class="col-md-1 theme-nav">
+												<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})"/>
+											</div>
+											<div class="col-md-2 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
+												<p>&nbsp;&nbsp;&nbsp;{$vo.title}<p>
+											</div>
+										</div>
+									</volist>
+								</div>
+							</div>
+						</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<div class="col-md-12">
+					  					<p id="project_member"></p>
+									</div>
+				  				</div>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">融资情况</h3>
+					</div>
+				  	<div class="panel-body">
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<volist name="filist" id="profi">
+					  				<div class='row'>
+					  					<div class="col-md-6 col-xs-6">
+											<p class="theme-h4 text-danger">{$profi.round}</p>
+											<p>{$profi.investor_name}</p>
+											<p><span class="theme-small">{$profi.invest_time}</span>&nbsp;|&nbsp;投资金额{$profi.invest_amount}万{$profi.invest_cur}</p>
+										</div>
+										
+					  				</div>
+					  			</volist>
+				  			</div>
+				  		</div>
+				  		<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<div class="col-md-12">
+					  					<p id="project_fi"></p>
+									</div>
+				  				</div>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">已有投资人</h3>
+					</div>
+				  	<div class="panel-body">
+					  	<div class="panel">
+				  			<div class="panel-body">
+								<div class="row">
+									<volist name="investorlist" id="it">
+										<div class="investorField">
+											<div class="col-md-1 theme-nav">
+												<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
+											</div>
+											<div class="col-md-2 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
+											</div>
+										</div>
+									</volist>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">其他说明</h3>
+					</div>
+				  	<div class="panel-body">
+						<div class="row">
+							<div class="col-md-9">
+								<p class="theme-h4">招聘信息</p>
+								<p id="project_recruit"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-9">
+								<p class="theme-h4">融资需求</p>
+								<p id="project_require"></p>
+							</div>
+						</div>
+						
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	<div class="container" ng-app="myprojectpapp" ng-controller="projectController">
+		<form>
+  			<div class="form-group">
+    			<label for="verifyresult">审核结果</label>
+    			<select class="form-control" id="everifyresult"  ng-model="result" >
+  						<option value=2 selected = "selected">审核通过</option>
+  						<option value=0 >审核不通过</option>
+				</select>
+  			</div>
+  			<div class="form-group">
+   			 	<label for="note">审核意见</label>
+    			<input type="text" class="form-control" id="note" placeholder="审核通过"  ng-model="verifynote">
+ 			</div>
+  			
+  			<button  class="btn btn-default" ng-click="submit()">提交结果</button>
+		</form>
+		
+	</div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/Home/Case/edit.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	$('input[data-toggle=popover]').popover({'html':true});
+	$('input[data-toggle=popover]').mouseover(function(){$(this).popover('show');}); 
+	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+	
+	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
+	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
+	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
+	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
+	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
+	addInterests({$interests},"#interests");
+
+	function openUser(id){
+	  window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function openInvestor(id){
+	  window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
+</script>
+</html>

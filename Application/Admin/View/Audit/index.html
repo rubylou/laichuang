@@ -30,8 +30,10 @@
         <div role="tabpanel">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#projectVerify" aria-controls="projectVerify" role="tab" data-toggle="tab">项目审核</a></li>
-            <li role="presentation" ><a href="#projectManage" aria-controls="projectManage" role="tab" data-toggle="tab">项目管理</a></li>
+            <li role="presentation" class="active" ng-init="ProjectsVerifiedTabClick()" ng-click="ProjectsVerifiedTabClick()">
+              <a href="#projectVerify" aria-controls="projectVerify" role="tab" data-toggle="tab">项目审核</a></li>
+            <li role="presentation" ng-click="ProjectsManageTabClick()">
+              <a href="#projectManage" aria-controls="projectManage" role="tab" data-toggle="tab">项目管理</a></li>
 
             <li role="presentation" ng-click="InvestorsPsVerifiedTabClick()">
               <a href="#investorVerify" aria-controls="investorVerify" role="tab" data-toggle="tab">投资人审核</a></li>
@@ -50,12 +52,51 @@
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="projectVerify">
               <div style="height:500px; overflow:scroll;">
-                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
-
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;" >
+                 <tr>
+                    <th class="text-center">项目logo</th>
+                    <th class="text-center">项目id</th>
+                    <th class="text-center">项目名称</th>
+                    <th class="text-center">负责人id</th>
+                    <th class="text-center">项目简介</th>
+                    <th class="text-center">操作</th>
+                  </tr> 
+                   <tr ng-repeat="x in unverifiedProjects" >
+                    <td class="text-center"><image class="thumbnail theme-profile" src={{x.project_logo}} alt="logo" height="40px" width="40px"></td>
+                    <td class="text-center">{{ x.project_id}}</td>
+                    <td class="text-center">{{ x.project_name}}</td>
+                    <td class="text-center">{{ x.project_admin}}</td>
+                    <td class="text-center">{{ x.project_brief}}</td>
+                    <td class="text-center">
+                      <a data-toggle="tooltip" data-placement="top" title="审核" class="btn" href={{"__URL__/auditProjectVerify?key="+x.project_id}}><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInvestorPsDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
+                  </tr>
                 </table>
               </div>
             </div>
             <div role="tabpanel" class="tab-pane active" id="projectManage">
+              <div style="height:500px; overflow:scroll;">
+                <table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;" >
+                 <tr>
+                    <th class="text-center">项目logo</th>
+                    <th class="text-center">项目id</th>
+                    <th class="text-center">项目名称</th>
+                    <th class="text-center">负责人id</th>
+                    <th class="text-center">项目简介</th>
+                    <th class="text-center">操作</th>
+                  </tr> 
+                   <tr ng-repeat="x in manageProjects" >
+                    <td class="text-center"><image class="thumbnail theme-profile" src={{x.project_logo}} alt="logo" height="40px" width="40px"></td>
+                    <td class="text-center">{{ x.project_id}}</td>
+                    <td class="text-center">{{ x.project_name}}</td>
+                    <td class="text-center">{{ x.project_admin}}</td>
+                    <td class="text-center">{{ x.project_brief}}</td>
+                    <td class="text-center">
+                      <a data-toggle="tooltip" data-placement="top" title="审核" class="btn" href={{"__URL__/auditProjectVerify?key="+x.project_id}}><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInvestorPsDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true"></td>
+                  </tr>
+                </table>
+              </div>
             </div>
             
 

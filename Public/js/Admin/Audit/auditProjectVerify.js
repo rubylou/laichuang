@@ -1,29 +1,18 @@
-var user;
-var jobs;
-var type;
-var cases;
-var init=function(u,j,c)
-{
-	user=u[0];
-	jobs=j;
-	if(user.user_type==1)
-		type="风险投资人";
-	else
-		type="天使投资人";
-    cases=c;
-}
-var invesPApp=angular.module('myinvespapp',[]);
+var pro_id;
 
-invesPApp.controller("userController", function($scope,$http) {
-    $scope.userInfo=user;
-    $scope.jobInfo=jobs;
-    $scope.type=type;
-    $scope.cases=cases;
+var init=function(pid)
+{
+	pro_id=pid;
+}
+var projectApp=angular.module('myprojectpapp',[]);
+
+projectApp.controller("projectController", function($scope,$http) {
+    $scope.project_id=pro_id;
     $scope.result="";
     $scope.verifynote="审核结束";
     
     $scope.submit=function(){
-    	var url="receiveInverstorPVerifyResult?"+"user_id="+$scope.userInfo.user_id+"&note="+$scope.verifynote+"&result="+$scope.result;
+    	var url="receiveProjectVerifyResult?"+"project_id="+$scope.project_id+"&note="+$scope.verifynote+"&result="+$scope.result;
         var xmlhttp=createRequest();
         xmlhttp.onreadystatechange=function()
   		{
@@ -46,4 +35,3 @@ invesPApp.controller("userController", function($scope,$http) {
     };
 
 });
-
