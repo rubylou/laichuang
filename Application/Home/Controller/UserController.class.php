@@ -203,6 +203,17 @@ class UserController extends Controller {
             }
             $user = $Form->query("select * from investor_personal where user_id='%s'",$_SESSION['id']);
             $this->user = $user[0];
+
+            //认证资料
+            if($user[0]['user_type']==1){
+                $auth = $Form->query('select * from investor_company where user_id = "%s"', $_SESSION['id']);
+                $this->auth = $auth[0];
+            }
+            else if($user[0]['user_type']==2){
+                $auth = $Form->query('select * from investor_fi where user_id = "%s"',$_SESSION['id']);
+                $this->auth = $auth[0];
+            }
+
             $this->rounds = json_encode(C('INVEST_ROUND'));
             $this->currency = json_encode(C('CURRENCY_CODE'));
             $fields = C('INTEREST_FIELD');
@@ -371,6 +382,79 @@ class UserController extends Controller {
         else{
             echo 401;
         }
+    }
+
+    public function authSave(){
+        $Form = new Model();
+
+        $fi_type = $_POST['fiType'];
+        $fi_info = $_POST['pro_require'];
+        $company_type = $_POST['companyType'];
+
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize = 3145728 ;// 设置附件上传大小
+        $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
+        $upload->rootPath = './Public/upload/authorization/'; // 设置附件上传根目录
+        $upload->replace = true;
+        $upload->subName = '';
+
+        $Form->execute('update investor_company set company_type = %d where user_id="%s"',$company_type,$_SESSION['id']);
+
+        if(strlen($_FILES['license']['name'])>0){
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
+            $upload->saveName = $_SESSION['id']."_license";
+            // 上传文件 
+            $info = $upload->uploadOne($_FILES['license']);
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }else{// 上传成功
+                //dump($info);
+                $result = $Form->execute('update investor_company set license = "%s" 
+                    where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+            }
+        }
+
+        if(strlen($_FILES['companyCode']['name'])>0){
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
+            $upload->saveName = $_SESSION['id']."_companyCode";
+            // 上传文件 
+            $info = $upload->uploadOne($_FILES['companyCode']);
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }else{// 上传成功
+                $result = $Form->execute('update investor_company set company_code = "%s" 
+                    where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+            }
+        }
+
+        if(strlen($_FILES['statement']['name'])>0){
+            $upload->exts = array('pdf');// 设置附件上传类型
+            $upload->saveName = $_SESSION['id']."_statement";
+            // 上传文件 
+            $info = $upload->uploadOne($_FILES['statement']);
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }else{// 上传成功
+                $result = $Form->execute('update investor_company set fi_statement = "%s" 
+                    where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+            }
+        }
+        
+        if(strlen($_FILES['finance']['name'])>0){
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
+            $upload->saveName = $_SESSION['id']."_finance";
+            // 上传文件 
+            $info = $upload->uploadOne($_FILES['finance']);
+            if(!$info) {// 上传错误提示错误信息
+                $this->error($upload->getError());
+            }else{// 上传成功
+                $result = $Form->execute('update investor_fi set financial_doc = "%s", financial_type=%d, financial_info = "%s" 
+                    where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$fi_type,$fi_info,$_SESSION['id']);
+            }
+        } 
+
+        header("Location: investorEdit");
+
     }
 
     public function proEdit(){
