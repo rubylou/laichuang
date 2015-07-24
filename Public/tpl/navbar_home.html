@@ -4,7 +4,7 @@
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -37,12 +37,12 @@
         </ul>
         
         <ul class="nav navbar-nav navbar-right">
-          <form class="navbar-form navbar-right" role="search">
+          <!--<form class="navbar-form navbar-right" role="search">
             <div class="form-group">
               <input type="text" class="form-control theme-nav" placeholder="Search">
             </div>
             <button type="submit" class="btn btn-default theme-btn theme-nav">搜索</button>
-          </form>
+          </form>-->
           
 
           <if condition="session('?user')">
@@ -62,7 +62,11 @@
               <li><a href="{:U('Home/Index/login')}" class="theme-nav"><span class="glyphicon glyphicon-log-in text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">登录</span></a></li>
               <!--<li><a href="{:U('Home/Index/register')}"><span class="glyphicon glyphicon-plus text-success" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-success">注册</span></a></li>-->
           </if>
-              
+          <!--<li>
+            <a href="{:U('Home/User/index')}" class="theme-nav">
+              <span class="text-default theme-color theme-h4">{:session('user')}</span>
+            </a>
+          </li>-->    
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -27,13 +27,13 @@
 				<div class="panel panel-primary theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-4 text-center">
+					  		<div class="col-md-1 col-xs-12 text-center">
 					  			<form method="post" action="__URL__/profileSave" enctype="multipart/form-data" id="profile_form">
 								    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
 								</form>
 							    <input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
-							<div class="col-md-11 col-xs-6">
+							<div class="col-md-11 col-xs-12">
 								<p class="theme-h3 hide-edit">
 									<span>&nbsp;&nbsp;&nbsp;{:session('user')}</span>
 									<a class="btn show-edit" style="display:none" onclick="editName()">
@@ -55,7 +55,7 @@
 									</a>
 								</p>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-6 col-xs-12">
 										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;
 											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
 											<a class="btn show-edit" style="display:none" onclick="editField()">
@@ -63,10 +63,10 @@
 											</a>
 										</p>
 									</div>
-									<div class="col-md-2 col-md-offset-1 text-right">
+									<div class="col-md-2 col-md-offset-1 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/innovator/val/{$user.user_id}">预览</a>
 									</div>
-									<div class="col-md-2 text-right">
+									<div class="col-md-2 col-xs-6 text-right">
 										<if condition="$user.reg_status eq 0">
 											<a class="btn btn-default form-control theme-btn" onclick="submitAuth('{$user.user_id}')">提交审核</a>
 										</if>
@@ -86,7 +86,7 @@
 				<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
 						<h3 class="panel-title">
-							创业项目<a class="btn" href="{:U('Home/User/proEdit')}"><span class="glyphicon glyphicon-plus theme-white" aria-hidden="true"></span></a>
+							创业项目<a class="btn" href="{:U('Home/Case/proEdit')}"><span class="glyphicon glyphicon-plus theme-white" aria-hidden="true"></span></a>
 						</h3>
 					</div>
 				  	<div class="panel-body">
@@ -119,29 +119,29 @@
 							<hr>
 					        <div class="form-horizontal">
 							  <div class="form-group">
-							    <label for="title" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>职位</label>
+							    <label for="title" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>职位</label>
 							    <div class="col-md-7">
 						        	<input type="text" class="form-control" id="title">
 						        </div>
 							  </div>
 
 							  <div class="form-group">
-							    <label for="company2" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>公司名称</label>
+							    <label for="company2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>公司名称</label>
 							    <div class="col-md-7">
 						        	<input type="text" class="form-control" id="company2" placeholder="例: 来创">
 						        </div>
 							  </div>
 
 							  <div class="form-group">
-							    <label for="startyear" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>开始日期</label>
-							    <div class="col-md-3">
+							    <label for="startyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>开始日期</label>
+							    <div class="col-md-3 col-xs-6 ">
 							    	<div class="input-group">
 							        	<select class="form-control" id="startyear">
 							            </select>
 							            <span class="input-group-addon">年</span>
 							        </div>
 						        </div>
-						        <div class="col-md-2">
+						        <div class="col-md-2 col-xs-6 ">
 						        	<div class="input-group">
 						        		<select class="form-control" id="startmon">
 						            	</select>
@@ -151,22 +151,22 @@
 							  </div>
 
 							  <div class="form-group">
-							    <label for="endyear" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>结束日期</label>
-							    <div class="col-md-3">
+							    <label for="endyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>结束日期</label>
+							    <div class="col-md-3 col-xs-6 ">
 							    	<div class="input-group">
 							        	<select class="form-control" id="endyear">
 							            </select>
 							            <span class="input-group-addon">年</span>
 							        </div>
 						        </div>
-						        <div class="col-md-2">
+						        <div class="col-md-2 col-xs-6 ">
 						        	<div class="input-group">
 						        		<select class="form-control" id="endmon">
 						            	</select>
 						            	<span class="input-group-addon">月</span>
 						            </div>
 						        </div>
-						        <div class="col-md-2">
+						        <div class="col-md-2 col-xs-6 ">
 							      <div class="checkbox">
 							        <label>
 							          <input type="checkbox" id="untilnow" onclick="disableEnd(this.checked)">至今
@@ -183,11 +183,11 @@
 							  </div>
 							</div>
 						    <div class="row">
-						    	<div class="col-md-3 col-md-offset-3">
+						    	<div class="col-md-3 col-md-offset-3 col-xs-6 ">
 						        	<button type="submit" class="btn btn-default form-control theme-btn-inverse" onclick="submitJob()">&nbsp;提交&nbsp;</button> 
 						        </div>
 						        <input type="hidden" id="editJob_input"/>
-						        <div class="col-md-3">
+						        <div class="col-md-3 col-xs-6 ">
 						        	<button type="submit" class="btn btn-default form-control theme-btn" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</button>    
 						        </div>
 						    </div>
@@ -197,7 +197,7 @@
 							<div class="panel">
 					  			<div class="panel-body hide-edit">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-6">
+										<div class="col-md-6 col-xs-10">
 											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
 											<p class="theme-h4">{$jobs.job_company}</p>
 											<p>{$jobs.job_start}至{$jobs.job_end}</p>
@@ -236,7 +236,7 @@
 						</div>
 						<hr>-->
 						<div class="row hide-edit">
-							<div class="col-md-9">
+							<div class="col-md-9 col-xs-9">
 								<p class="theme-h4">基本信息</p>
 								<p class="theme-h4">
 									<small>&nbsp;&nbsp;性别: {$user.gender}</small>
@@ -244,13 +244,13 @@
 								<p class="theme-h4"><small>&nbsp;&nbsp;生日: {$user.birthday}</small></p>
 								<p class="theme-h4"><small>&nbsp;&nbsp;地区: {$user.city}</small></p>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 col-xs-2">
 								<a class="btn btn-default show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none" onclick=""><span class="glyphicon glyphicon-pencil theme-color"></span></a>
 							</div>
 						</div>
 						<div class="collapse" id="collapseExample3">
 							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
+								<div class="col-md-10 col-md-offset-1 col-xs-12">
 									<div class="form-group">
 						              <label for="editGender"><span class="required">*</span>性别</label>
 						              <select class="form-control" name="gender" id="editGender">
@@ -273,7 +273,7 @@
 						</div>
 						<hr>
 						<div class="row hide-edit">
-							<div class="col-md-9">
+							<div class="col-md-9 col-xs-9">
 								<p class="theme-h4">教育背景</p>
 								<p class="theme-h4">
 									<small>&nbsp;&nbsp;{$edu.school}</small>
@@ -281,13 +281,13 @@
 								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.degree}</small></p>
 								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.year}年{$edu.mon}月入学</small></p>
 							</div>
-							<div class="col-md-2">
+							<div class="col-md-2 col-xs-2">
 								<a class="btn btn-default show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" style="display:none" onclick=""><span class="glyphicon glyphicon-pencil theme-color"></span></a>
 							</div>
 						</div>
 						<div class="collapse" id="collapseExample1">
 							<div class="row">
-								<div class="col-md-10 col-md-offset-1">
+								<div class="col-md-10 col-md-offset-1 col-xs-12">
 						            <div class="form-group">
 						              <label for="editSchool"><span class="required">*</span>学校</label>
 						              <input type="text" class="form-control" id="editSchool">

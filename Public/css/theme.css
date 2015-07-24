@@ -43,8 +43,8 @@ ul li.active {
 	border-left: 1px solid #102D4A;
 	border-right: 1px solid #102D4A;
 	padding:0;
-	margin-right: auto;
-  margin-left: auto;
+	margin-right: 0;
+  margin-left: 0;
   margin-top: auto;
   margin-bottom: auto;
 }

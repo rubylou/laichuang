@@ -112,7 +112,7 @@
 				  			<div class="panel-body">
 				  				<volist name="filist" id="profi">
 					  				<div class='row'>
-					  					<div class="col-md-6 col-xs-6">
+					  					<div class="col-md-6 col-xs-12">
 											<p class="theme-h4 text-danger">{$profi.round}</p>
 											<p>{$profi.investor_name}</p>
 											<p><span class="theme-small">{$profi.invest_time}</span>&nbsp;|&nbsp;投资金额{$profi.invest_amount}万{$profi.invest_cur}</p>
@@ -125,7 +125,7 @@
 				  		<div class="panel">
 				  			<div class="panel-body">
 				  				<div class='row'>
-				  					<div class="col-md-12">
+				  					<div class="col-md-12 col-xs-12">
 					  					<p id="project_fi"></p>
 									</div>
 				  				</div>
@@ -143,11 +143,12 @@
 								<div class="row">
 									<volist name="investorlist" id="it">
 										<div class="investorField">
-											<div class="col-md-1 col-xs-4 theme-nav">
+											<div class="col-md-1 col-xs-3 theme-nav">
 												<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
 											</div>
 											<div class="col-md-2 col-xs-8 theme-nav">
 												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
+												<p class="theme-h4">&nbsp;</p>
 											</div>
 										</div>
 									</volist>
@@ -164,25 +165,25 @@
 					</div>
 				  	<div class="panel-body">
 						<div class="row">
-							<div class="col-md-9">
+							<div class="col-md-9 col-xs-12">
 								<p class="theme-h4">招聘信息</p>
 								<p id="project_recruit"></p>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-9">
+							<div class="col-md-9 col-xs-12">
 								<p class="theme-h4">融资需求</p>
 								<p id="project_require"></p>
 							</div>
 						</div>
 						<div class="row">
 							<if condition="session('type') eq 1">
-								<div class="col-md-6 col-md-offset-3">
+								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
 									<a class="btn btn-default theme-btn-inverse form-control">我要投资</a>
 								</div>
 							</if>
 							<if condition="session('type') eq 2">
-								<div class="col-md-6 col-md-offset-3">
+								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
 									<a class="btn btn-default theme-btn-inverse form-control">我要加入</a>
 								</div>
 							</if>

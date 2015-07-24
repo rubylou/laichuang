@@ -98,14 +98,20 @@ function checkName(id){
 }
 
 function checkValue(id,max,min,notice){
-	if($(id).val().length>min && $(id).val().length<max){
-		return true;
-	}
-	else{
+	if($(id).val().length<min){
 		$(id).val('');
 		$(id).attr('placeholder',notice);
 		$(id).focus();
 		return false;
+	}
+	else if($(id).val().length>max){
+		$(id).val('');
+		$(id).attr('placeholder','超出字数要求:'+max+'字');
+		$(id).focus();
+		return false;
+	}
+	else{
+		return true;
 	}
 }
 
