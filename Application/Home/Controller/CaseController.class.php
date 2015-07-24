@@ -430,5 +430,18 @@ class CaseController extends Controller {
     		echo 400;
     	}
     }
+
+    public function requestAuth(){
+        //dump($_POST);
+        $Form = new Model();
+        $id = I('post.p',0);
+        $result = $Form->execute('update project_info set status = 1 where project_id = "%s"',$id);
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
+    }
 }
 ?>

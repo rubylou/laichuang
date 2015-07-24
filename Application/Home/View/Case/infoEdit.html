@@ -61,8 +61,16 @@
 										</if>
 										
 									</div>-->
-									<div class="col-md-2 col-md-offset-3 text-right">
+									<div class="col-md-2 col-md-offset-1 text-right">
 										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/info/key/{$info.project_id}">预览</a>
+									</div>
+									<div class="col-md-2 text-right">
+										<if condition="$info.status eq 0">
+											<a class="btn btn-default form-control theme-btn" onclick="submitAuth('{$info.project_id}')">提交审核</a>
+										</if>
+										<if condition="$info.status eq 1">
+											<a href="#" class="btn btn-default form-control theme-btn">已提交审核</a>
+										</if>
 									</div>
 								</div>
 							</div>
@@ -720,6 +728,15 @@
 	$('#delFi_cancel').click(function(){
 		$('#delFi_input').val('');
 	});
+
+	function submitAuth(id){
+	    var xmlHttp = createRequest();
+	    request(xmlHttp,'p='+id,"requestAuth");
+	    if(xmlHttp.responseText == '200'){
+	      alert('提交成功');
+	      document.location.reload();
+	    }
+	}
 
 	
 

@@ -262,17 +262,20 @@ function editJob(id){
 
 function editBasics(){
   var xmlHttp = createRequest();
-  var basics = "company="+$('#editCompany').val()+"&";
-  basics += "title="+$('#editTitle').val()+"&";
-  request(xmlHttp,basics,"editInfo");
-  if(xmlHttp.responseText.match('200')){
-    document.location.reload();
+  if(checkValue("#editCompany",30,0,'公司不能为空') && checkValue("#editTitle",30,0,'职位不能为空')){
+    var basics = "company="+$('#editCompany').val()+"&";
+    basics += "title="+$('#editTitle').val()+"&";
+    request(xmlHttp,basics,"editInfo");
+    if(xmlHttp.responseText.match('200')){
+      document.location.reload();
+    }
+    else{
+      $('#collapseExample3').collapse('hide');
+      $('#editCompany').val('');
+      $('#editTitle').val('');
+    }
   }
-  else{
-    $('#collapseExample3').collapse('hide');
-    $('#editCompany').val('');
-    $('#editTitle').val('');
-  }
+  
 }
 
 function editInnovatorBasics(){
@@ -329,3 +332,4 @@ function editSNS(){
     $('#editSNS').focus();
   }
 }
+

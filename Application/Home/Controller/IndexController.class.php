@@ -130,12 +130,22 @@ class IndexController extends Controller {
                 (user_id,name,mobile,email,company,title,user_type,reg_time,reg_status)
                 values ("%s","%s","%s","%s","%s","%s",%d,
                 "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$regTime,0);
+            
+            //感兴趣领域
             $interests = $_POST['key9'];
             $interests = explode(',', $interests);
             for($i=0;$i<count($interests)-1;$i++){
                 $temp = $Form->execute('replace into interest_investor (id, interest_field) values ("%s",%d)',$id,$interests[$i]);
             }
 
+            //认证资料
+            if($_POST['key6']==1){
+                $result1 = $Form->execute('insert into investor_company (user_id, company_name) values ("%s","%s")',$id,$_POST['key4']);
+            }
+            else if($_POST['key6']==2){
+                $result1 = $Form->execute('insert into investor_fi (user_id) values ("%s")',$id);
+            }
+            
             if($result){
                 $safety = $Form->execute('insert into investor_security (user_id,user_pwd) 
                     values ("%s","%s")',$id,$_POST['key7']);
