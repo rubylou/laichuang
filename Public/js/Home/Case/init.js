@@ -7,6 +7,22 @@ function initializeField(rows,field){
 	addLabel(i,field);
 	}
 }
+
+
+function optionInitialize(value){
+  var field = value;
+  for(var i in field){
+    addOption(i,field);
+  }
+}
+
+function addOption(id,field){
+  var option = $('<option></option').text(field[id]);
+  option.attr('value',id);
+  $('#proField').append(option);
+}
+
+
 function addInterest(id,field){
 	var exist = $("#choices").contents().filter("#field"+id);
 	if(exist.text()==field[id]){

@@ -9,6 +9,25 @@ function addInterests(value,id){
   }
 }
 
+function submitProject(){
+  var xmlHttp = createRequest();
+  if(checkValue("#proName",20,0,'名称不能为空')&&checkValue("#proBrief",30,0,"简要介绍不能为空")){
+    var name = "key1="+$("#proName").val()+"&";
+    var brief = "key3="+$("#proBrief").val()+"&";
+    var member = "key4="+$("#proMember").val()+"&";
+    var fi = "key5="+$("#proFi").val()+"&";
+    var type = "key6="+$("#proField").val()+"&";
+    var recruit = "key7="+$("#proRecruit").val()+"&";
+    var require = "key8="+$('#proRequire').val()+"&";
+    var content="key9="+getContent(um)+"&";
+    var data = name+brief+member+fi+type+recruit+require+content;
+    request(xmlHttp,data,"proSave");
+    if(xmlHttp.responseText==200){
+      window.location.href='../User/index';
+    }
+  }
+}
+
 function fi_submit(id){
   var index = $('#editFi_input').val();
   var xmlHttp = createRequest();

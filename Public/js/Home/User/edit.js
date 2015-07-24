@@ -1,36 +1,3 @@
-
-function optionInitialize(value){
-  var field = value;
-  for(var i in field){
-    addOption(i,field);
-  }
-}
-
-function addOption(id,field){
-  var option = $('<option></option').text(field[id]);
-  option.attr('value',id);
-  $('#proField').append(option);
-}
-
-function submitProject(){
-  var xmlHttp = createRequest();
-  if(checkValue("#proName",20,0,'名称不能为空')&&checkValue("#proBrief",80,0,"简要介绍不能为空")){
-    var name = "key1="+$("#proName").val()+"&";
-    var logo = "key2="+$("#proLogo").val()+"&";
-    var brief = "key3="+$("#proBrief").val()+"&";
-    var member = "key4="+$("#proMember").val()+"&";
-    var fi = "key5="+$("#proFi").val()+"&";
-    var type = "key6="+$("#proField").val()+"&";
-    var other = "key7="+$("#proOther").val()+"&";
-    var content="key8="+getContent(um)+"&";
-    var data = name+logo+brief+member+fi+type+other+content;
-    request(xmlHttp,data,"proSave");
-    if(xmlHttp.responseText==200){
-      window.location.href="index";
-    }
-  }
-}
-
 function submitJob(){
   var id = $('#editJob_input').val();
   var xmlHttp = createRequest();
@@ -262,17 +229,20 @@ function editJob(id){
 
 function editBasics(){
   var xmlHttp = createRequest();
-  var basics = "company="+$('#editCompany').val()+"&";
-  basics += "title="+$('#editTitle').val()+"&";
-  request(xmlHttp,basics,"editInfo");
-  if(xmlHttp.responseText.match('200')){
-    document.location.reload();
+  if(checkValue("#editCompany",30,0,'公司不能为空') && checkValue("#editTitle",30,0,'职位不能为空')){
+    var basics = "company="+$('#editCompany').val()+"&";
+    basics += "title="+$('#editTitle').val()+"&";
+    request(xmlHttp,basics,"editInfo");
+    if(xmlHttp.responseText.match('200')){
+      document.location.reload();
+    }
+    else{
+      $('#collapseExample3').collapse('hide');
+      $('#editCompany').val('');
+      $('#editTitle').val('');
+    }
   }
-  else{
-    $('#collapseExample3').collapse('hide');
-    $('#editCompany').val('');
-    $('#editTitle').val('');
-  }
+  
 }
 
 function editInnovatorBasics(){
@@ -329,3 +299,4 @@ function editSNS(){
     $('#editSNS').focus();
   }
 }
+

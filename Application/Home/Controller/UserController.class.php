@@ -208,6 +208,7 @@ class UserController extends Controller {
             if($user[0]['user_type']==1){
                 $auth = $Form->query('select * from investor_company where user_id = "%s"', $_SESSION['id']);
                 $this->auth = $auth[0];
+                //dump($this->auth);
             }
             else if($user[0]['user_type']==2){
                 $auth = $Form->query('select * from investor_fi where user_id = "%s"',$_SESSION['id']);
@@ -454,44 +455,6 @@ class UserController extends Controller {
         } 
 
         header("Location: investorEdit");
-
-    }
-
-    public function proEdit(){
-        $fields = C('INTEREST_FIELD');
-        $this->field = json_encode($fields);
-    	$this->display();
-    }
-
-    public function proSave(){
-        //dump($_POST);
-        if(session('?type') && session('?id')){
-            $Form = new Model();
-            $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-            $user_id= $_SESSION['id'];
-            $project = $user_id.$seed;
-            $exist = $Form->query('select project_id from project_info where project_id = "%s"',$project);
-            while($exist){
-                $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-                $project = $user_id.$seed;
-                $exist = $Form->query('select project_id from project_info where project_id = "%s"',$project);
-            }
-            $result = $Form->execute('insert into project_info (project_id,project_admin,project_name,project_logo,project_brief,
-                project_member,project_fi,project_require,project_intro) 
-            values ("%s","%s","%s","%s","%s","%s","%s","%s","%s")',$project,$user_id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key7'],$_POST['key8']);
-            
-            $temp = $Form->execute('replace into interest_project (id, interest_field) values ("%s",%d)',$project,$_POST['key6']);
-
-            if($result){
-                echo 200;
-            }
-            else {
-                echo 400;
-            }
-        }
-        else{
-            echo 401;
-        }
 
     }
 
@@ -807,6 +770,107 @@ class UserController extends Controller {
 
         else{
             echo 401;
+        }
+    }
+
+    public function requestAuth(){
+        //dump($_POST);
+        $Form = new Model();
+        //验证投资人审核资格
+        if(session('type')==1){
+            $id = I('post.val',0);
+            //验证基本信息
+            $basics = $Form->query('select * from investor_personal where user_id = "%s"',$id);
+            $basics = $basics[0];
+            if(strlen($basics['name'])==0){
+                echo 4041;
+                exit();
+            }
+            if(strlen($basics['company'])==0 || strlen($basics['title'])==0){
+                echo 4042;
+                exit();
+            }
+            if(strlen($basics['mycard'])==0){
+                echo 4043;
+                exit();
+            }
+            //验证公司信息
+            if($basics['user_type']==1){
+                $company = $Form->query('select * from investor_company where user_id = "%s"',$id);
+                $company = $company[0];
+                if(strlen($company['license'])==0){
+                    echo 4044;
+                    exit();
+                }
+                if(strlen($company['company_code'])==0){
+                    echo 4045;
+                    exit();
+                }
+                if(strlen($company['fi_statement'])==0){
+                    echo 4046;
+                    exit();
+                }
+                
+            }
+            //验证财产信息
+            else if($basics['user_type']==2){
+                $fi = $Form->query('select * from investor_fi where user_id = "%s"',$id);
+                $fi = $fi[0];
+                if(strlen($fi['financial_doc'])==0){
+                    echo 4047;
+                    exit();
+                }
+            }
+
+            //验证投资案例
+            $cases = $Form->query('select count(*) from investor_case where user_id ="%s"',$id);
+            $cases = $cases[0];
+            if(intval($cases['count(*)'])<3){
+                echo 4048;
+                exit();
+            }
+
+            $result = $Form->execute('update investor_personal set reg_status = 1 where user_id = "%s"',$id);
+            if($result){
+                echo 200;
+            }
+            else{
+                echo 400;
+            }
+
+        }
+        //验证创业者审核资格
+        else if(session('type')==2){
+            $id = I('post.val',0);
+            //验证基本信息
+            $basics = $Form->query('select * from entrepreneur_personal where user_id="%s"',$id);
+            $basics = $basics[0];
+            if(strlen($basics['name'])==0){
+                echo 4041;
+                exit();
+            }
+            if(strlen($basics['birthday'])==0){
+                echo 4042;
+                exit();
+            }
+            //验证教育背景
+            $edu = $Form->query('select * from user_edu where user_id="%s"',$id);
+            $edu = $edu[0];
+            if(strlen($edu['school'])==0 || strlen($edu['degree'])==0 ||strlen($edu['start'])==0){
+                echo 4043;
+                exit();
+            }
+
+            $result = $Form->execute('update entrepreneur_personal set reg_status = 1 where user_id = "%s"',$id);
+            if($result){
+                echo 200;
+            }
+            else{
+                echo 400;
+            }
+        }
+        else{
+            echo 400;
         }
     }
 }

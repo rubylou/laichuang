@@ -12,6 +12,44 @@ class CaseController extends Controller {
 		$this->display();
 	}
 
+    public function proEdit(){
+        $fields = C('INTEREST_FIELD');
+        $this->field = json_encode($fields);
+        $this->display();
+    }
+
+    public function proSave(){
+        //dump($_POST);
+        if(session('?type') && session('?id')){
+            $Form = new Model();
+            $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
+            $user_id= $_SESSION['id'];
+            $project = $user_id.$seed;
+            $exist = $Form->query('select project_id from project_info where project_id = "%s"',$project);
+            while($exist){
+                $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
+                $project = $user_id.$seed;
+                $exist = $Form->query('select project_id from project_info where project_id = "%s"',$project);
+            }
+            $result = $Form->execute('insert into project_info (project_id,project_admin,project_name,project_brief,
+                project_member,project_fi,project_recruit,project_require,project_intro) 
+            values ("%s","%s","%s","%s","%s","%s","%s","%s","%s")',$project,$user_id,$_POST['key1'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key7'],$_POST['key8'],$_POST['key9']);
+            
+            $temp = $Form->execute('replace into interest_project (id, interest_field) values ("%s",%d)',$project,$_POST['key6']);
+
+            if($result){
+                echo 200;
+            }
+            else {
+                echo 400;
+            }
+        }
+        else{
+            echo 401;
+        }
+
+    }
+
 	public function infoEdit(){
 		$id = $_GET['key'];
 		$Form = new Model();
@@ -429,6 +467,19 @@ class CaseController extends Controller {
     	else{
     		echo 400;
     	}
+    }
+
+    public function requestAuth(){
+        //dump($_POST);
+        $Form = new Model();
+        $id = I('post.p',0);
+        $result = $Form->execute('update project_info set status = 1 where project_id = "%s"',$id);
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
     }
 }
 ?>
