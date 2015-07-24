@@ -75,8 +75,8 @@
 <script src="__PUBLIC__/js/util/editor.js"></script>
 <script src="__PUBLIC__/js/util/send_msg.js"></script>
 <script type="text/javascript">
-    var um = editorInitialize("myEditor");
-
+    
+    var um;
     function preview(){
         var result = unescape(getContent());
         document.write(result);
@@ -99,9 +99,45 @@
         alert(getContent(um));
     }
 
+    
     addField({$type},"#artiType");
     addField({$field},"#artiField");
     addField({$object},"#artiAbout");
+    
+    if({$fill_type}==1)
+    {
+        preFill();
+    }else
+    {
+        um = editorInitialize("myEditor");
+    }
+    function preFill()
+    {
+    // if this html is for old article, pre fill the blank
+        $("#subject").val("{$article.article_title}");
+        $('#artiType').children('option').each(function(){
+            if($(this).val()=='{$article.article_type}'){
+            $(this).attr('selected','selected');
+            }
+        });
+        $('#artiField').children('option').each(function(){
+            if($(this).val()=='{$article.article_field}'){
+            $(this).attr('selected','selected');
+            }
+        });
+        $('#artiObj').children('option').each(function(){
+            if($(this).val()=='{$article.article_object}'){
+            $(this).attr('selected','selected');
+            }
+        });
+        $('#artiAbout').children('option').each(function(){
+            if($(this).val()=='{$article.article_about}'){
+            $(this).attr('selected','selected');
+            }
+        });
+        um = editorInitialize("myEditor",unescape('{$article.article_content}'));
+    
+    }
 
     function submitArticle(){
         var title = "key1="+$("#subject").val()+"&";
@@ -111,11 +147,38 @@
         var about = "key5="+$("#artiAbout").val()+"&"; 
         var content = "key6="+getContent(um)+"&";
         var data = title+type+field+object+about+content;
-        var xmlHttp = createRequest();
-        request(xmlHttp,data,"articleSave");
-        if(xmlHttp.responseText==200){
-          alert("保存成功");
+        var xmlhttp = createRequest();
+
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                //alert(xmlhttp.responseText);
+                alert(xmlhttp.responseText);
+            }
         }
+        if ({$fill_type}==1) 
+        {
+            data=data+"key7={$article.article_id}";
+            xmlhttp.open("POST","articleUpdate",true);
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send(data);
+        }else
+        {
+            xmlhttp.open("POST","articleSave",true);
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send(data);
+        }
+        
+       
+        /*if({$fill_type})
+        {
+            data=data+"key7={$article.article_id}";
+            request(xmlHttp,data,"articleUpdate");
+        }
+        else
+            request(xmlHttp,data,"articleSave");*/
+        
 
     }
 
