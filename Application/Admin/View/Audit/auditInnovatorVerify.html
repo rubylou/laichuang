@@ -80,12 +80,14 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">基本信息</p>
-								<p>姓名:{$user.name}</p>
-								<p>电话:{$user.phone}</p>
-								<p>邮箱:{$user.email}</p>
-								<p>性别</p>
-								<p>生日</p>
-								<p>地区</p>
+								<p>&nbsp;&nbsp;<small>姓名:{$user.name}</small></p>
+								<p>&nbsp;&nbsp;<small>电话:{$user.phone}</small></p>
+								<p>&nbsp;&nbsp;<small>邮箱:{$user.email}</small></p>
+								<p>
+									&nbsp;&nbsp;<small>性别: {$user.gender}</small>
+								</p>
+								<p >&nbsp;&nbsp;<small>生日: {$user.birthday}</small></p>
+								<p >&nbsp;&nbsp;<small>地区: {$user.city}</small></p>
 
 							</div>
 						</div>
@@ -94,6 +96,11 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">教育背景</p>
+								<p class="theme-h4">
+									<small>&nbsp;&nbsp;{$edu.school}</small>
+								</p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.degree}</small></p>
+								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.year}年{$edu.mon}月入学</small></p>
 							</div>
 						</div>
 					</div>
@@ -101,6 +108,10 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">链接社交账号</p>
+								<p>
+									<a><span class="glyphicon glyphicon-link theme-color"></span></a>
+	 								<a class="btn theme-logo" href="{$user.sns_id}"><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+								</p>
 							</div>
 						</div>
 					</div>

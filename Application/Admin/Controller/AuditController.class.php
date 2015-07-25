@@ -137,8 +137,13 @@ class AuditController extends Controller {
         $fields = C('INTEREST_FIELD');
         $Form = new Model();
         
+
+
+
         $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$id);
         $user[0]['business'] = $fields[$user[0]['business']];
+        $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
+        $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
         $this->user = $user[0];
 
         $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$id);
@@ -151,6 +156,22 @@ class AuditController extends Controller {
             $this->assign('joblist',$jobs);
         }
         $this->user_id=$id;
+
+
+        //教育背景
+        $edu = $Form->query('select * from user_edu where user_id="%s"',$_SESSION['id']);
+        if($edu){
+            $edu[0]['degree'] = C('DEGREE_CODE')[$edu[0]['degree']];
+            $edu[0]['year'] = intval(substr($edu[0]['start'],0,4));
+            $edu[0]['mon'] = intval(substr($edu[0]['start'],5,2));
+            $this->edu = $edu[0];
+        }
+
+
+
+
+
+
         $this->display();
     }
     public function receiveInnovatorVerifyResult(){
@@ -196,7 +217,8 @@ class AuditController extends Controller {
         //get all need information 
         //dump($user_id);
         $Form = new Model();
-        
+    
+     
         $pinfoRaw=$Form->query("select * from investor_personal where user_id=".$user_id);
         $this->userInfo=json_encode($pinfoRaw);
         //dump($this->userInfo);
@@ -222,6 +244,54 @@ class AuditController extends Controller {
             //dump($cases);
             //$this->assign('caselist',$cases);
         }
+
+        //投资项目
+        $pros = $Form->query('select project_investor.project_id, project_name, project_logo from project_investor 
+                inner join project_info on project_investor.project_id = project_info.project_id
+                where user_id="%s"', $user_id);
+        if($pros){
+            $this->pros = $pros;
+            $this->assign('prolist',$pros);
+        }
+        //关注项目
+        $watch = $Form->query('select object_id, project_name, project_logo from relation_follow 
+            inner join project_info on project_id = object_id
+            where user_id="%s" and object_type="%s" and follow_status=1',$user_id,C(PROJECT_CODE));
+        if($watch){
+            $this->watch = $watch;
+            $this->assign('watchlist',$watch);
+        }
+
+        //工作经历
+            $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$user_id);
+            if($jobs){
+                foreach ($jobs as $key => $value) {
+                    $jobs[$key]['job_start'] = substr($value['job_start'], 0,7);
+                    $jobs[$key]['job_end'] = substr($value['job_end'], 0,7);
+                }
+                $this->jobs = $jobs;
+                $this->assign('joblist',$jobs);
+            }
+            $user = $Form->query("select * from investor_personal where user_id='%s'",$user_id);
+            $this->user = $user[0];
+
+            //认证资料
+            if($user[0]['user_type']==1){
+                $auth = $Form->query('select * from investor_company where user_id = "%s"', $user_id);
+                $this->auth = $auth[0];
+                //dump($this->auth);
+            }
+            else if($user[0]['user_type']==2){
+                $auth = $Form->query('select * from investor_fi where user_id = "%s"',$user_id);
+                $this->auth = $auth[0];
+            }
+
+            $this->rounds = json_encode(C('INVEST_ROUND'));
+            $this->currency = json_encode(C('CURRENCY_CODE'));
+            $fields = C('INTEREST_FIELD');
+            $fieldlen = count($fields);
+            $this->field = json_encode($fields);
+            $this->fieldlen = $fieldlen;
 
         $this->display();
     }

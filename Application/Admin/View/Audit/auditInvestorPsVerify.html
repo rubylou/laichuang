@@ -51,6 +51,20 @@
 						<h3 class="panel-title">投资案例</h3>
 					</div>
 				  	<div class="panel-body">
+				  		<div class="panel">
+			  				<div class="panel-body">
+								<div class="row">
+									<volist name="prolist" id="pros">
+										<div class="col-md-1 col-xs-3 theme-nav">
+											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+										</div>
+										<div class="col-md-2 col-xs-8 theme-nav">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+										</div>
+									</volist>
+								</div>
+							</div>
+						</div>
 				  		<div ng-repeat="x in cases">
 				  			<div class="panel">
 				  				<div class="panel-body">
@@ -122,6 +136,71 @@
 								<p class="theme-h4"><small>&nbsp;&nbsp;职位: {{userInfo.title}}</small></p>
 							</div>
 						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">财产信息或公司信息</p>
+					            <form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="finance_form">
+					            	<if condition="$user.user_type eq 1">
+						            	<div class="form-group">
+							              <label for="companyType"><span class="required">*</span>公司性质</label>
+							              <select class="form-control" name="companyType" id="companyType">
+							                <option value="1">国有企业</option>
+							                <option value="2">民营企业</option>
+							                <option value="3">三资企业</option>
+							                <option value="4">其他企业</option>
+							              </select>
+							            </div>
+						            	<div class="form-group">
+						              		<label><span class="required">*</span>营业执照</label>
+										    <if condition="strlen($auth['license']) gt 0">
+										    	<a href="{$auth.license}">已上传营业执照</a>
+										    </if>
+										    <!--input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>组织机构代码证</label>
+							              	<if condition="strlen($auth['company_code']) gt 0">
+							              		<a href="{$auth.company_code}">已上传机构代码证</a>
+							              	</if>
+											<!--input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>近三年财务报表</label>
+							              	<if condition="strlen($auth['fi_statement']) gt 0">
+							              		<a href="{$auth.fi_statement}">已上传财物报表</a>
+							              	</if>
+											<!--input type="file" name="statement" id="statement" accept="application/pdf" height="0px" width="0px"/-->
+										</div>
+									</if>
+									<if condition="$user.user_type eq 2">
+										<div class="form-group">
+							              <label for="fiType"><span class="required">*</span>财产证明类型</label>
+							              <select class="form-control" name="fiType" id="fiType">
+							                <option value="1">税单(年收入>100万证明)</option>
+							                <option value="2">房产证明(固定资产>1000万证明)</option>
+							                <option value="3">证券类资产>100万证明</option>
+							              </select>
+							            </div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>财产证明</label>
+							              	<if condition="strlen($auth['financial_doc']) gt 0">
+							              		<a href="{$auth.financial_doc}">已上传财产证明</a>
+							              	</if>
+											<!--input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+											<label><span class="required">*</span>说明</label>
+											<div id="financeInfo">
+							  					<textarea rows='5' name="pro_require" id="pro_require" class="form-control">{$auth.financial_info}</textarea>
+											</div>
+										</div>
+									</if>
+									<!--input type="submit" class="btn btn-default theme-btn-inverse" value="上传"/-->
+								</form>
+							</div>
+						</div>
+						<hr>
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">社交账号</p>
@@ -133,6 +212,23 @@
 						</div>
 					</div>
 			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">关注项目</h3>
+					</div>
+					<div class="panel-body">
+						<volist name="watchlist" id="watch">
+				  			<div class="row">
+					  			<div class="col-md-2 col-xs-3 theme-nav">
+									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+								</div>
+								<div class="col-md-9 col-xs-8 theme-nav">
+									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
+								</div>
+							</div>
+				  		</volist>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -157,4 +253,9 @@
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script type="text/javascript">
+function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+ 	}
+</script>
 </html>
