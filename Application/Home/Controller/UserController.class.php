@@ -244,6 +244,9 @@ class UserController extends Controller {
             }
             $this->interests = json_encode($result);
         }
+        else{
+            $this->interests = json_encode(null);
+        }
 
         $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$id);
         if($cases){

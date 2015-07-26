@@ -179,12 +179,12 @@
 						<div class="row">
 							<if condition="session('type') eq 1">
 								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-									<a class="btn btn-default theme-btn-inverse form-control">我要投资</a>
+									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$info.project_id},'INVEST','PROJECT')">我要投资</a>
 								</div>
 							</if>
 							<if condition="session('type') eq 2">
 								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
-									<a class="btn btn-default theme-btn-inverse form-control">我要加入</a>
+									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$info.project_id},'JOIN','PROJECT')">我要加入</a>
 								</div>
 							</if>
 						</div>
@@ -222,10 +222,21 @@
 		  <div class="modal-content">
 		    <div class="modal-body">
 		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		      <textarea rows="3" class="form-control" id="request_info" style="display:none"></textarea>
 		    </div>
 		    <div class="modal-footer">
 		      <div id="alertBtn">
 		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="joinRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="join_confirm">确定</button>
+			    <button type="button" class="btn btn-default" data-dismiss="modal" id="join_cancel">取消</button>
+			    <input type="hidden" id="join_input" />
+		      </div>
+		      <div id="investRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="invest_confirm">确定</button>
+			    <button type="button" class="btn btn-default" data-dismiss="modal" id="invest_cancel">取消</button>
+			    <input type="hidden" id="invest_input" />
 		      </div>
 		    </div>
 		  </div>
@@ -261,5 +272,22 @@
 	function openProject(id){
 	  window.open("{:U('Home/Case/info/key/"+id+"')}");
 	}
+
+	$('#join_confirm').click(function(){
+		send_message($('#join_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
+	});
+
+	$('#join_cancel').click(function(){
+		$('#join_input').val('');
+	});
+
+	$('#invest_confirm').click(function(){
+		send_message($('#invest_input').val(),'{:U("Home/Message/receiver")}');
+	});
+
+	$('#invest_cancel').click(function(){
+		$('#invest_input').val('');
+	});
+  
 </script>
 </html>

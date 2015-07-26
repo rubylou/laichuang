@@ -451,6 +451,11 @@
 			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
 			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
 			  </div>
+			   <div id="membersRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="members_confirm">发送</button>
+			    <button type="button" class="btn btn-default" data-dismiss="modal" id="members_cancel">不发送</button>
+			    <input type="hidden" id="members_input" />
+		      </div>
 		    </div>
 		  </div>
 		</div>
@@ -508,7 +513,8 @@
 		data = member+title+pro;
 		request(xmlHttp,data,"__URL__/queryUser");
 		if(xmlHttp.responseText==200){
-			document.location.reload();
+			//document.location.reload();
+			request_message('{$info.project_id}','MEMBERS','PROJECT',$("#member").val());
 		}
 		else if(xmlHttp.responseText==404){
 			$('#member').val('');
@@ -719,26 +725,16 @@
 		
 	}
 
-	$('#delFi_confirm').click(function(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-	});
-	$('#delFi_cancel').click(function(){
-		$('#delFi_input').val('');
+	
+	$('#members_confirm').click(function(){
+		send_message($('#members_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
 	});
 
-	function submitAuth(id){
-	    var xmlHttp = createRequest();
-	    request(xmlHttp,'p='+id,"requestAuth");
-	    if(xmlHttp.responseText == '200'){
-	      alert('提交成功');
-	      document.location.reload();
-	    }
-	}
-
+	$('#members_cancel').click(function(){
+		$('#members_input').val('');
+		document.location.reload();
+	});
 	
 
 </script>
