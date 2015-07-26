@@ -1,4 +1,5 @@
 <?php
+use Think\Model;
     function getCode($num,$w,$h) {  
         $code = "";  
         for ($i = 0; $i < $num; $i++) {  
@@ -63,5 +64,129 @@
         }
       }
     }
+
+
+    
+    /**********************************************************************************************************************/
+    //下面的都是用来发短信用的
+    function generate_code()
+    {
+        $length=6;
+        $code=rand(pow(10,($length-1)), pow(10,$length)-1);;
+        return $code;
+    }
+    function send_forward_msg($mobile,$content)
+    {
+        $uid=C(MSGUID);
+        $pwd=C(MSGPWD);
+        $res ="OK";//= sendSMS($uid,$pwd,$mobile,$content);
+        if($res=="OK")
+        {
+            
+           return "OK";
+        }else
+        {
+            return "FAIL";
+        }
+    }
+    function send_msg($mobile)
+    {
+        $uid=C(MSGUID);
+        $pwd=C(MSGPWD);
+        $code=generate_code();
+        $content=sprintf("欢迎加入来创，您的验证码为：%s ，请于60秒内输入验证码，过期失效。[来创]",$code);
+        $res ="OK";//= sendSMS($uid,$pwd,$mobile,$content);
+        if($res=="OK")
+        {
+            $Form = new Model();
+            $overtime=time()+60;
+            $insert = $Form->execute('replace into mobile_check (mobile,check_code,over_time) 
+            values ("%s","%s","%d")',
+            $mobile,$code,$overtime);
+            if($insert)
+                return "OK";
+            else
+                return "FAIL";
+        }else
+        {
+            return "FAIL";
+        }
+    }
+    function check_mobile($mobile,$code){
+        $Form = new Model();
+        $now=time();
+        $record=$Form->query("select * from mobile_check where mobile='%s' ",$mobile);
+        if($record)
+        {
+            $r=$record[0];
+            $stamp=intval($r.over_time);
+            if($stamp<$now)
+                return "EXPIRE";
+            if($r.check_code!=$code)
+                return "UNCORRECT";
+            return "OK";
+        }else
+        {
+            return "FAIL";
+        }
+    }
+    function sendSMS($uid,$pwd,$mobile,$content,$time='',$mid='')
+    {
+        $http = 'http://api.cnsms.cn/';
+        $data = array
+            (
+            'ac'=>'send',
+            'uid'=>$uid,                    //用户账号
+            'pwd'=>strtolower(md5($pwd)),   //MD5位32密码
+            'mobile'=>$mobile,              //号码
+            'content'=>$content,         //内容
+            'encode'=> 'utf8'
+            //'time'=>'2010-05-27 12:11',     //定时发送
+            );
+        $re= postSMS($http,$data);          //POST方式提交
+        if( trim($re) == '100' )
+        {
+            return "OK";
+         }
+        else 
+        {
+            return trim($re);
+        }
+    }
+
+    function postSMS($url,$data='')
+    {
+        $row = parse_url($url);
+        $host = $row['host'];
+        $port = $row['port'] ? $row['port']:80;
+        $file = $row['path'];
+        while (list($k,$v) = each($data)) 
+        {
+            $post .= rawurlencode($k)."=".rawurlencode($v)."&"; //转URL标准码
+        }
+        $post = substr( $post , 0 , -1 );
+        $len = strlen($post);
+        $fp = @fsockopen( $host ,$port, $errno, $errstr, 10);
+        if (!$fp) {
+            return "$errstr ($errno)\n";
+        } else {
+            $receive = '';
+            $out = "POST $file HTTP/1.0\r\n";
+            $out .= "Host: $host\r\n";
+            $out .= "Content-type: application/x-www-form-urlencoded\r\n";
+            $out .= "Connection: Close\r\n";
+            $out .= "Content-Length: $len\r\n\r\n";
+            $out .= $post;      
+            fwrite($fp, $out);
+            while (!feof($fp)) {
+                $receive .= fgets($fp, 128);
+            }
+            fclose($fp);
+            $receive = explode("\r\n\r\n",$receive);
+            unset($receive[0]);
+            return implode("",$receive);
+        }
+    }
+    /**********************************************************************************************************************/
     
  ?>

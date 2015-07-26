@@ -3,11 +3,19 @@ namespace Admin\Controller;
 use Think\Controller;
 use Think\Model;
 class IndexController extends Controller {
+    
     public function index(){
+        /*$mobile="18801967263";
+        //$res=send_msg($mobile);
+        $e=check_mobile("18801967263","929233");
+        dump($mobile);
+        dump($res);
+        dump($e);*/
     	$this->display();
     }
-
+    
     public function login(){
+       
     	$Form = new Model();
     	$user = $Form->query("select * from admin_personal where admin_id = '%s'", $_POST['loginuser']);
     	if($user[0]['admin_pwd']===$_POST['loginpwd']){
