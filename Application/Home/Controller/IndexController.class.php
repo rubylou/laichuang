@@ -64,7 +64,8 @@ class IndexController extends Controller {
 
     public function loginCheck(){
         $Form = new Model();
-        if(mysql_real_escape_string($_POST['value'])==='1'){
+        if(intval($_POST['value'])===1){
+            //echo 'aaa';
             $name = mysql_real_escape_string($_POST['key1']);
             $pwd = mysql_real_escape_string($_POST['key2']);
             $result = $Form->query('select user_id, name, portrait from investor_personal where mobile="%s" or email="%s"',$name,$name);
@@ -86,7 +87,8 @@ class IndexController extends Controller {
                 echo 400;
             }
         }
-        else if(mysql_real_escape_string($_POST['value'])==='2'){
+        else if(intval($_POST['value'])===2){
+            //echo 'bbb';
             $name = mysql_real_escape_string($_POST['key1']);
             $pwd = mysql_real_escape_string($_POST['key2']);
             $result = $Form->query('select user_id,name, portrait from entrepreneur_personal where phone="%s" or email="%s"',$name,$name);
