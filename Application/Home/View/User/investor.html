@@ -197,10 +197,6 @@
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	addInterests({$interests},"#interests");
 
-  	function openProject(id){
-	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
- 	}
-
  	$('#require_confirm').click(function(){
 		send_message($('#require_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
 	});
@@ -208,6 +204,10 @@
 	$('#require_cancel').click(function(){
 		$('#require_input').val('');
 	});
+
+	function openProject(id){
+	    window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
 
 </script>
 </html>

@@ -246,7 +246,9 @@
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script src="__PUBLIC__/js/Home/Case/edit.js"></script>
+<script src="__PUBLIC__/js/Home/Case/init.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
+
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 	$('input[data-toggle=popover]').popover({'html':true});
@@ -260,18 +262,6 @@
 	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
 	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
 	addInterests({$interests},"#interests");
-
-	function openUser(id){
-	  window.open("{:U('Home/User/innovator/val/"+id+"')}");
-	}
-
-	function openInvestor(id){
-	  window.open("{:U('Home/User/investor/val/"+id+"')}");
-	}
-
-	function openProject(id){
-	  window.open("{:U('Home/Case/info/key/"+id+"')}");
-	}
 
 	$('#join_confirm').click(function(){
 		send_message($('#join_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
@@ -288,6 +278,18 @@
 	$('#invest_cancel').click(function(){
 		$('#invest_input').val('');
 	});
+
+	function openProject(id){
+	    window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
+
+	function openUser(id){
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function openInvestor(id){
+		window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
   
 </script>
 </html>

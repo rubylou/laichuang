@@ -122,7 +122,7 @@ class MessageController extends Controller {
 				$followers = $model -> query('select user_id from relation_follow where object_id="%s" and object_type = 1 and follow_status = 1',$to);
 				$investors = $model -> query('select user_id from project_investor where project_id="%s"',$to);
 				$users = arrayUnion($followers,$investors,'user_id');
-
+				
 				$data['from_id'] = $to;
 				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
 				$data['msg_content'] = $content;
@@ -161,7 +161,7 @@ class MessageController extends Controller {
 				}
 			}
 		}
-		
+
 		if($msg_type === 'ARTICLES_CODE'){
 
 		}
