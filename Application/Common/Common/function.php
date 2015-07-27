@@ -189,4 +189,14 @@ use Think\Model;
     }
     /**********************************************************************************************************************/
     
+    function arrayUnion($arr1,$arr2,$token){
+        foreach ($arr1 as $key => $value) {
+            $arr1[$key] = $value[$token];
+        }
+        foreach ($arr2 as $key => $value) {
+            $arr2[$key] = $value[$token];
+        }
+        $arr3 = array_merge($arr1,$arr2);
+        return array_unique($arr3);
+    }
  ?>

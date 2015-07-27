@@ -429,33 +429,38 @@
 			  </div>
 		    </div>
 		    <div class="modal-footer">
-		      <div id="alertBtn">
-		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
-		      </div>
-		      <div id="delFiBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delFi_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delFi_cancel">取消</button>
-			      <input type="hidden" id="delFi_input" />
-			  </div>
-			  <div id="delMemberBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delMember_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delMember_cancel">取消</button>
-			      <input type="hidden" id="delMember_input" />
-			  </div>
-			  <div id="delInvestorBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delInvestor_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delInvestor_cancel">取消</button>
-			      <input type="hidden" id="delInvestor_input" />
-			  </div>
-			  <div id="editFieldBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
-			  </div>
-			   <div id="membersRequest">
-		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="members_confirm">发送</button>
-			    <button type="button" class="btn btn-default" data-dismiss="modal" id="members_cancel">不发送</button>
-			    <input type="hidden" id="members_input" />
-		      </div>
+		      	<div id="alertBtn">
+		      		<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      	</div>
+				<div id="delFiBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delFi_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delFi_cancel">取消</button>
+				  	<input type="hidden" id="delFi_input" />
+				</div>
+				<div id="delMemberBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delMember_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delMember_cancel">取消</button>
+				  	<input type="hidden" id="delMember_input" />
+				</div>
+				<div id="delInvestorBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delInvestor_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delInvestor_cancel">取消</button>
+				  	<input type="hidden" id="delInvestor_input" />
+				</div>
+			  	<div id="editFieldBtn">
+			      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+			  	</div>
+			   	<div id="membersRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="members_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="members_cancel">不发送</button>
+			    	<input type="hidden" id="members_input" />
+		      	</div>
+		      	<div id="financialRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="financial_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="financial_cancel">不发送</button>
+			    	<input type="hidden" id="financial_input" />
+		      	</div>
 		    </div>
 		  </div>
 		</div>
@@ -725,6 +730,19 @@
 		
 	}
 
+	$('#delFi_confirm').click(function(){
+	  var xmlHttp = createRequest();
+	  request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
+	  if(xmlHttp.responseText==200){
+	    document.location.reload();
+	  }
+	});
+
+	$('#delFi_cancel').click(function(){
+	  $('#delFi_input').val('');
+	});
+
+
 	
 	$('#members_confirm').click(function(){
 		send_message($('#members_input').val(),'{:U("Home/Message/receiver")}');
@@ -733,6 +751,16 @@
 
 	$('#members_cancel').click(function(){
 		$('#members_input').val('');
+		document.location.reload();
+	});
+
+	$('#financial_confirm').click(function(){
+		send_message($('#financial_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#financial_cancel').click(function(){
+		$('#financial_input').val('');
 		document.location.reload();
 	});
 	

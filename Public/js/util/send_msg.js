@@ -42,7 +42,7 @@ function request_message(id,value,obj,attach){
 	var to = 'to='+id+"&";
 	var type = 'type='+value+"&";
 	var obj = "obj="+obj+"&";
-	
+
 	if(attach){
 		var attach = "attach="+attach+"&";
 	}
@@ -76,7 +76,14 @@ function request_message(id,value,obj,attach){
 		$('#editField').hide();
 		$('.modal-footer').find('div').hide();
 		$('.modal-footer').find('div').filter('#membersRequest').show();
-		modalShow('alert_content','myModal','添加成功!<br>是否将成员更新的消息发送给投资人以及项目关注者?');
+		modalShow('alert_content','myModal','添加成功!<br><br>是否将成员更新的消息发送给投资人以及项目关注者?');
+	}
+	else if(value=="FINANCIAL"){
+		$('#financial_input').val(data);
+		$('#editField').hide();
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#financialRequest').show();
+		modalShow('alert_content','myModal','添加成功!<br><br>是否将融资更新的消息发送给投资人以及项目关注者?');
 	}
 	
 }

@@ -49,8 +49,8 @@ function fi_submit(id){
     }
 
     if(xmlHttp.responseText==200){
-      document.location.reload();
-
+      //document.location.reload();
+      request_message(id,'FINANCIAL','PROJECT',$('#round').val());
     }
     else{
       
@@ -112,16 +112,5 @@ function delFi(id){
   modalShow('alert_content','myModal','确认删除该融资信息?');
 }
 
-$('#delFi_confirm').click(function(){
-  var xmlHttp = createRequest();
-  request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-});
-
-$('#delFi_cancel').click(function(){
-  $('#delFi_input').val('');
-});
 
 

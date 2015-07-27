@@ -121,18 +121,57 @@ class MessageController extends Controller {
 
 				$followers = $model -> query('select user_id from relation_follow where object_id="%s" and object_type = 1 and follow_status = 1',$to);
 				$investors = $model -> query('select user_id from project_investor where project_id="%s"',$to);
-				$users = array_merge($followers,$investors);
-				$users = array_unique($users);
+				$users = arrayUnion($followers,$investors,'user_id');
 
 				$data['from_id'] = $to;
 				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
 				$data['msg_content'] = $content;
 				$data['sent_time'] = date('Y-m-d H:i:s');
 				foreach ($users as $key => $value) {
-					$data['to_id'] = $value['user_id'];
+					$data['to_id'] = $value;
 					$result = $Form->add($data);
 				}
 			}
+		}
+
+		if($msg_type === 'FINANCIAL_CODE'){
+			if($object === 'PROJECT'){
+				$round = C('INVEST_ROUND')[intval($_POST['attach'])];
+
+				$project = $model -> query('select project_id, project_name from project_info where project_id = "%s"',$to);
+				if($project){
+					$project_name = $project[0]['project_name'];
+					$content = '<p>您关注/投资的项目<a onclick="openProject(\''.$to.'\')">'.$project_name.'</a>进行了'.$round.'融资。</p>';
+				}
+
+				$followers = $model -> query('select user_id from relation_follow where object_id="%s" and object_type = 1 and follow_status = 1',$to);
+				//dump($followers);
+				$investors = $model -> query('select user_id from project_investor where project_id="%s"',$to);
+				//dump($investors);
+				$users = arrayUnion($followers,$investors,'user_id');
+				//dump($users);
+
+				$data['from_id'] = $to;
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$data['msg_content'] = $content;
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				foreach ($users as $key => $value) {
+					$data['to_id'] = $value;
+					$result = $Form->add($data);
+				}
+			}
+		}
+		
+		if($msg_type === 'ARTICLES_CODE'){
+
+		}
+
+		if($msg_type === 'PROJECTS_CODE'){
+
+		}
+
+		if($msg_type === 'AUTHORIZATION_CODE'){
+
 		}
 	}
 }
