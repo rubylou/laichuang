@@ -95,11 +95,11 @@ use Think\Model;
         $pwd=C(MSGPWD);
         $code=generate_code();
         $content=sprintf("欢迎加入来创，您的验证码为：%s ，请于60秒内输入验证码，过期失效。[来创]",$code);
-        $res ="OK";//= sendSMS($uid,$pwd,$mobile,$content);
+        $res = sendSMS($uid,$pwd,$mobile,$content);
         if($res=="OK")
         {
             $Form = new Model();
-            $overtime=time()+60;
+            $overtime=time()+120;//设定超时
             $insert = $Form->execute('replace into mobile_check (mobile,check_code,over_time) 
             values ("%s","%s","%d")',
             $mobile,$code,$overtime);

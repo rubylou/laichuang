@@ -5,12 +5,12 @@ use Think\Model;
 class IndexController extends Controller {
     
     public function index(){
-        /*$mobile="18801967263";
+        /**/$mobile="18801967263";
         //$res=send_msg($mobile);
-        $e=check_mobile("18801967263","929233");
-        dump($mobile);
-        dump($res);
-        dump($e);*/
+        //$e=check_mobile($mobile,"513711");
+        //dump($mobile);
+        //dump($res);
+        //dump($e);
     	$this->display();
     }
     
