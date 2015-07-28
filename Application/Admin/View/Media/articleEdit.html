@@ -71,21 +71,43 @@
 		    </div>
 	    </div>
 	</div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 id="alert_content" style="color:#5B5B5B"></h4>
+                </div>
+                <div class="modal-footer">
+                    <div id="alertBtn">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+                    </div>
+                    <div id="articlesRequest">
+                        <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="articles_confirm">发送</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="articles_cancel">不发送</button>
+                        <input type="hidden" id="articles_input" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="__PUBLIC__/js/util/editor.js"></script>
 <script src="__PUBLIC__/js/util/send_msg.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
 <script type="text/javascript">
-    
-    var um;
+
+    if({$fill_type}==1){
+        preFill();
+    }
+    else{
+        var um = editorInitialize("myEditor");
+    }
+
     function preview(){
         var result = unescape(getContent());
         document.write(result);
-    }
-
-    function addOption(value,index,id){
-        var option = $('<option></option').text(value);
-        option.attr('value',index);
-        $(id).append(option);
     }
 
     function addField(value,id){
@@ -94,23 +116,12 @@
           addOption(fields[i],i,id);
         }
     }
-
-    function alertContent(){
-        alert(getContent(um));
-    }
-
     
     addField({$type},"#artiType");
     addField({$field},"#artiField");
     addField({$object},"#artiAbout");
     
-    if({$fill_type}==1)
-    {
-        preFill();
-    }else
-    {
-        um = editorInitialize("myEditor");
-    }
+    
     function preFill()
     {
     // if this html is for old article, pre fill the blank
@@ -153,8 +164,7 @@
         {
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
-                //alert(xmlhttp.responseText);
-               // alert(xmlhttp.responseText);
+                request_message(xmlhttp.responseText,'ARTICLES',$("#artiAbout").val(),$("#artiObj").val());
             }
         }
         if ({$fill_type}==1) 
@@ -170,17 +180,19 @@
             xmlhttp.send(data);
         }
         
-       
-        /*if({$fill_type})
-        {
-            data=data+"key7={$article.article_id}";
-            request(xmlHttp,data,"articleUpdate");
-        }
-        else
-            request(xmlHttp,data,"articleSave");*/
         
 
     }
+
+    $('#articles_confirm').click(function(){
+        send_message($('#articles_input').val(),'{:U("Home/Message/receiver")}');
+        document.location.reload();
+    });
+
+    $('#articles_cancel').click(function(){
+        $('#articles_input').val('');
+        document.location.reload();
+    });
 
     
     

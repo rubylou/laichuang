@@ -9,9 +9,7 @@
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/editor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="__PUBLIC__/editor/ueditor.all.min.js"> </script>
     <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
@@ -94,7 +92,14 @@
                 <h4 id="alert_content" style="color:#5B5B5B"></h4>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+                <div id="alertBtn">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+                </div>
+                <div id="projectsRequest">
+                    <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="projects_confirm">发送</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="projects_cancel">不发送</button>
+                    <input type="hidden" id="projects_input" />
+                </div>
               </div>
             </div>
           </div>
@@ -112,5 +117,16 @@
   var um = editorInitialize("myEditor");
   var field = {$field};
   optionInitialize(field);
+  $('#projects_confirm').click(function(){
+      send_message($('#projects_input').val(),'{:U("Home/Message/receiver")}');
+      //document.location.reload();
+      window.location.href='../User/index';
+  });
+
+  $('#articles_cancel').click(function(){
+      $('#articles_input').val('');
+      document.location.reload();
+  });
+
 </script>
 </html>

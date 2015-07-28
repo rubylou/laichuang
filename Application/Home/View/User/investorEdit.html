@@ -32,7 +32,11 @@
 					  			<form method="post" action="__URL__/profileSave" enctype="multipart/form-data" id="profile_form">
 								    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
 								</form>
-							    <input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+								<if condition="strlen($user['portrait']) gt 0">
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+							    	<else />
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/investor.png' alt="头像" height="90px" width="90px">
+							    </if>
 					  		</div>
 							<div class="col-md-11 col-xs-12">
 								<p class="hide-edit">
@@ -59,12 +63,12 @@
 								</p>
 								<div class="row">
 									<div class="col-md-6 col-xs-12">
-										<p><small id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;
+										<p id="interests" class="hide-edit theme-small">&nbsp;&nbsp;&nbsp;
 											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
 											<a class="btn show-edit" style="display:none" onclick="editField()">
 												<small><span class="glyphicon glyphicon-pencil"></span></small>
 											</a>
-										</small></p>
+										</p>
 									</div>
 									<div class="col-md-2 col-md-offset-2 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn" href="__URL__/investor/val/{$user.user_id}">预览</a>
@@ -186,7 +190,7 @@
 											<if condition="strlen($pros['project_logo']) gt 0">
 												<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
 												<else />
-												<input type="image" class="thumbnail theme-profile" src="/lcb/Public/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
 											</if>
 										</div>
 										<div class="col-md-2 col-xs-8 theme-nav">
@@ -201,15 +205,15 @@
 				  			<div class="panel">
 				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
-								  		<div class="col-md-2 col-xs-4">
-										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/case.png' alt="Logo" height="80px" width="80px">
+								  		<div class="col-md-1 col-xs-3">
+										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="70px" width="70px">
 								  		</div>
-										<div class="col-md-6 col-xs-6">
-											<p class="theme-h4">{$cases.company}</p>
-											<p class="theme-small">{$cases.investor_name}</p>
-											<p class="theme-small"><span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
+										<div class="col-md-6 col-md-offset-1 col-xs-9">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$cases.company}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;{$cases.investor_name}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;<span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
 										</div>
-										<div class="col-md-2 col-md-offset-2 col-xs-2">
+										<div class="col-md-2 col-md-offset-2 col-xs-6 col-xs-offset-6">
 											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
 											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delCase('{$cases.case_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
@@ -380,7 +384,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
-								<img class="thumbnail" src="{$user.mycard}" height="162" width="288"></img>
+								<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
 							</div>
 						</div>
 						<hr>
@@ -480,7 +484,11 @@
 						<volist name="watchlist" id="watch">
 				  			<div class="row">
 					  			<div class="col-md-2 theme-nav col-xs-3">
-									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+					  				<if condition="strlen($watch['project_logo']) gt 0">
+										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+										<else />
+										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+									</if>
 								</div>
 								<div class="col-md-9 theme-nav col-xs-8">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>

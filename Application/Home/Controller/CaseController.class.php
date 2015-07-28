@@ -38,7 +38,7 @@ class CaseController extends Controller {
             $temp = $Form->execute('replace into interest_project (id, interest_field) values ("%s",%d)',$project,$_POST['key6']);
 
             if($result){
-                echo 200;
+                echo $project;
             }
             else {
                 echo 400;
