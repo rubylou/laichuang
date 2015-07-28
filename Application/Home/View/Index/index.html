@@ -84,11 +84,11 @@
             <div class="row">
               <div class="col-md-2">
                 <if condition="$vo.thumb neq ''">
-                  <img src="{$vo.thumb}" alt="资讯图片" height="135" width="240"/>
+                  <img src="{$vo['thumb']}" alt="资讯图片" height="135" width="240"/>
                 </if>
               </div>
               <div class="col-md-9 col-md-offset-1">
-                <a class="btn theme-color" style="font-size:18px;" onclick="requestNews('{$vo.article_id}')"><strong>{$vo.article_title}</strong></a>
+                <a class="btn theme-color" style="font-size:18px;" onclick="requestNews('{$vo[\'article_id\']}')"><strong>{$vo.article_title}</strong></a>
                 <h4><small><span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-primary">{$vo.admin_id}</span>&nbsp;&middot;&nbsp;{$vo.article_time}</small></h4>
                 <br>
                 <p>&nbsp;&nbsp;文章简要介绍</p>
@@ -233,7 +233,9 @@
       </div>
     </div>
   </div>
+  <include file="./Public/tpl/footer_home.html" />
 </body>
+<link href="__PUBLIC__/css/theme.css" rel="stylesheet">
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});

@@ -60,7 +60,7 @@
               <li>
                 <a href="{:U('Home/Message/index')}" class="theme-nav">
                   <span class="glyphicon glyphicon-envelope text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
-                  <span class="text-default theme-color">消息</span>
+                  <span class="text-default theme-color">消息&nbsp;<if condition="session('msg')"><span class="badge theme-bg">{:session('msg')}</span></if></span>
                 </a>
               </li>
               <!--<li><a href="{:U('Home/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>-->

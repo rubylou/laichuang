@@ -6,10 +6,16 @@ class MessageController extends Controller {
 	public function index(){
 		//dump($_SESSION);
 		$Form = M('messagebox');
-		$message = $Form->where('to_id = "%s"',$_SESSION['id'])->select();
+		$message = $Form->where('to_id = "%s"',$_SESSION['id'])->order('sent_time desc')->select();
 		//dump($message);
 		if($message){
 			$this->assign('msg_list',$message);
+		}
+
+		$data['ifread'] = true;
+		$read = $Form->where('to_id = "%s"',$_SESSION['id'])->save($data);
+		if($read){
+			$_SESSION['msg'] = 0;
 		}
 		$this->display();
 

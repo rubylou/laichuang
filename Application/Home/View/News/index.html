@@ -16,31 +16,158 @@
 
 <body>
   <include file="./Public/tpl/navbar_home.html" />
-  <div class="container">
-	<volist name="list" id="vo">
-		<div class="row">
-			<div class="col-md-2">
-				<if condition="$vo.thumb neq ''">
-					<img src="{$vo.thumb}" alt="资讯图片" height="135" width="240"/>
-				</if>
-			</div>
-			<div class="col-md-9 col-md-offset-1">
-				<a class="btn text-success" style="font-size:18px;" href="__URL__/detail/p/{$vo.article_id}"><strong>{$vo.article_title}</strong></a>
-				<h3><small>{$vo.admin_id}&nbsp;&middot;&nbsp;{$vo.article_time}</small></h3>
+  <div class="well">
+	  <div class="container" style="margin-top:70px">
+	  	<div>
+		  <!-- Nav tabs -->
+		  <ul class="nav nav-tabs" role="tablist" style="margin-bottom:20px">
+		    <li role="presentation" class="active"><a class="theme-color" href="#type1" aria-controls="type1" role="tab" data-toggle="tab">公司新闻</a></li>
+		    <li role="presentation"><a class="theme-color" href="#type2" aria-controls="type2" role="tab" data-toggle="tab">创业快讯</a></li>
+		    <li role="presentation"><a class="theme-color" href="#type3" aria-controls="type3" role="tab" data-toggle="tab">前沿科技</a></li>
+		    <li role="presentation"><a class="theme-color" href="#type4" aria-controls="type4" role="tab" data-toggle="tab">创业政策</a></li>
+		    <li role="presentation"><a class="theme-color" href="#type5" aria-controls="type5" role="tab" data-toggle="tab">创业者故事</a></li>
+		  </ul>
 
-			</div>
+		  <!-- Tab panes -->
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane fade in active" id="type1">
+		    	<volist name="list1" id="vo1">
+		    		<div class="panel">
+		    			<div class="panel-body">
+							<div class="row">
+								<if condition="$vo1['thumb'] neq ''">
+									<div class="col-md-2">
+										<input type="image" src="{$vo1.thumb}" alt="资讯图片" height="135" width="240" onclick="javascript: window.location.href = '__URL__/detail/p/{$vo1.article_id}'"/>
+									</div>
+								</if>
+								<div class="col-md-9 col-md-offset-1">
+									<a class="btn theme-color theme-h4" href="__URL__/detail/p/{$vo1.article_id}">{$vo1.article_title}</a>
+									<h3><small><span class="glyphicon glyphicon-user text-default" aria-hidden="true"></span>&nbsp;&nbsp;{$vo1.admin_nickname}&nbsp;&middot;&nbsp;{$vo1.article_time}</small></h3>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo1.article_visits}&nbsp;)&nbsp;</small></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+	  		</div>
+		    <div role="tabpanel" class="tab-pane fade" id="type2">
+		    	<volist name="list2" id="vo2">
+		    		<div class="panel">
+		    			<div class="panel-body">
+							<div class="row">
+								<if condition="$vo2['thumb'] neq ''">
+									<div class="col-md-2">
+										<input type="image" src="{$vo2.thumb}" alt="资讯图片" height="135" width="240" onclick="javascript: window.location.href = '__URL__/detail/p/{$vo2.article_id}'"/>
+									</div>
+								</if>
+								<div class="col-md-9 col-md-offset-1">
+									<a class="btn theme-color theme-h4" style="font-size:18px;" href="__URL__/detail/p/{$vo2.article_id}">{$vo2.article_title}</a>
+									<h3><small><span class="glyphicon glyphicon-user text-default" aria-hidden="true"></span>&nbsp;&nbsp;{$vo2.admin_nickname}&nbsp;&middot;&nbsp;{$vo2.article_time}</small></h3>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo2.article_visits}&nbsp;)&nbsp;</small></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="type3">
+		    	<volist name="list3" id="vo3">
+		    		<div class="panel">
+		    			<div class="panel-body">
+							<div class="row">
+								<if condition="$vo3['thumb'] neq ''">
+									<div class="col-md-2">
+										<input type="image" src="{$vo3.thumb}" alt="资讯图片" height="135" width="240" onclick="javascript: window.location.href = '__URL__/detail/p/{$vo3.article_id}'"/>
+									</div>
+								</if>
+								<div class="col-md-9 col-md-offset-1">
+									<a class="btn theme-color theme-h4" style="font-size:18px;" href="__URL__/detail/p/{$vo3.article_id}">{$vo3.article_title}</a>
+									<h3><small><span class="glyphicon glyphicon-user text-default" aria-hidden="true"></span>&nbsp;&nbsp;{$vo3.admin_nickname}&nbsp;&middot;&nbsp;{$vo3.article_time}</small></h3>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo3.article_visits}&nbsp;)&nbsp;</small></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="type4">
+		    	<volist name="list4" id="vo4">
+		    		<div class="panel">
+		    			<div class="panel-body">
+							<div class="row">
+								<if condition="$vo4['thumb'] neq ''">
+									<div class="col-md-2">
+										<input type="image" src="{$vo4.thumb}" alt="资讯图片" height="135" width="240" onclick="javascript: window.location.href = '__URL__/detail/p/{$vo4.article_id}'"/>
+									</div>
+								</if>
+								<div class="col-md-9 col-md-offset-1">
+									<a class="btn theme-color theme-h4" style="font-size:18px;" href="__URL__/detail/p/{$vo4.article_id}">{$vo4.article_title}</a>
+									<h3><small><span class="glyphicon glyphicon-user text-default" aria-hidden="true"></span>&nbsp;&nbsp;{$vo4.admin_nickname}&nbsp;&middot;&nbsp;{$vo4.article_time}</small></h3>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo4.article_visits}&nbsp;)&nbsp;</small></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+		    </div>
+		    <div role="tabpanel" class="tab-pane fade" id="type5">
+		    	<volist name="list5" id="vo5">
+		    		<div class="panel">
+		    			<div class="panel-body">
+							<div class="row">
+								<if condition="$vo5['thumb'] neq ''">
+									<div class="col-md-2">
+										<input type="image" src="{$vo5.thumb}" alt="资讯图片" height="135" width="240" onclick="javascript: window.location.href = '__URL__/detail/p/{$vo5.article_id}'"/>
+									</div>
+								</if>
+								<div class="col-md-9 col-md-offset-1">
+									<a class="btn theme-color theme-h4" style="font-size:18px;" href="__URL__/detail/p/{$vo5.article_id}">{$vo5.article_title}</a>
+									<h3><small><span class="glyphicon glyphicon-user text-default" aria-hidden="true"></span>&nbsp;&nbsp;{$vo5.admin_nickname}&nbsp;&middot;&nbsp;{$vo5.article_time}</small></h3>
+
+								</div>
+
+							</div>
+							<div class="row">
+								<div class="col-md-10">
+									<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo5.article_visits}&nbsp;)&nbsp;</small></h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</volist>
+		    </div>
+		  </div>
 
 		</div>
-		<div class="row">
-			<div class="col-md-10">
-				<h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$vo.article_visits}&nbsp;)&nbsp;</small></h5>
-			</div>
-		</div>
-		<hr>
-	</volist>
-  	
+	</div>
   </div>
+  <include file="./Public/tpl/footer_home.html" />
 </body>
+<link href="__PUBLIC__/css/theme.css" rel="stylesheet">
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 </script>

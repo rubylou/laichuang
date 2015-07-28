@@ -28,13 +28,17 @@
 				  	<div class="panel-body">
 				  		<volist name="msg_list" id="vo">
 							<div class="panel">
-				  				<div class="panel-body">
+				  				<div class="panel-body <if condition='$vo.ifread eq 0'>alert-info</if>">
 								  	<div class='row'>
-								  		<p>{$vo.sent_time}</p>
 								  		<p>{$vo.msg_content}</p>
 								  		<if condition="$vo['msg_type'] eq 1 OR $vo['msg_type'] eq 3">
-								  			<p>附言: {$vo.msg_attachment}</p>
+								  			<p>附言: <blockquote>{$vo.msg_attachment}</blockquote></p>
 								  		</if>
+									</div>
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<p><small>{$vo.sent_time}</small></p>
+										</div>
 									</div>
 								</div>
 							</div>
