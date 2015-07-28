@@ -138,6 +138,13 @@
 								</p>
 							</div>
 						</div>
+						<div class="row">
+							<if condition="session('type') eq 2">
+								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$user.user_id},'REQUIRE','INVESTOR')">我需要你&nbsp;!</a>
+								</div>
+							</if>
+						</div>
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
@@ -160,17 +167,47 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		      <textarea rows="3" class="form-control" id="request_info" style="display:none"></textarea>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="requireRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="require_confirm">确定</button>
+			    <button type="button" class="btn btn-default" data-dismiss="modal" id="require_cancel">取消</button>
+			    <input type="hidden" id="require_input" />
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	addInterests({$interests},"#interests");
 
-  	function openProject(id){
-	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
- 	}
+ 	$('#require_confirm').click(function(){
+		send_message($('#require_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
+	});
+
+	$('#require_cancel').click(function(){
+		$('#require_input').val('');
+	});
+
+	function openProject(id){
+	    window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
+
 </script>
 </html>

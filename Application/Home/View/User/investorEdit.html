@@ -35,8 +35,9 @@
 							    <input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 					  		</div>
 							<div class="col-md-11 col-xs-12">
-								<p class="theme-h3 hide-edit">
-									<span>&nbsp;&nbsp;&nbsp;{:session('user')}</span>
+								<p class="hide-edit">
+									<span class="theme-h3">&nbsp;&nbsp;{:session('user')}&nbsp;&nbsp;</span>
+									<span class="label label-info">{$user.reg_status}</span>
 									<a class="btn show-edit" style="display:none" onclick="editName()">
 										<span class="glyphicon glyphicon-pencil theme-color"></span>
 									</a>
@@ -58,22 +59,19 @@
 								</p>
 								<div class="row">
 									<div class="col-md-6 col-xs-12">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;
+										<p><small id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;
 											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
 											<a class="btn show-edit" style="display:none" onclick="editField()">
-												<span class="glyphicon glyphicon-pencil theme-color"></span>
+												<small><span class="glyphicon glyphicon-pencil"></span></small>
 											</a>
-										</p>
+										</small></p>
 									</div>
-									<div class="col-md-2 col-md-offset-1 col-xs-6 text-right">
-										<a class="btn btn-default form-control theme-btn-inverse" href="__URL__/investor/val/{$user.user_id}">预览</a>
+									<div class="col-md-2 col-md-offset-2 col-xs-6 text-right">
+										<a class="btn btn-default form-control theme-btn" href="__URL__/investor/val/{$user.user_id}">预览</a>
 									</div>
 									<div class="col-md-2 col-xs-6 text-right">
-										<if condition="$user.reg_status eq 0">
+										<if condition="$user.reg_status eq '未提交'">
 											<a class="btn btn-default form-control theme-btn" onclick="submitAuth('{$user.user_id}')">提交审核</a>
-										</if>
-										<if condition="$user.reg_status eq 1">
-											<a href="#" class="btn btn-default form-control theme-btn">已提交审核</a>
 										</if>
 									</div>
 								</div>
@@ -88,8 +86,13 @@
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">投资案例<a class="btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1"><span class="glyphicon glyphicon-plus theme-white" aria-hidden="true"></span></a></h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;投资案例&nbsp;</span>
+							<a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1">
+								<span class="glyphicon glyphicon-plus theme-color" aria-hidden="true"></span>
+							</a>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="collapse" id="collapseExample1">
@@ -180,7 +183,11 @@
 								<div class="row">
 									<volist name="prolist" id="pros">
 										<div class="col-md-1 col-xs-3 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+											<if condition="strlen($pros['project_logo']) gt 0">
+												<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												<else />
+												<input type="image" class="thumbnail theme-profile" src="/lcb/Public/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+											</if>
 										</div>
 										<div class="col-md-2 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
@@ -195,12 +202,12 @@
 				  				<div class="panel-body hide-edit">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
+										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/case.png' alt="Logo" height="80px" width="80px">
 								  		</div>
 										<div class="col-md-6 col-xs-6">
 											<p class="theme-h4">{$cases.company}</p>
-											<p>{$cases.investor_name}</p>
-											<p><span class="text-danger">{$cases.round}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额{$cases.invest_amount}万{$cases.invest_cur}</p>
+											<p class="theme-small">{$cases.investor_name}</p>
+											<p class="theme-small"><span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
 										</div>
 										<div class="col-md-2 col-md-offset-2 col-xs-2">
 											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
@@ -215,8 +222,13 @@
 			  		</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">工作经历<a class="btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2"><span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#FFFFFF"></span></a></h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;工作经历&nbsp;</span>
+							<a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2">
+								<span class="glyphicon glyphicon-plus theme-color" aria-hidden="true"></span>
+							</a>
+						</p>
 					</div>
 				  	<div class="panel-body">
 		  				<div class="collapse" id="collapseExample2">
@@ -302,10 +314,9 @@
 					  			<div class="panel-body hide-edit">
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-10">
-											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
-											<p class="theme-h4">{$jobs.job_company}</p>
-											<p>{$jobs.job_start}至{$jobs.job_end}</p>
-											<p>{$jobs.job_info}</p>
+											<p class="theme-h4">{$jobs.job_title}</p>
+											<p class="theme-small">{$jobs.job_info}</p>
+											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
 											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
@@ -321,17 +332,22 @@
 			</div>
 			<div class="col-md-4 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading">
-						<h3 class="panel-title">个人资料</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;个人资料&nbsp;</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="row hide-edit">
 							<div class="col-md-9 col-xs-9">
-								<p class="theme-h4">基本信息</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;公司: {$user.company}</small>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.company}</span>
 								</p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;职位: {$user.title}</small></p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.title}</span>
+								</p>
 							</div>
 							<div class="col-md-2 col-xs-2">
 								<a class="btn btn-default show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none" onclick=""><span class="glyphicon glyphicon-pencil theme-color"></span></a>
@@ -359,7 +375,7 @@
 						<br>
 						<div class="row">
 							<div class="col-md-4 col-xs-6">
-								<a class="btn btn-default theme-btn-inverse form-control" onclick="upload('#mycard')">上传名片</a>
+								<a class="btn btn-default theme-btn form-control" onclick="upload('#mycard')">上传名片</a>
 							</div>
 						</div>
 						<div class="row">
@@ -427,7 +443,7 @@
 											</div>
 										</div>
 									</if>
-									<input type="submit" class="btn btn-default theme-btn-inverse" value="上传"/>
+									<input type="submit" class="btn btn-default theme-btn" value="保存"/>
 								</form>
 							</div>
 						</div>
@@ -455,8 +471,10 @@
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading">
-						<h3 class="panel-title">关注项目</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">关注项目</span>
+						</p>
 					</div>
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">

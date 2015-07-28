@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;消息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="panel-heading theme-heading">
+						<h3 class="panel-title">消息列表</h3>
+					</div>
+				  	<div class="panel-body">
+				  		<volist name="msg_list" id="vo">
+							<div class="panel">
+				  				<div class="panel-body <if condition='$vo.ifread eq 0'>alert-info</if>">
+								  	<div class='row'>
+								  		<p>{$vo.msg_content}</p>
+								  		<if condition="$vo['msg_type'] eq 1 OR $vo['msg_type'] eq 3">
+								  			<p>附言: <blockquote>{$vo.msg_attachment}</blockquote></p>
+								  		</if>
+									</div>
+									<div class="row">
+										<div class="col-md-12 text-right">
+											<p><small>{$vo.sent_time}</small></p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</volist>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	
+  </div>
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	
+  	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+ 	}
+
+ 	function openUser(id){
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function openInvestor(id){
+		window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
+
+</script>
+</html>

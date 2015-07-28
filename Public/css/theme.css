@@ -1,3 +1,11 @@
+.well{
+  margin-bottom:0;
+}
+
+small {
+  color:#999999;
+}
+
 .theme-color {
 	color:#102D4A;
 }
@@ -38,10 +46,6 @@ ul li.active {
 	color:#102D4A;
 	background-color:#FFFFFF;
 	border:0;
-	border-bottom:1px solid #102D4A;
-	border-top: 1px solid #102D4A;
-	border-left: 1px solid #102D4A;
-	border-right: 1px solid #102D4A;
 	padding:0;
 	margin-right: 0;
   margin-left: 0;
@@ -61,17 +65,24 @@ ul li.active {
 	color:#102D4A;
 	background-color:#FFFFFF;
 	border:0;
-	border-bottom:1px solid #102D4A;
-	border-top: 1px solid #102D4A;
-	border-left: 1px solid #102D4A;
-	border-right: 1px solid #102D4A;
 	padding-top: auto;
-  	padding-bottom: auto;
+  padding-bottom: auto;
 }
 
-.panel-default > .theme-heading {
-  color: #ffffff;
-  background-color: #102D4A;
+.panel-title > .theme-heading {
+  border:0;
+  border-bottom:3px solid #CCCCCC;
+  color: #102D4A;
+  padding-bottom: 6px;
+}
+
+.theme-panel-heading{
+  padding: 15px 20px;
+  border-bottom: 1px solid #CCCCCC;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  padding-bottom:6px; 
+  background-color:#FFFFFF
 }
 
 .theme-btn-inverse {
@@ -94,15 +105,20 @@ ul li.active {
 
 .theme-h3 {
 	font-size:25px; 
-	font-weight: bold; 
 	margin-top:5px; 
-	margin-bottom:10px
+	margin-bottom:5px;
 }
 
 .theme-h4 {
 	font-size:18px; 
 	margin-top:0; 
 	margin-bottom:5px
+}
+
+.theme-h5 {
+  font-size:15px; 
+  margin-top:0; 
+  margin-bottom:5px
 }
 
 .theme-nav {

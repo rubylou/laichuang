@@ -101,6 +101,5 @@ function addCity(id,field){
   option.attr('value',id);
   $('#editCity').append(option);
 }
-
   
   

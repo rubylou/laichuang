@@ -31,7 +31,7 @@ class IndexController extends Controller {
                 $result[$key]['thumb'] = '';
             }
         }
-        //dump($result);
+
         $this->vo = $result;
         $this->assign("list",$result);
     	$this->display();
@@ -77,6 +77,12 @@ class IndexController extends Controller {
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '1';
                     $_SESSION['portrait'] = $result[0]['portrait'];
+
+                    $msg = $Form->query('select count(*) as sum from messagebox where ifread = 0 and to_id = "%s"',$result[0]['user_id']);
+                    if($msg[0]){
+                        $_SESSION['msg'] = $msg[0]['sum'];
+                    }
+
                     echo 200;
                 }
                 else{
@@ -100,6 +106,12 @@ class IndexController extends Controller {
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '2';
                     $_SESSION['portrait'] = $result[0]['portrait'];
+
+                    $msg = $Form->query('select count(*) as sum from messagebox where ifread = 0 and to_id = "%s"',$result[0]['user_id']);
+                    if($msg[0]){
+                        $_SESSION['msg'] = $msg[0]['sum'];
+                    }
+
                     echo 200;
                 }
                 else{

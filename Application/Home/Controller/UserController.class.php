@@ -201,7 +201,10 @@ class UserController extends Controller {
                 $this->jobs = $jobs;
                 $this->assign('joblist',$jobs);
             }
+
+            //用户信息
             $user = $Form->query("select * from investor_personal where user_id='%s'",$_SESSION['id']);
+            $user[0]['reg_status'] = C('AUTH_STATUS')[$user[0]['reg_status']];
             $this->user = $user[0];
 
             //认证资料
@@ -243,6 +246,9 @@ class UserController extends Controller {
                 $result[$key]['interest_field'] = $fields[$value['interest_field']];
             }
             $this->interests = json_encode($result);
+        }
+        else{
+            $this->interests = json_encode(null);
         }
 
         $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$id);

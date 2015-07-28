@@ -35,7 +35,7 @@
 										<span class="glyphicon glyphicon-pencil theme-color"></span>
 									</a>
 									<input type="hidden" id="pro_name" value="{$info.project_name}" class="theme-form-control-1"/>
-									<a id="saveName" class="btn btn-default" onclick="saveName()" style="display:none">
+									<a id="saveName" class="btn btn-default" onclick="saveName('__URL__/editInfo/p/{$info.project_id}')" style="display:none">
 										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 									</a>
 								</p>
@@ -45,7 +45,7 @@
 										<span class="glyphicon glyphicon-pencil theme-color"></span>
 									</a>
 									<input type="hidden" id="pro_brief" value="" class="theme-form-control-4"/>
-									<a id="saveBrief" class="btn btn-default" onclick="saveBrief()" style="display:none">
+									<a id="saveBrief" class="btn btn-default" onclick="saveBrief('__URL__/editInfo/p/{$info.project_id}')" style="display:none">
 										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 									</a>
 								</p>
@@ -147,7 +147,7 @@
 										</div>
 									    <div class="row">
 									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
-									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addMember()">&nbsp;提交&nbsp;</a>    
+									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addMember('{$info.project_id}','__URL__/queryUser')">&nbsp;提交&nbsp;</a>    
 									        </div>
 									        <div class="col-md-3 col-xs-6">
 									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</a>    
@@ -164,7 +164,7 @@
 					  					<p id="project_member"></p>
 					  					<div id="editMembers" style="display:none">
 						  					<textarea rows='8' id="pro_member" class="theme-form-control-6"></textarea>
-											<a id="saveMember" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveMember()" style="vertical-align: bottom;">
+											<a id="saveMember" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveMember('__URL__/editInfo?p={$info.project_id}')" style="vertical-align: bottom;">
 												<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 											</a>
 										</div>
@@ -273,7 +273,7 @@
 											<p><span class="theme-small">{$profi.invest_time}</span>&nbsp;|&nbsp;投资金额{$profi.invest_amount}万{$profi.invest_cur}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
-											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editProFi('{$profi.id}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
+											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editProFi('{$profi.id}','__URL__/editProFi/p/{:I(\'get.key\')}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
 											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delFi('{$profi.id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 					  				</div>
@@ -287,7 +287,7 @@
 					  					<p id="project_fi"></p>
 					  					<div id="editFi" style="display:none">
 						  					<textarea rows='8' id="pro_fi" class="theme-form-control-6"></textarea>
-											<a id="saveFi" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveFi()" style="vertical-align: bottom;">
+											<a id="saveFi" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveFi('__URL__/editInfo?p={$info.project_id}')" style="vertical-align: bottom;">
 												<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 											</a>
 										</div>
@@ -335,7 +335,7 @@
 										</div>
 									    <div class="row">
 									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
-									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addInvestor()">&nbsp;提交&nbsp;</a>    
+									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addInvestor('{$info.project_id}','__URL__/queryInvestor')">&nbsp;提交&nbsp;</a>    
 									        </div>
 									        <div class="col-md-3 col-xs-6">
 									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample3')">&nbsp;取消&nbsp;</a>    
@@ -367,7 +367,7 @@
 							<div class="col-md-12">
 								<div id="editRecruit" style="display:none">
 				  					<textarea rows='5' id="pro_recruit" class="theme-form-control-8"></textarea>
-									<a id="saveRecruit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRecruit()" style="vertical-align: bottom;">
+									<a id="saveRecruit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRecruit('__URL__/editInfo?p={$info.project_id}')" style="vertical-align: bottom;">
 										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 									</a>
 								</div>
@@ -386,7 +386,7 @@
 							<div class="col-md-12">
 								<div id="editRequire" style="display:none">
 				  					<textarea rows='5' id="pro_require" class="theme-form-control-8"></textarea>
-									<a id="saveRequire" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRequire()" style="vertical-align: bottom;">
+									<a id="saveRequire" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRequire('__URL__/editInfo?p={$info.project_id}')" style="vertical-align: bottom;">
 										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
 									</a>
 								</div>
@@ -429,28 +429,38 @@
 			  </div>
 		    </div>
 		    <div class="modal-footer">
-		      <div id="alertBtn">
-		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
-		      </div>
-		      <div id="delFiBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delFi_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delFi_cancel">取消</button>
-			      <input type="hidden" id="delFi_input" />
-			  </div>
-			  <div id="delMemberBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delMember_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delMember_cancel">取消</button>
-			      <input type="hidden" id="delMember_input" />
-			  </div>
-			  <div id="delInvestorBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delInvestor_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delInvestor_cancel">取消</button>
-			      <input type="hidden" id="delInvestor_input" />
-			  </div>
-			  <div id="editFieldBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
-			  </div>
+		      	<div id="alertBtn">
+		      		<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      	</div>
+				<div id="delFiBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delFi_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delFi_cancel">取消</button>
+				  	<input type="hidden" id="delFi_input" />
+				</div>
+				<div id="delMemberBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delMember_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delMember_cancel">取消</button>
+				  	<input type="hidden" id="delMember_input" />
+				</div>
+				<div id="delInvestorBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delInvestor_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delInvestor_cancel">取消</button>
+				  	<input type="hidden" id="delInvestor_input" />
+				</div>
+			  	<div id="editFieldBtn">
+			      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+			  	</div>
+			   	<div id="membersRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="members_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="members_cancel">不发送</button>
+			    	<input type="hidden" id="members_input" />
+		      	</div>
+		      	<div id="financialRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="financial_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="financial_cancel">不发送</button>
+			    	<input type="hidden" id="financial_input" />
+		      	</div>
 		    </div>
 		  </div>
 		</div>
@@ -469,28 +479,8 @@
 	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	
-	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
+	initializeProject('{$info.project_intro}','{$info.project_member}','{$info.project_fi}','{$info.project_recruit}','{$info.project_require}');
 	
-	var str = unescape('{$info.project_member}');
-	str = str.replace(/<br>/g,"\r");
-	$("#pro_member")[0].innerHTML = (str);
-	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
-
-	str = unescape('{$info.project_fi}');
-	str = str.replace(/<br>/g,"\r");
-	$("#pro_fi")[0].innerHTML = (str);
-	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
-
-	str = unescape('{$info.project_recruit}');
-	str = str.replace(/<br>/g,"\r");
-	$("#pro_recruit")[0].innerHTML = (str);
-	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
-
-	str = unescape('{$info.project_require}');
-	str = str.replace(/<br>/g,"\r");
-	$("#pro_require")[0].innerHTML = (str);
-	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
-
 	var field = {$field};
 	var rows = ({$fieldlen})/8;
 	initializeField(rows,field);
@@ -500,44 +490,7 @@
 	addCur({$currency},"#currency2");
 	addYM('#investyear','#investmon',1980);
 
-	function addMember(){
-		var xmlHttp = createRequest();
-		var member = "key1="+$("#member").val()+"&";
-		var title = "key2="+$("#title").val()+"&";
-		var pro = "p={$info.project_id}&";
-		data = member+title+pro;
-		request(xmlHttp,data,"__URL__/queryUser");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else if(xmlHttp.responseText==404){
-			$('#member').val('');
-			$('#member').attr('placeholder','用户不存在');
-			$("#member").focus();
-		}
-		else if(xmlHttp.responseText==409){
-			$('#member').val('');
-			$('#member').attr('placeholder','该用户为创始人');
-			$("#member").focus();
-		}
-	}
-
-	function addInvestor(){
-		var xmlHttp = createRequest();
-		var investor = "key1="+$("#pro_investor").val()+"&";
-		var pro = "p={$info.project_id}&";
-		data = investor+pro;
-		request(xmlHttp,data,"__URL__/queryInvestor");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else if(xmlHttp.responseText==404){
-			$('#investor').val('');
-			$('#investor').attr('placeholder','用户不存在');
-			$("#investor").focus();
-		}
-	}
-
+	$('img').addClass('img-responsive');
 
 	function openUser(id){
 		window.open("{:U('Home/User/innovator/val/"+id+"')}");
@@ -545,43 +498,6 @@
 
 	function openInvestor(id){
 		window.open("{:U('Home/User/investor/val/"+id+"')}");
-	}
-
-  	
-
-	function saveName(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'name='+$('#pro_name').val(),"__URL__/editInfo/p/{$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			$('#pro_name').val('');
-			$('#pro_name').attr('placeholder','名称带有特殊字符');
-			$('#pro_name').focus();
-		}
-	}
-
-	
-
-	function saveBrief(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'brief='+$('#pro_brief').val(),"__URL__/editInfo/p/{$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			$('#pro_brief').val('');
-			$('#pro_brief').attr('placeholder','简介带有特殊字符');
-			$('#pro_brief').focus();
-		}
-	}
-
-	function editField(){
-		$('#editField').show();
-		$('.modal-footer').find('div').hide();
-		$('.modal-footer').find('div').filter('#editFieldBtn').show();
-		modalShow('alert_content','myModal','请重新选择该项目所涉及的领域(最多选5个)');
 	}
 
 	$('#editField_confirm').click(function(){
@@ -596,67 +512,6 @@
 			document.location.reload();
 		}
 	});
-
-	
-
-	function saveMember(){
-		var str = $('#pro_member').val();
-		str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-		var xmlHttp = createRequest();
-		var data = 'member='+escape(str)+'&';
-		request(xmlHttp,data,"__URL__/editInfo?p={$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			showEditPanel('#editMembers');
-		}
-
-	}
-
-	function saveFi(){
-		var str = $('#pro_fi').val();
-		str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-		var xmlHttp = createRequest();
-		var data = 'fi='+escape(str)+'&';
-		request(xmlHttp,data,"__URL__/editInfo?p={$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			showEditPanel('#editFi');
-		}
-
-	}
-
-	function saveRecruit(){
-		var str = $('#pro_recruit').val();
-		str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-		var xmlHttp = createRequest();
-		var data = 'recruit='+escape(str)+'&';
-		request(xmlHttp,data,"__URL__/editInfo?p={$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			showEditPanel('#editRecruit');
-		}
-	}
-
-	function saveRequire(){
-		var str = $('#pro_require').val();
-		str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-		var xmlHttp = createRequest();
-		var data = 'require='+escape(str)+'&';
-		request(xmlHttp,data,"__URL__/editInfo?p={$info.project_id}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
-		else{
-			showEditPanel('#editRequire');
-		}
-	}
-
 	
 
 	$('#delMember_confirm').click(function(){
@@ -682,63 +537,37 @@
 		$('#delInvestor_input').val('');
 	});
 
-	function editProFi(id){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+id,"__URL__/editProFi/p/{:I('get.key')}");
-		var info = JSON.parse(xmlHttp.responseText);
-		$('#collapseExample1').collapse('show');
-		$('#round').children('option').each(function(){
-			if($(this).val()==info.round){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#amount').val(info.invest_amount);
-		$('#currency1').children('option').each(function(){
-			if($(this).val()==info.invest_cur){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#assess').val(info.assess_amount);
-		$('#currency2').children('option').each(function(){
-			if($(this).val()==info.assess_cur){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#investor').val(info.investor_name);
-		$('#investyear').children('option').each(function(){
-			if($(this).val()==info.year){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#investmon').children('option').each(function(){
-			if($(this).val()==info.mon){
-				$(this).attr('selected','selected');
-			}
-		});
-		$('#editFi_input').val(id);
-		
-	}
-
 	$('#delFi_confirm').click(function(){
-		var xmlHttp = createRequest();
-		request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
-		if(xmlHttp.responseText==200){
-			document.location.reload();
-		}
+	  var xmlHttp = createRequest();
+	  request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
+	  if(xmlHttp.responseText==200){
+	    document.location.reload();
+	  }
 	});
+
 	$('#delFi_cancel').click(function(){
-		$('#delFi_input').val('');
+	  $('#delFi_input').val('');
+	});
+	
+	$('#members_confirm').click(function(){
+		send_message($('#members_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
 	});
 
-	function submitAuth(id){
-	    var xmlHttp = createRequest();
-	    request(xmlHttp,'p='+id,"requestAuth");
-	    if(xmlHttp.responseText == '200'){
-	      alert('提交成功');
-	      document.location.reload();
-	    }
-	}
+	$('#members_cancel').click(function(){
+		$('#members_input').val('');
+		document.location.reload();
+	});
 
+	$('#financial_confirm').click(function(){
+		send_message($('#financial_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#financial_cancel').click(function(){
+		$('#financial_input').val('');
+		document.location.reload();
+	});
 	
 
 </script>

@@ -57,11 +57,18 @@
                   <li><a href="{:U('Home/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>
                 </ul>
               </li>
+              <li>
+                <a href="{:U('Home/Message/index')}" class="theme-nav">
+                  <span class="glyphicon glyphicon-envelope text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+                  <span class="text-default theme-color">消息&nbsp;<if condition="session('msg')"><span class="badge theme-bg">{:session('msg')}</span></if></span>
+                </a>
+              </li>
               <!--<li><a href="{:U('Home/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>-->
           <else/>
               <li><a href="{:U('Home/Index/login')}" class="theme-nav"><span class="glyphicon glyphicon-log-in text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">登录</span></a></li>
               <!--<li><a href="{:U('Home/Index/register')}"><span class="glyphicon glyphicon-plus text-success" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-success">注册</span></a></li>-->
           </if>
+          
           <!--<li>
             <a href="{:U('Home/User/index')}" class="theme-nav">
               <span class="text-default theme-color theme-h4">{:session('user')}</span>
