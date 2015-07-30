@@ -331,12 +331,12 @@ class UserController extends Controller {
                     $Form = new Model();
                     if($_SESSION['type']=="1"){
                         $success = $Form->execute('update investor_personal set portrait="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: investorEdit");
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: index");
                     }
                 }
@@ -374,13 +374,13 @@ class UserController extends Controller {
                     $Form = new Model();
                     if($_SESSION['type']=="1"){
                         $success = $Form->execute('update investor_personal set mycard="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: investorEdit");
                         
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set mycard="%s" 
-                            where user_id="%s"','/lcb/Public/upload/pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
                         header("Location: index");
                     }
                 }
@@ -878,6 +878,10 @@ class UserController extends Controller {
         else{
             echo 400;
         }
+    }
+
+    public function settings(){
+        $this->display();
     }
 }
 ?>

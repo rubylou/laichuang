@@ -274,7 +274,7 @@ class CaseController extends Controller {
 	            if($result){
 	                $Form = new Model();
                     $success = $Form->execute('update project_info set project_logo="%s" 
-                        where project_id="%s"','/lcb/Public/upload/pic/logo/'.$upload->savePath.'thumb_'.$filename,I('get.p'));
+                        where project_id="%s"',C(UPLOAD).'pic/logo/'.$upload->savePath.'thumb_'.$filename,I('get.p'));
                     header("Location: infoEdit/key/".I('get.p'));
 	            }
 	        }

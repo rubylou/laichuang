@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;账号设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">账号设置</span>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="panel">
+				  			<p class="theme-h5">修改密码</p>
+				  			<div class="form-horizontal">
+							  	<div class="form-group">
+							    	<label for="pwd1" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>原密码</label>
+							    	<div class="col-md-6">
+						        		<input type="password" class="form-control" id="pwd1">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pwd2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>新密码</label>
+							    	<div class="col-md-6">
+						        		<input type="password" class="form-control" id="pwd2">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pwd3" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>重复新密码</label>
+							    	<div class="col-md-6">
+						        		<input type="password" class="form-control" id="pwd3">
+						        	</div>
+							  	</div>
+							</div>
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        </div>
+						    </div>
+
+				  		</div>
+				  		<div class="panel">
+				  			<p class="theme-h5">手机验证状态</p>
+				  			<div class="row">
+				  				<div class="col-md-6 col-md-offset-3">
+				  					<span>{手机状态}</span>
+				  				</div>
+				  			</div>
+				  			<div class="form-horizontal">
+							  	<div class="form-group">
+							    	<label for="phone" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>手机</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="phone">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="checkCode" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+							    	<div class="col-md-3">
+						        		<input type="text" class="form-control" id="checkCode">
+						        	</div>
+						        	<div class="col-md-2">
+						        		<input type="button" class="btn btn-default theme-btn" value="发送验证码"/>
+						        	</div>
+							  	</div>
+							</div>
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        </div>
+						    </div>
+				  		</div>
+				  		<div class="panel">
+				  			<p class="theme-h5">邮箱验证状态</p>
+				  			<div class="row">
+				  				<div class="col-md-6 col-md-offset-3">
+				  					<span>{邮箱状态}</span>
+				  				</div>
+				  			</div>
+				  			<div class="form-horizontal">
+							  	<div class="form-group">
+							    	<label for="email" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="email">
+						        	</div>
+							  	</div>
+							</div>
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        </div>
+						    </div>
+				  		</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	
+  </div>
+  <include file="./Public/tpl/footer_home.html" />
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+
+</script>
+</html>
