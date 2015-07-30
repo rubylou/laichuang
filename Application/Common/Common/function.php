@@ -1,5 +1,6 @@
 <?php
 use Think\Model;
+require 'PHPMailerAutoload.php';
     function getCode($num,$w,$h) {  
         $code = "";  
         for ($i = 0; $i < $num; $i++) {  
@@ -79,14 +80,14 @@ use Think\Model;
     {
         $uid=C(MSGUID);
         $pwd=C(MSGPWD);
-        $res ="OK";//= sendSMS($uid,$pwd,$mobile,$content);
+        $res = sendSMS($uid,$pwd,$mobile,$content);
         if($res=="OK")
         {
             
-           return "OK";
+           return 200;
         }else
         {
-            return "FAIL";
+            return 400;
         }
     }
     function send_msg($mobile)
@@ -104,12 +105,12 @@ use Think\Model;
             values ("%s","%s","%d")',
             $mobile,$code,$overtime);
             if($insert)
-                return "OK";
+                return 200;
             else
-                return "FAIL";
+                return 400;
         }else
         {
-            return "FAIL";
+            return 400;
         }
     }
     function check_mobile($mobile,$code){
@@ -119,20 +120,20 @@ use Think\Model;
         if($record)
         {
             $r=$record[0];
-            $stamp=intval($r.over_time);
+            $stamp=intval($r[over_time]);
             if($stamp<$now)
-                return "EXPIRE";
-            if($r.check_code!=$code)
-                return "UNCORRECT";
-            return "OK";
+                return 408;
+            if($r[check_code]!=$code)
+                return 409;
+            return 200;
         }else
         {
-            return "FAIL";
+            return 400;
         }
     }
     function sendSMS($uid,$pwd,$mobile,$content,$time='',$mid='')
     {
-        $http = 'http://api.cnsms.cn/';
+        $http = C(MSGAPI);
         $data = array
             (
             'ac'=>'send',
@@ -188,7 +189,74 @@ use Think\Model;
         }
     }
     /**********************************************************************************************************************/
-    
+    //下面是发邮件用的    
+  function think_send_mail($to, $name, $subject = '', $body = '', $attachment = null){
+        
+        $mail = new PHPMailer;
+        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->Host = C(SMTP);  // Specify main and backup SMTP servers
+        $mail->SMTPAuth = true;                               // Enable SMTP authentication
+        $mail->Username = C(MAILUSER);                 // SMTP username
+        $mail->Password = C(MAILPWD);                           // SMTP password
+        $mail->SMTPSecure = 'tls';                            // Enable encryption, 'ssl' also accepted
+        $mail->From = C(MAILFROM);
+        $mail->FromName = C(MAILNAME);
+        $mail->addAddress($to); // Add a recipient 
+
+
+        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body    = $body;
+        $mail->AltBody = strval($body);
+
+        if(!$mail->send()) {
+            return 400;//'Message could not be sent.';
+        //return 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            //echo 'Message has been sent';
+            return 200;
+        }
+    }
+    //发送激活邮件给userid objectid
+    function send_active_mail($user_id,$objectid,$to_address)
+    {
+        $Form = new Model();
+        $name='';
+        $pwd='';
+        $active_code='';
+        if($objectid==2)//investor
+        {
+            $names=$Form->query('select name from investor_personal where user_id="%s"',$user_id);
+            $pwds=$Form->query('select user_pwd from investor_security where user_id="%s"',$user_id);
+            $name=$names[0][name];
+            $pwd=$pwds[0][user_pwd];
+        }else
+        {
+            $names=$Form->query('select name from entrepreneur_personal where user_id="%s"',$user_id);
+            $pwds=$Form->query('select user_pwd from entrepreneur_security where user_id="%s"',$user_id);
+            $name=$names[0][name];
+            $pwd=$pwds[0][user_pwd];
+        }
+
+        $active_time=time();
+        $over_time=$active_time+24*60*60;
+        $active_code=md5($user_id.$name.$pwd.$active_time);
+        $sqlstr=sprintf("replace into email_active (user_id,active_code,mail_address,over_time,active_status)
+             values ('%s','%s','%s','%d','%d')",$user_id,$active_code,$to_address,$over_time,0);
+        $res=$Form->execute($sqlstr);
+        if($res)
+        {
+            $url=sprintf("http://localhost:8888/lcb/index.php/Home/Active/index?key1=%s&key2=%s&key3=%s",
+                $user_id,$to_address,$active_code);
+            $body=sprintf("尊敬的用户 %s：请点击以下链接激活邮箱，如不能点击请将地址拷贝至浏览器栏激活邮箱。<br><a>%s</a>",$name,$url);
+            return think_send_mail($to_address, $name, $subject = '来创科技邮箱激活', $body);
+        }
+        return 400;
+
+    }
+
+    //
+
     function arrayUnion($arr1,$arr2,$token){
         foreach ($arr1 as $key => $value) {
             $arr1[$key] = $value[$token];
