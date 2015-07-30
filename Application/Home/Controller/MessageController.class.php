@@ -169,11 +169,45 @@ class MessageController extends Controller {
 		}
 
 		if($msg_type === 'ARTICLES_CODE'){
+			//dump($_POST);
+			$article = $model->query('select * from admin_articles where article_id = "%s"',$to);
+			if($article){
+				$field = $article[0]['article_field'];
+				$users = $model->query('select id from interest_investor where interest_field = %d',$field);
+				$content = "您感兴趣的“".C('INTEREST_FIELD')[$field]."”领域发布了一条新的资讯,<a onclick=\"openNews('".$to."')\">点击查看</a>";
 
+				$data['from_id'] = $to;
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$data['msg_content'] = $content;
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				foreach ($users as $key => $value) {
+					$data['to_id'] = $value['id'];
+					$result = $Form->add($data);
+					//dump($result);
+				}
+			}
 		}
 
 		if($msg_type === 'PROJECTS_CODE'){
-
+			if($object === "PROJECT"){
+				$project = $model->query('select * from project_info where project_id = "%s"',$to);
+				if($project){
+					$project_name = $project[0]['project_name'];
+				}
+				$users = $model->query('select interest_investor.id, interest_investor.interest_field from interest_investor 
+					inner join interest_project on interest_project.interest_field = interest_investor.interest_field
+					where interest_project.id = "%s"',$to);
+				$data['from_id'] = $to;
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				foreach ($users as $key => $value) {
+					$data['to_id'] = $value['id'];
+					$data['msg_content'] = "您感兴趣的“".C('INTEREST_FIELD')[$value['interest_field']]."”领域新增了一个创业项目“".$project_name."”, 
+					<a onclick=\"openProject('".$to."')\">点击查看</a>";
+					$result = $Form->add($data);
+					//dump($result);
+				}
+			}
 		}
 
 		if($msg_type === 'AUTHORIZATION_CODE'){

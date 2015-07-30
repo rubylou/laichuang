@@ -29,5 +29,3 @@ function addRound(value,id){
     option.attr('value',index);
     $(id).append(option);
   }
-
-

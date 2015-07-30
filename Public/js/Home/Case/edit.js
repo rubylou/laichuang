@@ -11,8 +11,9 @@ function submitProject(){
     var content="key9="+getContent(um)+"&";
     var data = name+brief+member+fi+type+recruit+require+content;
     request(xmlHttp,data,"proSave");
-    if(xmlHttp.responseText==200){
-      window.location.href='../User/index';
+    if(xmlHttp.responseText.length>4){
+      //window.location.href='../User/index';
+      request_message(xmlHttp.responseText,'PROJECTS','PROJECT');
     }
   }
 }

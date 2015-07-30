@@ -85,5 +85,17 @@ function request_message(id,value,obj,attach){
 		$('.modal-footer').find('div').filter('#financialRequest').show();
 		modalShow('alert_content','myModal','添加成功!<br><br>是否将融资更新的消息发送给投资人以及项目关注者?');
 	}
+	else if(value=="ARTICLES"){
+		$('#articles_input').val(data);
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#articlesRequest').show();
+		modalShow('alert_content','myModal','编辑成功!<br><br>是否将资讯更新的消息发送给相关领域的投资者?');
+	}
+	else if(value=="PROJECTS"){
+		$('#projects_input').val(data);
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#projectsRequest').show();
+		modalShow('alert_content','myModal','添加成功!<br><br>是否将新增创业项目的消息发送给相关领域的投资者?');
+	}
 	
 }

@@ -23,31 +23,33 @@ class MediaController extends Controller {
 
     public function articleEdit(){
     	//dump($_SESSION);
-    	$this->type = json_encode(C('MODULE_CODE'));
-    	$this->field = json_encode(C('INTEREST_FIELD'));
-    	$this->object = json_encode(C('OBJECT_CODE'));
-        
-        $article_id=$_GET['key'];
-        //dump($_GET);
-        if($article_id)// 1 for edit an old article 2for edit a new article and no need to fill
-        {
+        if(session('?id')&&session('?type')){
+            $this->type = json_encode(C('MODULE_CODE'));
+            $this->field = json_encode(C('INTEREST_FIELD'));
+            $this->object = json_encode(C('OBJECT_CODE'));
+            
+            $article_id=$_GET['key'];
+            //dump($_GET);
+            if($article_id)// 1 for edit an old article 2for edit a new article and no need to fill
+            {
 
-            $this->fill_type=1;
-            $Form = new Model();
-            $articleRaw=$Form->query("select * from admin_articles where article_id='%s'",$article_id);
-            $this->article=$articleRaw[0];
-            //dump($this->article);
+                $this->fill_type=1;
+                $Form = new Model();
+                $articleRaw=$Form->query("select * from admin_articles where article_id='%s'",$article_id);
+                $this->article=$articleRaw[0];
+                //dump($this->article);
+            }
+            else
+            {
+                $this->fill_type=2;
+            }
+            $this->display();
         }
-        else
-        {
-            $this->fill_type=2;
+    	else{
+            $this->redirect('Index/index');
         }
 
-
-
-
-
-    	$this->display();
+    	
     }
 
     public function articleView(){
@@ -63,7 +65,7 @@ class MediaController extends Controller {
     		article_field,article_object,article_about,article_content,article_time) values 
     	('%s','%s','%s',%d,%d,'%s',%d,'%s','%s')",$id,$_SESSION['userid'],$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$date);
     	if($result){
-    		echo 200;
+    		echo $id;
     	}
     	else{
     		echo 400;

@@ -66,8 +66,8 @@ class IndexController extends Controller {
         $Form = new Model();
         if(intval($_POST['value'])===1){
             //echo 'aaa';
-            $name = mysql_real_escape_string($_POST['key1']);
-            $pwd = mysql_real_escape_string($_POST['key2']);
+            $name = ($_POST['key1']);
+            $pwd = ($_POST['key2']);
             $result = $Form->query('select user_id, name, portrait from investor_personal where mobile="%s" or email="%s"',$name,$name);
             if($result){
                 $id = $result[0]['user_id'];
@@ -95,8 +95,8 @@ class IndexController extends Controller {
         }
         else if(intval($_POST['value'])===2){
             //echo 'bbb';
-            $name = mysql_real_escape_string($_POST['key1']);
-            $pwd = mysql_real_escape_string($_POST['key2']);
+            $name = ($_POST['key1']);
+            $pwd = ($_POST['key2']);
             $result = $Form->query('select user_id,name, portrait from entrepreneur_personal where phone="%s" or email="%s"',$name,$name);
             if($result){
                 $id = $result[0]['user_id'];
@@ -130,7 +130,7 @@ class IndexController extends Controller {
 
     public function userSave(){
         $Form = new Model();
-        if(mysql_real_escape_string($_POST['value'])==='investor'){
+        if(($_POST['value'])==='investor'){
             $seed = rand(C(RANDOM_USER_MIN),C(RANDOM_USER_MAX));
             $id = '1'.substr(date('Y'),2).$seed;
             $regTime = date('Y-m-d');
@@ -174,7 +174,7 @@ class IndexController extends Controller {
                 echo 400;
             }
         }
-        else if(mysql_real_escape_string($_POST['value'])==='innovator'){
+        else if(($_POST['value'])==='innovator'){
             $seed = rand(C(RANDOM_USER_MIN),C(RANDOM_USER_MAX));
             $id = '2'.substr(date('Y'),2).$seed;
             $regTime = date('Y-m-d');

@@ -82,11 +82,11 @@
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">
-							项目介绍
-							<a class="btn" data-toggle="tooltip" data-placement="top" title="编辑" href="__URL__/introEdit/p/{$info.project_id}"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a>
-						</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;项目介绍&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" href="__URL__/introEdit/p/{$info.project_id}"><span class="glyphicon glyphicon-pencil theme-color" aria-hidden="true"></span></a>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="row">
@@ -97,8 +97,11 @@
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">创业团队<a class="btn" data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editMembers')"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;创业团队&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editMembers')"><span class="glyphicon glyphicon-pencil theme-color" aria-hidden="true"></span></a>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="panel">
@@ -119,7 +122,11 @@
 									<volist name="memberlist" id="vo">
 										<div class="memberField">
 											<div class="col-md-1 col-xs-3 theme-nav">
-												<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+												<if condition="strlen($vo['portrait']) gt 0">
+													<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+													<else />
+													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+												</if>
 											</div>
 											<div class="col-md-2 col-xs-8 theme-nav">
 												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
@@ -175,8 +182,11 @@
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">融资情况<a class="btn" data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editFi')"><span class="glyphicon glyphicon-pencil theme-white" aria-hidden="true"></span></a></h3>
+			  		<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;融资情况&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editFi')"><span class="glyphicon glyphicon-pencil theme-color" aria-hidden="true"></span></a>
+						</p>
 					</div>
 				  	<div class="panel-body">
 					  	<div class="panel">
@@ -298,8 +308,10 @@
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">已有投资人</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;已有投资人&nbsp;</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 					  	<div class="panel">
