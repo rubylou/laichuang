@@ -66,7 +66,7 @@
 				  			</div>
 				  			<div class="form-horizontal">
 							  	<div class="form-group">
-							    	<label for="phone" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>手机</label>
+							    	<label for="phone" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>修改手机</label>
 							    	<div class="col-md-6">
 						        		<input type="text" class="form-control" id="phone">
 						        	</div>
@@ -77,13 +77,13 @@
 						        		<input type="text" class="form-control" id="checkCode">
 						        	</div>
 						        	<div class="col-md-2">
-						        		<input type="button" class="btn btn-default theme-btn" value="发送验证码"/>
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this)"/>
 						        	</div>
 							  	</div>
 							</div>
 							<div class="row">
 						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
-						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitMobile()">&nbsp;保存&nbsp;</button>    
 						        </div>
 						    </div>
 				  		</div>
@@ -104,7 +104,7 @@
 							</div>
 							<div class="row">
 						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
-						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitEmail()">&nbsp;激活邮箱&nbsp;</button>    
 						        </div>
 						    </div>
 				  		</div>
@@ -121,6 +121,45 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	function queryCheckCode(){
+  		var mobile = $('#phone').val();
+  		var xmlHttp = createRequest();
+  		request(xmlHttp,'mobile='+mobile,'queryCheckCode');
+  	}
 
+  	function submitMobile(){
+  		var mobile = "key1="+$('#phone').val()+"&";
+  		var code = "key2="+$('#checkCode').val()+"&";
+  		var data = mobile+code;
+  		var xmlHttp = createRequest();
+  		request(xmlHttp,data,'saveMobile');
+  	}
+
+  	function submitEmail(){
+  		var email = "key1="+$('#email').val()+"&";
+  		var xmlHttp = createRequest();
+  		request(xmlHttp,email,'saveEmail');
+  	}
+
+	var wait=60;
+	function settime(o) {
+        if (wait == 0) {
+            o.removeAttribute("disabled");            
+            o.value="获取验证码";
+            wait = 60;
+        } 
+        else {
+        	if (wait == 60){
+	        	submitMobile();
+	        }
+            o.setAttribute("disabled", true);
+            o.value="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                settime(o)
+            },
+            1000)
+        }
+    }
 </script>
 </html>
