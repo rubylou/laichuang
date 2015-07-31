@@ -313,7 +313,6 @@ class UserController extends Controller {
             $upload->subName = '';
             // 上传文件 
             $info = $upload->upload();
-            dump($info);
             if(!$info) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }else{// 上传成功
@@ -324,21 +323,19 @@ class UserController extends Controller {
                 $filename = $filename[0].'.png';
 
                 $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
-                dump($thumbName);
-
+                
                 $result = $image->thumb(100, 100,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
-                dump($result);
                 if($result){
                     $Form = new Model();
                     if($_SESSION['type']=="1"){
                         $success = $Form->execute('update investor_personal set portrait="%s" 
                             where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        //header("Location: investorEdit");
+                        header("Location: investorEdit");
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
                             where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        //header("Location: index");
+                        header("Location: index");
                     }
                 }
             }
