@@ -5,12 +5,17 @@ use Think\Model;
 class AuditController extends Controller {
     public function index(){
     	//dump($_SESSION);
-    	$this->display();   
+        if(session('?userid')&&session('?usertype')){
+    	$this->display();   }
+        else{
+            $this->redirect('Index/index');
+        }
     }
 
     public function fetchProject(){
         $Form = new Model();
-        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info");
+        $status= C(VERIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
         echo json_encode($pro);
     }
     public function fetchProjectUnderVerified(){
@@ -19,6 +24,7 @@ class AuditController extends Controller {
         $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
         echo json_encode($pro);
     }
+    
     public function auditProjectVerify(){
         $id=$_GET['key'];
         $Form = new Model();
@@ -123,7 +129,8 @@ class AuditController extends Controller {
 
     public function fetchInnovator(){
         $Form = new Model();
-        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal");
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status=".$status);
         echo json_encode($user);
     }
     public function fetchInnovatorUnderVerified(){
@@ -209,7 +216,8 @@ class AuditController extends Controller {
     }
     public function fetchInvestor(){
         $Form = new Model();
-        $user = $Form->query("select user_id,name,company,mobile from investor_personal");
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
         echo json_encode($user);
     }
     public function auditInvestorPsVerify(){
