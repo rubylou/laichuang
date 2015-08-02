@@ -25,23 +25,27 @@
 				  	<div class="panel-body">
 					  	<div class='row'>
 					  		<div class="col-md-1 col-xs-12 text-center">
-							    <img class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+					  			<if condition="strlen($user['portrait']) gt 0">
+							    	<img class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+							    	<else />
+							    	<img class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/innovator.png' alt="头像" height="90px" width="90px">
+							    </if>
 					  		</div>
 							<div class="col-md-11 col-xs-12">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.nickname}</p>
 								<p class="hide-edit">&nbsp;&nbsp;&nbsp;{$user.brief}</p>
 								<div class="row">
 									<div class="col-md-6 col-xs-12">
-										<p id="interests" class="hide-edit">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
+										<p id="interests" class="hide-edit theme-small">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
 									</div>
-									<div class="col-md-2 col-md-offset-3 col-xs-12 text-right">
+									<!--<div class="col-md-2 col-md-offset-3 col-xs-12 text-right">
 										<if condition="$follow eq false">
 											<a class="btn btn-default form-control theme-nav theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
 											<else/>
 											<a class="btn btn-default form-control theme-nav theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
 										</if>
 										
-									</div>
+									</div>-->
 								</div>
 							</div>
 						</div>
@@ -52,16 +56,22 @@
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">创业项目</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">创业项目</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<volist name="prolist" id="projects">
 							<div class="panel">
-				  				<div class="panel-body hide-edit">
+				  				<div class="panel-body theme-well">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <input type="image" class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="80px" width="80px" onclick="openProject('{$projects.project_id}')">
+								  			<if condition="strlen($projects['project_logo']) gt 0">
+								  				<input type="image" class="thumbnail theme-profile" src='{$projects.project_logo}' alt="Logo" height="80px" width="80px" onclick="openProject('{$projects.project_id}')">
+								  				<else />
+										    	<input type="image" class="thumbnail theme-profile" src='__PUBLIC__/pic/project.png' alt="Logo" height="80px" width="80px" onclick="openProject('{$projects.project_id}')">
+										    </if>
 								  		</div>
 										<div class="col-md-6 col-xs-8">
 											<p class="theme-h4">{$projects.project_name}</p>
@@ -74,19 +84,20 @@
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">工作经历</h3>
+			  		<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">工作经历</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 						<volist name="joblist" id="jobs">
 							<div class="panel">
-					  			<div class="panel-body hide-edit">
+					  			<div class="panel-body theme-well">
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-12">
-											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
-											<p class="theme-h4">{$jobs.job_company}</p>
-											<p>{$jobs.job_start}至{$jobs.job_end}</p>
-											<p>{$jobs.job_info}</p>
+											<p class="theme-h4">{$jobs.job_title}</p>
+											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 									</div>
 								</div>
@@ -97,18 +108,24 @@
 			</div>
 			<div class="col-md-4 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading">
-						<h3 class="panel-title">个人资料</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">个人资料</span>
+						</p>
 					</div>
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">基本信息</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;性别: {$user.gender}</small>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;性别: </span><span class="theme-h5">{$user.gender}</span>
 								</p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;生日: {$user.birthday}</small></p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;地区: {$user.city}</small></p>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;生日: </span><span class="theme-h5">{$user.birthday}</span>
+								</p>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;地区: </span><span class="theme-h5">{$user.city}</span>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -116,11 +133,17 @@
 						<div class="row">
 							<div class="col-md-12">
 								<p class="theme-h4">教育背景</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;{$edu.school}</small>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;学校: </span><span class="theme-h5">{$edu.school}</span>
 								</p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.degree}</small></p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.year}年{$edu.mon}月入学</small></p>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;学历: </span><span class="theme-h5">{$edu.degree}</span>
+								</p>
+								<if condition="strlen($edu['year']) gt 0">
+									<p>
+										<span class="theme-h5-small">&nbsp;&nbsp;入学年月: </span><span class="theme-h5">{$edu.year}年{$edu.mon}月</span>
+									</p>
+								</if>
 							</div>
 						</div>
 					</div>

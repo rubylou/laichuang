@@ -18,6 +18,12 @@
   <include file="./Public/tpl/navbar_home.html" />
   <div class="well">
   	<div class="container" style="margin-top:70px">
+  		<if condition="$user.reg_status eq '未提交'">
+			<div class="alert alert-danger alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  <span>请提交审核，成为来创认证的投资人！</span><a class="alert-link" onclick="submitAuth('{$user.user_id}')">点击这里</a>
+			</div>
+		</if>
   		<div class="alert alert-warning alert-dismissible" role="alert" style="display:none">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		  <div id="alert_window">
@@ -70,13 +76,8 @@
 											</a>
 										</p>
 									</div>
-									<div class="col-md-2 col-md-offset-2 col-xs-6 text-right">
+									<div class="col-md-2 col-md-offset-3 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn" href="__URL__/investor/val/{$user.user_id}">预览</a>
-									</div>
-									<div class="col-md-2 col-xs-6 text-right">
-										<if condition="$user.reg_status eq '未提交'">
-											<a class="btn btn-default form-control theme-btn" onclick="submitAuth('{$user.user_id}')">提交审核</a>
-										</if>
 									</div>
 								</div>
 							</div>
@@ -186,16 +187,18 @@
 			  				<div class="panel-body">
 								<div class="row">
 									<volist name="prolist" id="pros">
-										<div class="col-md-1 col-xs-3 theme-nav">
-											<if condition="strlen($pros['project_logo']) gt 0">
-												<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
-												<else />
-												<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
-											</if>
-										</div>
-										<div class="col-md-2 col-xs-8 theme-nav">
-											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
-											<p class="theme-h4">&nbsp;</p>
+										<div class="col-md-3 theme-well">
+											<div class="col-md-4 col-xs-3 theme-nav">
+												<if condition="strlen($pros['project_logo']) gt 0">
+													<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+													<else />
+													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												</if>
+											</div>
+											<div class="col-md-8 col-xs-8 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+												<p class="theme-h4">&nbsp;</p>
+											</div>
 										</div>
 									</volist>
 								</div>
@@ -203,7 +206,7 @@
 						</div>
 				  		<volist name="caselist" id="cases">
 				  			<div class="panel">
-				  				<div class="panel-body hide-edit">
+				  				<div class="panel-body hide-edit theme-well">
 								  	<div class='row'>
 								  		<div class="col-md-1 col-xs-3">
 										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="70px" width="70px">
@@ -214,15 +217,13 @@
 											<p class="theme-small">&nbsp;&nbsp;&nbsp;<span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
 										</div>
 										<div class="col-md-2 col-md-offset-2 col-xs-6 col-xs-offset-6">
-											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
-											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delCase('{$cases.case_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delCase('{$cases.case_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
 							</div>
 						</volist>
-						
-						
 			  		</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
@@ -315,16 +316,16 @@
 						</div>
 						<volist name="joblist" id="jobs">
 							<div class="panel">
-					  			<div class="panel-body hide-edit">
+					  			<div class="panel-body hide-edit theme-well">
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-10">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
-											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-pencil theme-color"></span></a>
-											<a class="btn btn-default show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
@@ -345,16 +346,16 @@
 				  		<div class="row hide-edit">
 							<div class="col-md-9 col-xs-9">
 								<p class="theme-h5">
-									<span class="theme-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
+									<span class="theme-h5-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
 									<span>{$user.company}</span>
 								</p>
 								<p class="theme-h5">
-									<span class="theme-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
+									<span class="theme-h5-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
 									<span>{$user.title}</span>
 								</p>
 							</div>
 							<div class="col-md-2 col-xs-2">
-								<a class="btn btn-default show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none" onclick=""><span class="glyphicon glyphicon-pencil theme-color"></span></a>
+								<a class="btn theme-icon-btn show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none"><span class="glyphicon glyphicon-edit theme-color"></span></a>
 							</div>
 						</div>
 						<div class="collapse" id="collapseExample3">
@@ -368,7 +369,7 @@
 						              <label for="editTitle"><span class="required">*</span>职位</label>
 						              <input type="text" name="title" class="form-control" id="editTitle" placeholder="">
 						            </div>
-						            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="editBasics()">&nbsp;保存&nbsp;</button>
+						            <button type="submit" class="theme-btn-inverse form-control" onclick="editBasics()">&nbsp;保存&nbsp;</button>
 						        </div>
 							</div>
 						</div>
@@ -384,7 +385,11 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
-								<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
+								<if condition="strlen($user['mycard']) gt 0">
+									<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
+									<else />
+									<img class="thumbnail img-responsive" src="__PUBLIC__/pic/mycard.png" height="162" width="288"></img>
+								</if>
 							</div>
 						</div>
 						<hr>
@@ -447,7 +452,7 @@
 											</div>
 										</div>
 									</if>
-									<input type="submit" class="btn btn-default theme-btn" value="保存"/>
+									<input type="submit" class="btn theme-btn" value="保存"/>
 								</form>
 							</div>
 						</div>
@@ -457,7 +462,11 @@
 								<p class="theme-h4">链接社交账号</p>
 								<p>
 									<a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample4" href="#collapseExample4"><span class="glyphicon glyphicon-link theme-color"></span></a>
-	 								<a class="btn theme-logo" href="{$user.sns_id}"><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+									<if condition="strlen($user['sns_id']) gt 0">
+	 									<a class="btn theme-logo" href="{$user.sns_id}"><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
+	 									<else />
+	 									<a class="btn theme-logo" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample4" href="#collapseExample4"><img src="__PUBLIC__/pic/weibo-off.png" height="32px" width="32px"/></a>
+	 								</if>
 								</p>
 							</div>
  						</div>
@@ -482,7 +491,7 @@
 					</div>
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">
-				  			<div class="row">
+				  			<div class="row theme-well">
 					  			<div class="col-md-2 theme-nav col-xs-3">
 					  				<if condition="strlen($watch['project_logo']) gt 0">
 										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
@@ -508,7 +517,7 @@
 		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
 		      <div id="editField" style="display:none">
 		      	<div class="row">
-		      		<div class="col-md-10 col-md-offset-1">
+		      		<div class="col-md-8 col-md-offset-2">
 					  	<div class="form-group">
 			                <div id="conditions">
 			                </div>
@@ -552,7 +561,7 @@
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 	var field = {$field};
-	var rows = ({$fieldlen})/8;
+	var rows = ({$fieldlen})/6;
 	initializeField(rows,field);
 	addInterests({$interests},"#interests");
 	addRound({$rounds},"#round");
@@ -578,60 +587,7 @@
 		}
 	});
 
-	function submitAuth(id){
-    var xmlHttp = createRequest();
-    request(xmlHttp,'val='+id,"requestAuth");
-    if(xmlHttp.responseText == '200'){
-      alert('提交成功');
-      document.location.reload();
-    }
-    else if(xmlHttp.responseText == '4041'){
-      //alert('请填写姓名');
-      $('#alert_window')[0].innerHTML = "<strong>请填写姓名</strong>"; 
-      $('.alert').fadeIn();
-      editName();
-      $("#user_name").focus();
-    }
-    else if(xmlHttp.responseText == '4042'){
-      //alert('请填写公司、职位信息');
-      $('#alert_window')[0].innerHTML = "<strong>请填写公司、职位信息</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4043'){
-      //alert('请上传名片');
-      $('#alert_window')[0].innerHTML = "<strong>请上传名片</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4044'){
-      //alert('请上传公司营业执照');
-      $('#alert_window')[0].innerHTML = "<strong>请上传公司营业执照</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4045'){
-      //alert('请上传组织结构代码证件');
-      $('#alert_window')[0].innerHTML = "<strong>请上传组织结构代码证件</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4046'){
-      //alert('请上传公司近三年财务报表');
-      $('#alert_window')[0].innerHTML = "<strong>请上传公司近三年财务报表</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4047'){
-      //alert('请上传个人财产证明');
-      $('#alert_window')[0].innerHTML = "<strong>请上传个人财产证明</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else if(xmlHttp.responseText == '4048'){
-      //alert('请填写至少三个投资案例');
-      $('#alert_window')[0].innerHTML = "<strong>请填写至少三个投资案例</strong>"; 
-      $('.alert').fadeIn();
-    }
-    else{
-
-    }
-
-  }
+	
 
 </script>
 </html>

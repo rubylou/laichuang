@@ -53,7 +53,8 @@ class CaseController extends Controller {
 	public function infoEdit(){
 		$id = $_GET['key'];
 		$Form = new Model();
-		$result = $Form->query('select project_info.*, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id where project_id="%s"',$id);
+		$result = $Form->query('select project_info.*, name, portrait from project_info 
+            inner join entrepreneur_personal on project_admin = user_id where project_id="%s"',$id);
 		foreach ($result as $key => $value) {
 			$result[$key]['project_type'] = C('INTEREST_FIELD')[$value['project_type']];
 			$result[$key]['project_intro'] = htmlspecialchars_decode($value['project_intro']);
@@ -62,6 +63,11 @@ class CaseController extends Controller {
         //关注信息
         $follow = $Form->query('select count(user_id) from relation_follow where object_type=%d and object_id="%s"',C(PROJECT_CODE),$id);
 		$result[0]['project_watches'] = $follow[0]['count(user_id)'];
+        $result[0]['status'] = C('AUTH_STATUS')[$result[0]['status']];
+        if($result[0]['project_admin']!== $_SESSION['id']){
+            $this->redirect('Home/Case/info/key/'.$id);
+        }
+
         $this->info = $result[0];
 
 		//所属领域
@@ -344,9 +350,6 @@ class CaseController extends Controller {
     }
 
     public function editInfo(){
-    	//dump($_SESSION);
-    	//dump($_POST);
-    	//dump($_GET);
     	$Form = new Model();
     	if(count($_POST['name'])>0 && $_SESSION['type']==2){
             $result = $Form->execute('update project_info set project_name="%s" where project_admin="%s" and project_id="%s"',$_POST['name'],$_SESSION['id'],$_GET['p']);

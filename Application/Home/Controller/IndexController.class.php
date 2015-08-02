@@ -249,5 +249,13 @@ class IndexController extends Controller {
         }
     }
 
+    public function queryCheckCode(){
+        dump($_POST);
+        if(I('post.mobile')){
+            //$result = send_msg(I('post.mobile'));
+            echo $result;
+        }
+    }
+
     
 }

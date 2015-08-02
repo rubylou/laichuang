@@ -18,10 +18,10 @@ function submitProject(){
   }
 }
 
-function fi_submit(id){
+function fi_submit(id,url){
   var index = $('#editFi_input').val();
   var xmlHttp = createRequest();
-  if(checkValue("#investor",50,0,'投资主体不能为空')){
+  if(checkValue("#investor",50,1,'投资主体不能为空')){
     var round = 'key1='+$('#round').val()+'&';
     var currency1 = 'key2='+$('#currency1').val()+'&';
     var amount = 'key3='+$('#amount').val()+'&';
@@ -32,10 +32,10 @@ function fi_submit(id){
     var investmon = 'key8='+$('#investmon').val()+'&';
     var data = round+currency1+amount+currency2+assess+investor+investyear+investmon;
     if(index.length>0){
-      request(xmlHttp,"p="+id+"&"+data+"c="+index,"profiAdd");
+      request(xmlHttp,"p="+id+"&"+data+"c="+index,url);
     }
     else{
-      request(xmlHttp,"p="+id+"&"+data,"profiAdd");
+      request(xmlHttp,"p="+id+"&"+data,url);
     }
 
     if(xmlHttp.responseText==200){
@@ -59,13 +59,20 @@ function followPro(id,value,url){
   }
 }
 
-function submitAuth(id){
-    var xmlHttp = createRequest();
-    request(xmlHttp,'p='+id,"requestAuth");
-    if(xmlHttp.responseText == '200'){
-      alert('提交成功');
-      document.location.reload();
+function submitAuth(id,logo,url){
+    if(logo.length>0){
+      var xmlHttp = createRequest();
+      request(xmlHttp,'p='+id,url);
+      if(xmlHttp.responseText == '200'){
+        alert('提交成功');
+        document.location.reload();
+      }
     }
+    else{
+      $('#alert_window')[0].innerHTML = "<strong>请先添加创业项目Logo</strong>"; 
+      $('.alert').fadeIn();
+    }
+    
 }
 
 function addMember(p,url){

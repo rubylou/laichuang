@@ -24,7 +24,7 @@ class UserController extends Controller {
             $user = $Form->query("select * from entrepreneur_personal where user_id='%s'",$_SESSION['id']);
             $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
             $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
-
+            $user[0]['reg_status'] = C('AUTH_STATUS')[$user[0]['reg_status']];
             $this->user = $user[0];
             //dump($this->user);
            
@@ -879,29 +879,134 @@ class UserController extends Controller {
     }
 
     public function settings(){
+        $Form = new Model();
+        //dump($_SESSION);
+        if($_SESSION['type']==1){
+            $result = $Form->query('select mobile, email, active_status from investor_personal
+                left join email_active on investor_personal.user_id = email_active.user_id
+                where investor_personal.user_id = "%s"',$_SESSION['id']);
+            if($result){
+                $this->info = $result[0];
+            }
+            //dump($result);
+        }
+        else if($_SESSION['type']==2){
+            $result = $Form->query('select phone as mobile, email, active_status from entrepreneur_personal
+                left join email_active on entrepreneur_personal.user_id = email_active.user_id
+                where entrepreneur_personal.user_id = "%s"',$_SESSION['id']);
+            if($result){
+                $this->info = $result[0];
+            }
+            //dump($result);
+        }
+        else {
+            $this->redirect('Index/login');
+        }
         $this->display();
+
     }
 
     public function queryCheckCode(){
-        //dump($_POST);
+        dump($_POST);
         if(I('post.mobile')){
-            $result = send_msg(I('post.mobile'));
+            //$result = send_msg(I('post.mobile'));
             echo $result;
         }
     }
 
     public function saveMobile(){
-        dump($_POST);
-        if(I('post.key1') && I('post.key2')){
-            //$result = check_mobile(I('post.key1'),I('post.key2'));
-            //echo $result;
+        if(check_mobile(I('post.key1'),I('post.key2'))===200){
+            if($_SESSION['type']==1){
+                $Form = M('investor_personal');
+                $data['user_id'] = session('id');
+                $data['mobile'] = I('post.key1');
+                $result = $Form->save($data);
+                if($result){
+                    echo 200;
+                }
+            }
+            else if($_SESSION['type']==2){
+                $Form = M('entrepreneur_personal');
+                $data['user_id'] = session('id');
+                $data['phone'] = I('post.key1');
+                $result = $Form->save($data);
+                if($result){
+                    echo 200;
+                }
+            }
+            else{
+                echo 401;
+            }
         }
     }
 
     public function saveEmail(){
-        dump($_POST);
-        $result = send_active_mail(session('id'),session('type'),I('post.key1'));
-        echo $result;
+        //dump($_POST);
+        if(send_active_mail(session('id'),session('type'),I('post.key1'))){
+            if($_SESSION['type']==1){
+                $Form = M('investor_personal');
+                $data['user_id'] = session('id');
+                $data['email'] = I('post.key1');
+                $result = $Form->save($data);
+                if($result){
+                    echo 200;
+                    session('[destroy]');
+                }
+            }
+            else if($_SESSION['type']==2){
+                $Form = M('entrepreneur_personal');
+                $data['user_id'] = session('id');
+                $data['email'] = I('post.key1');
+                $result = $Form->save($data);
+                if($result){
+                    echo 200;
+                    session('[destroy]');
+                }
+            }
+            else{
+                echo 401;
+            }
+        }
+    }
+
+    public function saveChange(){
+        //dump($_POST);
+        $Form = new Model();
+        if($_SESSION['type']==1){
+            $check = $Form->query('select * from investor_security where user_id = "%s"',$_SESSION['id']);
+            if($check[0]['user_pwd']===I('post.key1')){
+                $result = $Form->execute('update investor_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
+                if($result){
+                    echo 200;
+                    session('[destroy]');
+                }
+                else{
+                    echo 400;
+                }
+            }
+            else{
+                echo 404;
+            }
+        }
+        else if($_SESSION['type']==2){
+            $check = $Form->query('select * from entrepreneur_security where user_id = "%s"',$_SESSION['id']);
+            if($check[0]['user_pwd']===I('post.key1')){
+                $result = $Form->execute('update entrepreneur_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
+                if($result){
+                    echo 200;
+                    session('[destroy]');
+                }
+                else{
+                    echo 400;
+                }
+            }
+            else{
+                echo 404;
+            }
+        }
+        else{
+            echo 401;
+        }
     }
 }
 ?>

@@ -51,7 +51,7 @@ function addInterest(id,field){
 	}
 	else{
 		var label = $('<span></span>').text(field[id]);
-		label.addClass('btn btn-default label label-default theme-btn');
+		label.addClass('btn btn-default label theme-btn-inverse');
 		label.attr('value',id);
 		label.attr("id","field"+id);
 		label.click(function(){
@@ -69,7 +69,7 @@ function addLabel(id,field){
 	}
 	else{
 		var label = $('<span></span>').text(field[id]);
-		label.addClass('btn btn-default label theme-bg theme-white');
+		label.addClass('btn btn-default label theme-btn');
 		label.attr('value',id);
 		label.attr("id","field"+id);
 		label.click(function(){
@@ -82,8 +82,8 @@ function addLabel(id,field){
 		  }
 		});
 
-		var row = parseInt(id/8);
-		if(id%8==0){
+		var row = parseInt(id/6);
+		if(id%6==0){
 		  --row;
 		}
 		$('#row'+row).append(label);
