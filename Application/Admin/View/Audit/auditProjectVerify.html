@@ -34,7 +34,7 @@
 								<p>&nbsp;&nbsp;&nbsp;{$info.project_brief}</p>
 								<div class="row">
 									<div class="col-md-6">
-										<p id="interests">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
+										<!--p id="interests">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p-->
 									</div>
 									<div class="col-md-2 col-md-offset-3 text-right">
 										
@@ -196,14 +196,17 @@
 		  </div>
 		</div>
 	</div>
+	
+
 	<div class="container" ng-app="myprojectpapp" ng-controller="projectController">
 		<form>
   			<div class="form-group">
     			<label for="verifyresult">审核结果</label>
-    			<select class="form-control" id="everifyresult"  ng-model="result" >
-  						<option value=2 selected = "selected">审核通过</option>
-  						<option value=0 >审核不通过</option>
-				</select>
+    			<br>
+    			<div id="verifyresult" class="btn-group" role="group" aria-label="...">
+  					<button id="agreeBtn" type="button" class="btn btn-default" ng-click="result=2;btn1=1;btn2=0" ng-class="{'active': btn1,'btn-primary':btn1}">审核通过</button>
+  					<button id="denyBtn" type="button" class="btn btn-default" ng-click="result=0;btn1=0;btn2=1"  ng-class="{'active': btn2,'btn-primary':btn2}">审核不通过</button>
+				</div>
   			</div>
   			<div class="form-group">
    			 	<label for="note">审核意见</label>
@@ -214,6 +217,8 @@
 		</form>
 		
 	</div>
+
+
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>

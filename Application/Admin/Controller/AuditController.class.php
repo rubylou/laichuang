@@ -5,12 +5,45 @@ use Think\Model;
 class AuditController extends Controller {
     public function index(){
     	//dump($_SESSION);
+        if(session('?userid')&&session('?usertype')){
+
+        $Form = new Model();
+        $status= C(VERIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
+        $this->project=$pro;
+
+        $status=C(UNDERVIRIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
+        $this->unProject=$pro;
+
+
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status=".$status);
+        $this->innovator=$user;
+
+        $status=C(UNDERVIRIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status = ".$status);
+        $this->unInnovator=$user;
+
+        $status=C(UNDERVIRIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status = ".$status);
+        $this->unInvestor=$user;
+
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
+        $this->investor=$user;
+
     	$this->display();   
+    }
+        else{
+            $this->redirect('Index/index');
+        }
     }
 
     public function fetchProject(){
         $Form = new Model();
-        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info");
+        $status= C(VERIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
         echo json_encode($pro);
     }
     public function fetchProjectUnderVerified(){
@@ -19,6 +52,7 @@ class AuditController extends Controller {
         $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
         echo json_encode($pro);
     }
+    
     public function auditProjectVerify(){
         $id=$_GET['key'];
         $Form = new Model();
@@ -111,8 +145,15 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$project_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update project_info set status=%d where project_id="%s"',$result,$project_id);
+        $res=$Form->execute('update project_info set status=%d where project_id="%s"',$result,$project_id);
 
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
     }
 
@@ -123,7 +164,8 @@ class AuditController extends Controller {
 
     public function fetchInnovator(){
         $Form = new Model();
-        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal");
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status=".$status);
         echo json_encode($user);
     }
     public function fetchInnovatorUnderVerified(){
@@ -190,9 +232,16 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$innovator_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update entrepreneur_personal set reg_status=%d where user_id="%s"',$result,$innovator_id);
+        $res=$Form->execute('update entrepreneur_personal set reg_status=%d where user_id="%s"',$result,$innovator_id);
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
-
+ 
     }
 
 
@@ -209,25 +258,28 @@ class AuditController extends Controller {
     }
     public function fetchInvestor(){
         $Form = new Model();
-        $user = $Form->query("select user_id,name,company,mobile from investor_personal");
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
         echo json_encode($user);
     }
     public function auditInvestorPsVerify(){
-        $user_id=$_GET['key'];
+        $id=$_GET['key'];
         //get all need information 
         //dump($user_id);
         $Form = new Model();
-    
-     
-        $pinfoRaw=$Form->query("select * from investor_personal where user_id=".$user_id);
-        $this->userInfo=json_encode($pinfoRaw);
-        //dump($this->userInfo);
-        
-        $jobRaw=$Form->query("select * from user_job where user_id=".$user_id);
-        $this->jobInfo=json_encode($jobRaw);
-        //dump($this->jobInfo);
+        $result = $Form->query('select interest_field from interest_investor where id="%s"', $id);
+        if($result){
+            $fields = C('INTEREST_FIELD');
+            foreach ($result as $key => $value) {
+                $result[$key]['interest_field'] = $fields[$value['interest_field']];
+            }
+            $this->interests = json_encode($result);
+        }
+        else{
+            $this->interests = json_encode(null);
+        }
 
-        $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$user_id);
+        $cases = $Form->query('select * from investor_case where user_id="%s" order by invest_time desc',$id);
         if($cases){
             $round = C('INVEST_ROUND');
             $cur = C('CURRENCY_CODE');
@@ -240,59 +292,60 @@ class AuditController extends Controller {
                     $cases[$key]['invest_amount'] = '-未知-';
                 }
             }
-            $this->cases = json_encode($cases);
-            //dump($cases);
-            //$this->assign('caselist',$cases);
+            $this->cases = $cases;
+            $this->assign('caselist',$cases);
         }
 
         //投资项目
         $pros = $Form->query('select project_investor.project_id, project_name, project_logo from project_investor 
-                inner join project_info on project_investor.project_id = project_info.project_id
-                where user_id="%s"', $user_id);
+            inner join project_info on project_investor.project_id = project_info.project_id
+            where user_id="%s"', $id);
         if($pros){
             $this->pros = $pros;
             $this->assign('prolist',$pros);
         }
+
         //关注项目
         $watch = $Form->query('select object_id, project_name, project_logo from relation_follow 
             inner join project_info on project_id = object_id
-            where user_id="%s" and object_type="%s" and follow_status=1',$user_id,C(PROJECT_CODE));
+            where user_id="%s" and object_type="%s" and follow_status=1',$id,C(PROJECT_CODE));
         if($watch){
             $this->watch = $watch;
             $this->assign('watchlist',$watch);
         }
 
-        //工作经历
-            $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$user_id);
-            if($jobs){
-                foreach ($jobs as $key => $value) {
-                    $jobs[$key]['job_start'] = substr($value['job_start'], 0,7);
-                    $jobs[$key]['job_end'] = substr($value['job_end'], 0,7);
-                }
-                $this->jobs = $jobs;
-                $this->assign('joblist',$jobs);
+        $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$id);
+        if($jobs){
+            foreach ($jobs as $key => $value) {
+                $jobs[$key]['job_start'] = substr($value['job_start'], 0,7);
+                $jobs[$key]['job_end'] = substr($value['job_end'], 0,7);
             }
-            $user = $Form->query("select * from investor_personal where user_id='%s'",$user_id);
-            $this->user = $user[0];
+            $this->jobs = $jobs;
+            $this->assign('joblist',$jobs);
+        }
+        $user = $Form->query("select * from investor_personal where user_id='%s'",$id);
+        $this->user = $user[0];
 
-            //认证资料
-            if($user[0]['user_type']==1){
-                $auth = $Form->query('select * from investor_company where user_id = "%s"', $user_id);
+
+
+        //认证资料
+        if($user[0]['user_type']==1){
+                $auth = $Form->query('select * from investor_company where user_id = "%s"', $id);
                 $this->auth = $auth[0];
                 //dump($this->auth);
             }
             else if($user[0]['user_type']==2){
-                $auth = $Form->query('select * from investor_fi where user_id = "%s"',$user_id);
+                $auth = $Form->query('select * from investor_fi where user_id = "%s"',$id);
                 $this->auth = $auth[0];
-            }
+        }
 
-            $this->rounds = json_encode(C('INVEST_ROUND'));
-            $this->currency = json_encode(C('CURRENCY_CODE'));
-            $fields = C('INTEREST_FIELD');
-            $fieldlen = count($fields);
-            $this->field = json_encode($fields);
-            $this->fieldlen = $fieldlen;
-
+        $this->rounds = json_encode(C('INVEST_ROUND'));
+        $this->currency = json_encode(C('CURRENCY_CODE'));
+        $fields = C('INTEREST_FIELD');
+        $fieldlen = count($fields);
+        $this->field = json_encode($fields);
+        $this->fieldlen = $fieldlen;
+        $this->userid=$id;
         $this->display();
     }
     public function receiveInverstorPVerifyResult(){
@@ -311,8 +364,14 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$user_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update investor_personal set reg_status=%d where user_id="%s"',$result,$user_id);
-
+        $res=$Form->execute('update investor_personal set reg_status=%d where user_id="%s"',$result,$user_id);
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
     }
 

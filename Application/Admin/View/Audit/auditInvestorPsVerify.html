@@ -15,7 +15,7 @@
     <script src="__PUBLIC__/js/util/angular.min.js"></script>
     <script src="__PUBLIC__/js/util/angular-route.js"></script>
     <script src="__PUBLIC__/js/Admin/Audit/auditInvestorPsVerify.js"></script>
-    <script type="text/javascript">init({$userInfo},{$jobInfo},{$cases});</script>
+    <script type="text/javascript">init({$userid});</script>
   </head>
 
 <body  >
@@ -24,17 +24,36 @@
   	<div class="container" style="margin-top:70px">
 	    <div class="row">
 			<div class="col-md-12 col-xs-12">
-				<div class="panel panel-primary theme-outline">
+				<div class="panel panel-default theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-4 text-center" >
-							    <image class="thumbnail theme-profile" src={{userInfo.portrait}} alt="头像" height="90px" width="90px">
+					  		<div class="col-md-1 col-xs-12 text-center">
+							    <if condition="strlen($user['portrait']) gt 0">
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+							    	<else />
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/investor.png' alt="头像" height="90px" width="90px">
+							    </if>
 					  		</div>
-							<div class="col-md-11 col-xs-6">
-								<p class="theme-h3 hide-edit">&nbsp;&nbsp;&nbsp;{$user.name}</p>
+							<div class="col-md-11 col-xs-12">
+								<p class="theme-h3 hide-edit">&nbsp;&nbsp;{$user.name}</p>
 								<p class="hide-edit">
-									<span>&nbsp;&nbsp;&nbsp;{{userInfo.brief}}</span>
+									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
 								</p>
+								<div class="row">
+									<div class="col-md-6">
+										<!--p id="interests" class="hide-edit theme-small">
+											&nbsp;&nbsp;&nbsp;
+											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+										</p-->
+									</div>
+									<!--<div class="col-md-2 col-md-offset-3 text-right">
+										<if condition="$follow eq false">
+											<a class="btn btn-default form-control theme-nav theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<else/>
+											<a class="btn btn-default form-control theme-nav theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+										</if>
+									</div>-->
+								</div>
 							</div>
 
 						</div>
@@ -47,8 +66,10 @@
 		<div class="row">
 			<div class="col-md-8 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">投资案例</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;投资案例&nbsp;</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="panel">
@@ -56,91 +77,127 @@
 								<div class="row">
 									<volist name="prolist" id="pros">
 										<div class="col-md-1 col-xs-3 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+											<if condition="strlen($pros['project_logo']) gt 0">
+												<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												<else />
+												<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+											</if>
 										</div>
 										<div class="col-md-2 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+											<p class="theme-h4">&nbsp;</p>
 										</div>
 									</volist>
 								</div>
 							</div>
 						</div>
-				  		<div ng-repeat="x in cases">
+				  		<volist name="caselist" id="cases">
 				  			<div class="panel">
 				  				<div class="panel-body">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
-										    <img class="thumbnail theme-profile" src='/lcb/Public/pic/company.png' alt="Logo" height="90px" width="90px">
+										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="80px" width="80px">
 								  		</div>
-										<div class="col-md-6 col-xs-6">
-										<p class="theme-h4">{{x.company}}</p>
-											<p>{{x.investor_name}}</p>
-											<p><span class="text-danger">{{x.round}}</span>&nbsp;&middot;&nbsp;<span class="theme-small">{{x.invest_time}}</span>&nbsp;|&nbsp;投资金额{{x.invest_amount}}万{{x.invest_cur}}</p>
+										<div class="col-md-6 col-xs-8">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$cases.company}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;{$cases.investor_name}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;<span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
+						</volist>
 						
 			  		</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">工作经历</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">工作经历
+						</p>
 					</div>
 				  	<div class="panel-body">
-				  		<div ng-repeat="x in jobInfo">
-				  			<div class="panel">
+						<volist name="joblist" id="jobs">
+							<div class="panel">
 					  			<div class="panel-body">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-6">
-											<p class="theme-h4"><strong>{{x.job_title}}</strong></p>
-											<p class="theme-h4">{{x.job_company}}</p>
-											<p>{{x.job_start}}至{{x.job_end}}</p>
-											<p>{{x.job_info}}</p>
+										<div class="col-md-6 col-xs-12">
+											<p class="theme-h4">{$jobs.job_title}</p>
+											<p class="theme-small">{$jobs.job_info}</p>
+											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 									</div>
 								</div>
 							</div>
-				  		</div>
-			
+						</volist>
 					</div>
 			  	</div>
 			</div>
 			<div class="col-md-4 col-xs-12">
 				<div class="panel panel-default theme-outline">
-					<div class="panel-heading">
-						<h3 class="panel-title">个人资料</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">个人资料</span>
+						</p>
 					</div>
 				  	<div class="panel-body">
 				  		<div class="row">
-							<div class="col-md-9">
-								<p class="theme-h4">基本信息</p>
+							<div class="col-md-9 col-xs-12">
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.company}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.title}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;姓名:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.name}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;电话:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.mobile}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.email}</span>
+								</p>
+								
+							</div>
 
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;姓名: {{userInfo.name}}</small>
-								</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;手机: {{userInfo.mobile}}</small>
-								</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;邮箱: {{userInfo.email}}</small>
-								</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;注册投资人类型: {{type}}</small>
-								</p>
+						</div>
 
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;公司: {{userInfo.company}}</small>
-								</p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;职位: {{userInfo.title}}</small></p>
+
+						<div class="row">
+							<div class="col-md-4 col-xs-6">
+								<span class="theme-small">&nbsp;&nbsp;名片:&nbsp;&nbsp;&nbsp;</span>
 							</div>
 						</div>
-						<hr>
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
+							</div>
+						</div>
+
+                        
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">社交账号</p>
+								<p>&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-link theme-color"></span>
+	 								<a class="btn theme-logo" href="{$user.sns_id}">{$user.sns_id}<!--img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/--></a>
+								</p>
+							</div>
+						</div>
+
+                        <hr>
+						
+
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
 								<p class="theme-h4">财产信息或公司信息</p>
-					            <form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="finance_form">
+					            <form method="post" enctype="multipart/form-data" id="finance_form"> <!--action="__URL__/authSave"-->
 					            	<if condition="$user.user_type eq 1">
 						            	<div class="form-group">
 							              <label for="companyType"><span class="required">*</span>公司性质</label>
@@ -196,31 +253,33 @@
 											</div>
 										</div>
 									</if>
-									<!--input type="submit" class="btn btn-default theme-btn-inverse" value="上传"/-->
+									<!--input type="submit" class="btn btn-default theme-btn" value="保存"/-->
 								</form>
 							</div>
 						</div>
-						<hr>
-						<div class="row">
-							<div class="col-md-12">
-								<p class="theme-h4">社交账号</p>
-								<p>&nbsp;&nbsp;
-									<span class="glyphicon glyphicon-link theme-color"></span>
-	 								<a class="btn theme-logo" href={{userInfo.sns_id}}><img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/></a>
-								</p>
-							</div>
-						</div>
+						
+
+
+
+						
+						
 					</div>
 			  	</div>
 			  	<div class="panel panel-default theme-outline">
-					<div class="panel-heading">
-						<h3 class="panel-title">关注项目</h3>
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">关注项目</span>
+						</p>
 					</div>
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">
 				  			<div class="row">
 					  			<div class="col-md-2 col-xs-3 theme-nav">
-									<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+									<if condition="strlen($watch['project_logo']) gt 0">
+										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+										<else />
+										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+									</if>
 								</div>
 								<div class="col-md-9 col-xs-8 theme-nav">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
@@ -232,14 +291,38 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		      <textarea rows="3" class="form-control" id="request_info" style="display:none"></textarea>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="requireRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="require_confirm">确定</button>
+			    <button type="button" class="btn btn-default" data-dismiss="modal" id="require_cancel">取消</button>
+			    <input type="hidden" id="require_input" />
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+  	<!--======================verify==========================================================-->
 	<div class="container">
 		<form>
   			<div class="form-group">
     			<label for="verifyresult">审核结果</label>
-    			<select class="form-control" id="everifyresult"  ng-model="result" >
-  						<option value=2 selected = "selected">审核通过</option>
-  						<option value=0 >审核不通过</option>
-				</select>
+    			<br>
+    			<div id="verifyresult" class="btn-group" role="group" aria-label="...">
+  					<button id="agreeBtn" type="button" class="btn btn-default" ng-click="result=2;btn1=1;btn2=0" ng-class="{'active': btn1,'btn-primary':btn1}">审核通过</button>
+  					<button id="denyBtn" type="button" class="btn btn-default" ng-click="result=0;btn1=0;btn2=1"  ng-class="{'active': btn2,'btn-primary':btn2}">审核不通过</button>
+				</div>
   			</div>
   			<div class="form-group">
    			 	<label for="note">审核意见</label>
@@ -252,6 +335,7 @@
 	</div>
   </div>
 </body>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script type="text/javascript">
 function openProject(id){

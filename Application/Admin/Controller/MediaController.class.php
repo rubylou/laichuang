@@ -23,7 +23,7 @@ class MediaController extends Controller {
 
     public function articleEdit(){
     	//dump($_SESSION);
-        if(session('?id')&&session('?type')){
+        if(session('?userid')&&session('?usertype')){
             $this->type = json_encode(C('MODULE_CODE'));
             $this->field = json_encode(C('INTEREST_FIELD'));
             $this->object = json_encode(C('OBJECT_CODE'));
