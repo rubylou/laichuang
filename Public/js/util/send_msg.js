@@ -97,5 +97,11 @@ function request_message(id,value,obj,attach){
 		$('.modal-footer').find('div').filter('#projectsRequest').show();
 		modalShow('alert_content','myModal','添加成功!<br><br>是否将新增创业项目的消息发送给相关领域的投资者?');
 	}
+	else if(value=="AUTHORIZATION"){
+		$('#projects_input').val(data);
+		$('.modal-footer').find('div').hide();
+		$('.modal-footer').find('div').filter('#projectsRequest').show();
+		modalShow('alert_content','myModal','审核成功!<br><br>请返回首页继续审核');
+	}
 	
 }

@@ -27,7 +27,7 @@ class MessageController extends Controller {
 		$msg_type = I('post.type',0).'_CODE';
 		$object = I('post.obj',0);
 		$attach = I('post.attach');
-
+        //echo json_encode($_POST);
 		//dump($from);
 		//dump($to);
 		//dump($msg_type);

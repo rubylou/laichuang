@@ -36,8 +36,19 @@ invesPApp.controller("userController", function($scope,$http) {
   			if (xmlhttp.readyState==4 && xmlhttp.status==200)
     		{
     			//alert(xmlhttp.responseText);
-    			window.location.href="index";
-    		}
+    			//window.location.href="index";
+                if(xmlhttp.responseText=='200')
+                {
+                    request_message($scope.user_id,'AUTHORIZATION','INVESTOR','');
+                    window.location.href="index";
+                }else
+                {
+                    modalShow("alert_content","myModal","审核失败，请稍候再试！");
+                }
+    		}else
+            {
+                modalShow("alert_content","myModal","审核失败，请稍候再试！");
+            }
 		}
 		xmlhttp.open("GET",url,true);
 		xmlhttp.send();

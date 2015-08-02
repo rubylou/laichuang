@@ -6,7 +6,35 @@ class AuditController extends Controller {
     public function index(){
     	//dump($_SESSION);
         if(session('?userid')&&session('?usertype')){
-    	$this->display();   }
+
+        $Form = new Model();
+        $status= C(VERIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
+        $this->project=$pro;
+
+        $status=C(UNDERVIRIFIED);
+        $pro = $Form->query("select project_id,project_admin,project_brief,project_logo,project_name from project_info where status=".$status);
+        $this->unProject=$pro;
+
+
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status=".$status);
+        $this->innovator=$user;
+
+        $status=C(UNDERVIRIFIED);
+        $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status = ".$status);
+        $this->unInnovator=$user;
+
+        $status=C(UNDERVIRIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status = ".$status);
+        $this->unInvestor=$user;
+
+        $status= C(VERIFIED);
+        $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
+        $this->investor=$user;
+
+    	$this->display();   
+    }
         else{
             $this->redirect('Index/index');
         }
@@ -117,8 +145,15 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$project_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update project_info set status=%d where project_id="%s"',$result,$project_id);
+        $res=$Form->execute('update project_info set status=%d where project_id="%s"',$result,$project_id);
 
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
     }
 
@@ -197,9 +232,16 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$innovator_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update entrepreneur_personal set reg_status=%d where user_id="%s"',$result,$innovator_id);
+        $res=$Form->execute('update entrepreneur_personal set reg_status=%d where user_id="%s"',$result,$innovator_id);
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
-
+ 
     }
 
 
@@ -322,8 +364,14 @@ class AuditController extends Controller {
             $admin_id,$audition_type,$user_id,$time,$note);
         //echo "ok";
         //update the user reg_status
-        $Form->execute('update investor_personal set reg_status=%d where user_id="%s"',$result,$user_id);
-
+        $res=$Form->execute('update investor_personal set reg_status=%d where user_id="%s"',$result,$user_id);
+        if($res)
+        {
+            echo '200';
+        }else
+        {
+            echo '400';
+        }
 
     }
 
