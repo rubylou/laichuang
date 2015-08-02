@@ -33,6 +33,9 @@ class AuditController extends Controller {
         $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
         $this->investor=$user;
 
+
+        $this->unreadcount=$Form->query("select COUNT(*) from messagebox where adminread='0' and msg_type <= 3")[0]['count(*)'];
+        //dump($this->unreadcount);
     	$this->display();   
     }
         else{
