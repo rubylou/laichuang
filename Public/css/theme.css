@@ -114,6 +114,31 @@ ul li.active {
   margin-bottom: auto;
 }
 
+.theme-label-btn {
+  color:#253B58;
+  background-color:#FFFFFF;
+  padding-right: 1px;
+  padding-left: 1px;
+  font-size: 75%;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  width: 120%;
+
+}
+
+.theme-label-btn:active,
+.theme-label-btn:focus,
+.theme-label-btn:hover{
+  border-radius: .25em;
+  border-bottom:1px solid #A2A2A2;
+  border-top: 1px solid #A2A2A2;
+  border-left: 1px solid #A2A2A2;
+  border-right: 1px solid #A2A2A2;
+
+}
+
 .theme-profile:active,
 .theme-profile:focus,
 .theme-profile:hover{

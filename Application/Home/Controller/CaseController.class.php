@@ -5,10 +5,19 @@ use Think\Model;
 class CaseController extends Controller {
 	public function index(){
 		$Form = new Model();
-		$result = $Form->query('select project_id, project_name, project_logo, project_brief, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id');
-		
+		$result = $Form->query('select project_id, project_name, project_logo, project_brief, nickname, city, project_admin from project_info inner join entrepreneur_personal on project_admin = user_id');
+		foreach ($result as $key => $value) {
+            $result[$key]['city'] = C('PROVINCE_CODE')[$value['city']];
+        }
 		$this->vo = $result;
 		$this->assign("list",$result);
+
+        //感兴趣领域
+        $fields = C('INTEREST_FIELD');
+        $this->assign('fields',$fields);
+        $city = C("PROVINCE_CODE");
+        $this->assign('city',$city);
+
 		$this->display();
 	}
 
@@ -134,6 +143,10 @@ class CaseController extends Controller {
 	}
 
     public function info(){
+        if(!session('?type') || !session('?id')){
+            $this->redirect('Home/Index/login');
+        }
+
         $id = $_GET['key'];
         $Form = new Model();
         $result = $Form->query('select project_info.*, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id where project_id="%s"',$id);
