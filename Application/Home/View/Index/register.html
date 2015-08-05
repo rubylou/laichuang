@@ -9,13 +9,12 @@
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
   </head>
   <style>
     .jumbotron{
-      background:url(/lcb/Public/pic/indexbg.jpg);
+      background:url(__PUBLIC__/pic/reg.jpg);
       background-size: cover; 
       -moz-background-size: cover;
       height:400px;
@@ -23,17 +22,17 @@
   </style>
 <body>
   <include file="./Public/tpl/navbar_home.html" />
-  <div class="jumbotron">
+  <div class="jumbotron" style="margin-top:70px">
     <div class="container">
       <div class="row">
         <h1 class="text-center item-container"><span class="theme-white">一起来创吧</span></h1>
       </div>
       <div class="row">
         <div class="col-md-3 col-md-offset-3 col-xs-6">
-          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我要投资&nbsp;</button>
+          <button type="submit" class="theme-btn-alpha form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我要投资&nbsp;</button>
         </div>
         <div class="col-md-3 col-xs-6">
-          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我要创业&nbsp;</button>
+          <button type="submit" class="theme-btn-alpha form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我要创业&nbsp;</button>
         </div>
       </div>
     </div>
@@ -41,134 +40,220 @@
 
   <div class="container">
     <div class="collapse" id="collapseExample1">
-      <div class="well">
         <div class="row">
-          <div class="col-md-4 col-md-offset-4 col-xs-12">   
-            <div class="form-group">
-              <label for="regName1"><span class="required">*</span>姓名</label>
-              <input type="text" name="name" class="form-control" id="regName1" placeholder="请填写真实姓名">
+          <div class="col-md-4 col-md-offset-4 col-xs-12"> 
+            <div class="theme-panel-heading">
+                <p class="panel-title">
+                  <span class="theme-heading theme-h4">投资人注册</span>
+                </p>
             </div>
+          </div>
+        </div>
+        <div class="form-horizontal">
             <div class="form-group">
-              <label for="regMobile1"><span class="required">*</span>手机</label>
-              <input type="text" name="mobile" class="form-control" id="regMobile1" placeholder="11位手机号码">
-            </div>
-            <div class="form-group">
-              <label for="regEmail1"><span class="required">*</span>邮箱</label>
-              <input type="text" name="email" class="form-control" id="regEmail1" placeholder="example@lc.com">
-            </div>
-            <div class="form-group">
-              <label for="regCompany1"><span class="required">*</span>公司</label>
-              <input type="text" name="company" class="form-control" id="regCompany1" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="regTitle1"><span class="required">*</span>职位</label>
-              <input type="text" name="title" class="form-control" id="regTitle1" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="regType1"><span class="required">*</span>投资人类别</label>
-              <select class="form-control" name="type" id="regType1">
-                <option value="1">风险投资人</option>
-                <option value="2">天使投资人</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="conditions"><span class="required">*</span>感兴趣领域(最多选5个)</label>
-              <div id="conditions">
+              <label for="regName1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>姓名</label>
+              <div class="col-md-4">
+                <input type="text" name="name" class="form-control" id="regName1" placeholder="请填写真实姓名">
               </div>
-              <div class="row"></div>
-              <label for="choices">已选择:</label>
-              <div id="choices">
+            </div>
+            <div class="form-group">
+              <label for="regMobile1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>手机</label>
+              <div class="col-md-4">
+                <input type="text" name="mobile" class="form-control" id="regMobile1" placeholder="11位手机号码">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="checkCode1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+              <div class="col-md-2">
+                  <input type="text" class="form-control" id="checkCode1">
+              </div>
+              <div class="col-md-2">
+                  <input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#regMobile1')"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regEmail1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
+              <div class="col-md-4">
+                <input type="text" name="email" class="form-control" id="regEmail1" placeholder="example@lc.com">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regCompany1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>公司</label>
+              <div class="col-md-4">
+                <input type="text" name="company" class="form-control" id="regCompany1" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regTitle1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>职位</label>
+              <div class="col-md-4">
+                <input type="text" name="title" class="form-control" id="regTitle1" placeholder="">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="regType1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>投资人类别</label>
+              <div class="col-md-4">
+                <select class="form-control" name="type" id="regType1">
+                  <option value="1">风险投资人</option>
+                  <option value="2">天使投资人</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="conditions" class="col-md-3 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>感兴趣领域(最多选5个)</label>
+              <div class="col-md-4">
+                <div id="conditions">
+                </div>
+              </div>
+            </div>
+            <div class="form-group"> 
+              <label for="choices" class="col-md-2 col-md-offset-2 col-xs-12 control-label">已选择:</label>
+              <div class="col-md-4">
+                <div id="choices">
+                </div>
               </div>
             </div>
 
             <hr>  
             <div class="form-group">
-              <label for="regPwd1"><span class="required">*</span>密码</label>
-              <input type="password" name="pwd" class="form-control" id="regPwd1" placeholder="密码">
+              <label for="regPwd1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>密码</label>
+              <div class="col-md-4">
+                <input type="password" name="pwd" class="form-control" id="regPwd1" placeholder="密码">
+              </div>
             </div>
             <div class="form-group">
-              <label for="regPwdfirm1"><span class="required">*</span>确认密码</label>
-              <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm1" placeholder="确认密码">
-            </div>  
-            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInvestor()">&nbsp;提交&nbsp;</button>    
-          </div>
+              <label for="regPwdfirm1" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>确认密码</label>
+              <div class="col-md-4">
+                <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm1" placeholder="确认密码">
+              </div>
+            </div> 
+            <div class="form-group"> 
+              <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-3">
+                <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInvestor()">&nbsp;注册&nbsp;</button>   
+              </div> 
+            </div>
+            <div class="form-group">
+              <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-3 text-center">
+                <p class="theme-h5-small">点击注册，即同意我们的<a class="theme-color">用户隐私条例</a></p>
+              </div>   
+            </div>
         </div>
-      </div>
     </div>
      
     <div class="collapse" id="collapseExample2">
-      <div class="well">
-        <div class="innovator">
-          <div class="row">
-            <div class="col-md-4 col-md-offset-4 col-xs-12">   
-              <div class="form-group">
-                <label for="regName2"><span class="required">*</span>姓名</label>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 col-xs-12"> 
+            <div class="theme-panel-heading">
+                <p class="panel-title">
+                  <span class="theme-heading theme-h4">创业者注册</span>
+                </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-horizontal">  
+            <div class="form-group">
+              <label for="regName2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>姓名</label>
+              <div class="col-md-4">
                 <input type="text" name="name" class="form-control" id="regName2" placeholder="请填写真实姓名">
               </div>
-              <div class="form-group">
-                <label for="regMobile2"><span class="required">*</span>手机</label>
+            </div>
+            <div class="form-group">
+              <label for="regMobile2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>手机</label>
+              <div class="col-md-4">
                 <input type="text" name="mobile" class="form-control" id="regMobile2" placeholder="请填写真实手机">
               </div>
-              <div class="form-group">
-                <label for="regEmail2"><span class="required">*</span>邮箱</label>
+            </div>
+            <div class="form-group">
+              <label for="checkCode2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+              <div class="col-md-2">
+                  <input type="text" class="form-control" id="checkCode2">
+                </div>
+                <div class="col-md-2">
+                  <input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#regMobile2')"/>
+                </div>
+            </div>
+            <div class="form-group">
+              <label for="regEmail2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
+              <div class="col-md-4">
                 <input type="text" name="email" class="form-control" id="regEmail2" placeholder="example@lc.com">
               </div>
-              <div class="form-group">
-                <label for="regNickname2"><span class="required">*</span>昵称</label>
+            </div>
+            <div class="form-group">
+              <label for="regNickname2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>昵称</label>
+              <div class="col-md-4">
                 <input type="text" name="nickname" class="form-control" id="regNickname2" placeholder="请输入昵称">
               </div>
-              <div class="form-group">
-                <label for="regGender2"><span class="required">*</span>性别</label>
+            </div>
+            <div class="form-group">
+              <label for="regGender2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>性别</label>
+              <div class="col-md-4">
                 <select class="form-control" name="gender" id="regGender2">
                   <option value="1">男</option>
                   <option value="2">女</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label for="regBirth2"><span class="required">*</span>生日</label>
+            </div>
+            <div class="form-group">
+              <label for="regBirth2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>生日</label>
+              <div class="col-md-4">
                 <input type="text" name="birth" class="form-control" id="regBirth2" placeholder="格式: yyyy-mm-dd">
               </div>
-              <div class="form-group">
-                <label for="regCity2"><span class="required">*</span>地区</label>
+            </div>
+            <div class="form-group">
+              <label for="regCity2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>地区</label>
+              <div class="col-md-4">
                 <select class="form-control" name="field" id="regCity2">
                 </select>
               </div>
-              <div class="form-group">
-                <label for="regField2"><span class="required">*</span>行业</label>
+            </div>
+            <div class="form-group">
+              <label for="regField2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>行业</label>
+              <div class="col-md-4">
                 <select class="form-control" name="field" id="regField2">
                 </select>
               </div>
-              <hr>
-              <div class="form-group">
-                <label for="regPwd2"><span class="required">*</span>密码</label>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label for="regPwd2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>密码</label>
+              <div class="col-md-4">
                 <input type="password" name="pwd" class="form-control" id="regPwd2" placeholder="密码">
               </div>
-              <div class="form-group">
-                <label for="regPwdfirm2"><span class="required">*</span>确认密码</label>
+            </div>
+            <div class="form-group">
+              <label for="regPwdfirm2" class="col-md-2 col-md-offset-2 col-xs-12 control-label"><span class="required">*</span>确认密码</label>
+              <div class="col-md-4">
                 <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm2" placeholder="确认密码">
               </div>
-              
-              <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInnovator()">&nbsp;提交&nbsp;</button>    
+            </div>
+            <div class="form-group">
+              <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-3">
+                <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInnovator()">&nbsp;注册&nbsp;</button>  
+              </div> 
+            </div>
+            <div class="form-group">
+              <div class="col-md-4 col-md-offset-4 col-xs-6 col-xs-3 text-center">
+                <p class="theme-h5-small">点击注册，即同意我们的<a class="theme-color">用户隐私条例</a></p>
+              </div>   
             </div>
           </div>
-        </div>
       </div>
-    </div>
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <h4 id="alert_content" class="theme-color"></h4>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm">确定</button>
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 id="alert_content" class="theme-color"></h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm">确定</button>
         </div>
       </div>
     </div>
   </div>
+  <include file="./Public/tpl/footer_home.html" />
 </body>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/Index/reg.js"></script>
@@ -180,6 +265,31 @@
   initializeField(rows,field);
   initailizeCity(city);
 
+  var wait=60;
+  function settime(o,val) {
+    if (wait == 0) {
+            o.removeAttribute("disabled");            
+            o.value="获取验证码";
+            wait = 60;
+        } 
+        else {
+          if (wait == 60){
+            if(checkPhone(val)){
+              queryCheckCode(val);
+            }
+            else{
+              wait = 1;
+            }
+          }
+            o.setAttribute("disabled", true);
+            o.value="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                settime(o)
+            },
+            1000)
+        }
+    }
   
 </script>
 </html>

@@ -72,16 +72,18 @@
 			  				<div class="panel-body">
 								<div class="row">
 									<volist name="prolist" id="pros">
-										<div class="col-md-1 col-xs-3 theme-nav">
-											<if condition="strlen($pros['project_logo']) gt 0">
-												<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
-												<else />
-												<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
-											</if>
-										</div>
-										<div class="col-md-2 col-xs-8 theme-nav">
-											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
-											<p class="theme-h4">&nbsp;</p>
+										<div class="col-md-3 theme-well">
+											<div class="col-md-4 col-xs-3 theme-nav">
+												<if condition="strlen($pros['project_logo']) gt 0">
+													<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+													<else />
+													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												</if>
+											</div>
+											<div class="col-md-8 col-xs-8 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+												<p class="theme-h4">&nbsp;</p>
+											</div>
 										</div>
 									</volist>
 								</div>
@@ -89,7 +91,7 @@
 						</div>
 				  		<volist name="caselist" id="cases">
 				  			<div class="panel">
-				  				<div class="panel-body">
+				  				<div class="panel-body theme-well">
 								  	<div class='row'>
 								  		<div class="col-md-2 col-xs-4">
 										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="80px" width="80px">
@@ -115,11 +117,11 @@
 				  	<div class="panel-body">
 						<volist name="joblist" id="jobs">
 							<div class="panel">
-					  			<div class="panel-body">
+					  			<div class="panel-body theme-well">
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-12">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 									</div>
@@ -140,11 +142,11 @@
 				  		<div class="row">
 							<div class="col-md-9 col-xs-12">
 								<p class="theme-h5">
-									<span class="theme-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
+									<span class="theme-h5-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
 									<span>{$user.company}</span>
 								</p>
 								<p class="theme-h5">
-									<span class="theme-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
+									<span class="theme-h5-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
 									<span>{$user.title}</span>
 								</p>
 							</div>
@@ -175,7 +177,7 @@
 					</div>
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">
-				  			<div class="row">
+				  			<div class="row theme-well">
 					  			<div class="col-md-2 col-xs-3 theme-nav">
 									<if condition="strlen($watch['project_logo']) gt 0">
 										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>

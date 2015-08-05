@@ -5,7 +5,7 @@ function selectCollpase(id1,id2){
 
 function initializeField(rows,field){
   for(var i=0;i<=rows;i++){
-    $('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
+    $('#conditions').append($('<p></p>').attr("id","row"+i));
   }
 
   for(var i in field){
@@ -27,7 +27,7 @@ function addInterest(id,field){
   }
   else{
     var label = $('<span></span>').text(field[id]);
-    label.addClass('btn btn-default label label-default theme-btn');
+    label.addClass('btn btn-default label label-default theme-btn-inverse');
     label.attr('value',id);
     label.attr("id","field"+id);
     label.click(function(){
@@ -45,7 +45,7 @@ function addLabel(id,field){
   }
   else{
     var label = $('<span></span>').text(field[id]);
-    label.addClass('btn btn-default label theme-bg theme-white');
+    label.addClass('btn btn-default label theme-btn');
     label.attr('value',id);
     label.attr("id","field"+id);
     label.click(function(){
@@ -58,8 +58,8 @@ function addLabel(id,field){
       }
     });
 
-    var row = parseInt(id/8);
-    if(id%8==0){
+    var row = parseInt(id/6);
+    if(id%6==0){
       --row;
     }
     $('#row'+row).append(label);
@@ -182,4 +182,10 @@ function submitInnovator(){
   else{
 
   }
+}
+
+function queryCheckCode(val){
+    var mobile = $(val).val();
+    var xmlHttp = createRequest();
+    request(xmlHttp,'mobile='+mobile,'queryCheckCode');
 }

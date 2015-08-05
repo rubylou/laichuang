@@ -15,93 +15,98 @@
   </head>
   <style>
     .jumbotron{
-      background:url(/lcb/Public/pic/indexbg.jpg);
-      background-size: cover; 
-      -moz-background-size: cover;
-      height:400px;
+      background-color: #FFFFFF;
     }
   </style>
 <body>
   <include file="./Public/tpl/navbar_home.html" />
-  <div class="jumbotron">
-    <div class="container">
-      <div class="row">
-        <h1 class="text-center item-container"><span class="theme-white">欢迎回来</span></h1>
-      </div>
-      <div class="row">
-        <div class="col-md-3 col-md-offset-3 col-xs-6">
-          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample1','#collapseExample2')" aria-expanded="false" aria-controls="collapseExample1">&nbsp;我是投资人&nbsp;</button>
-        </div>
-        <div class="col-md-3 col-xs-6">
-          <button type="submit" class="btn btn-default theme-btn-inverse form-control" data-toggle="collapse" onclick="selectCollpase('#collapseExample2','#collapseExample1')" aria-expanded="false" aria-controls="collapseExample2">&nbsp;我是创业者&nbsp;</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="container">
-      <div class="collapse" id="collapseExample1">
-        <div class="well">
-          <div class="row">
-            <div class="col-md-4 col-md-offset-4 col-xs-12">   
-              <div class="form-group">
-                <label for="logName1"><span class="required">*</span>用户名</label>
-                <input type="text" name="mobile" class="form-control" id="logName1" placeholder="注册手机号或邮箱">
+  <div class="well" style="margin-top:50px">
+    <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-8 col-xs-12">
+            <img src="__PUBLIC__/pic/login.jpg" class="img-responsive"/>
+          </div>
+          <div class="col-md-4 col-xs-12">
+            <div class="col-md-10 col-md-offset-1 col-xs-12" style="margin-top:20px;">
+              <ul class="nav theme-nav-tabs" role="tablist" style="margin-bottom:20px;">
+                <li role="presentation" class="active"><a class="theme-color theme-h4" href="#type1" aria-controls="type1" role="tab" data-toggle="tab">我是投资人</a></li>
+                <li role="presentation" ><a class="theme-color theme-h4" href="#type2" aria-controls="type2" role="tab" data-toggle="tab">我是创业者</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-4 col-xs-12">
+            <div class="col-md-10 col-md-offset-1 col-xs-12" style="margin-top:20px;"> 
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active" id="type1"> 
+                  <div class="form-horizontal">
+                    <div class="form-group input-group-lg">
+                      <input type="text" name="mobile" class="form-control" id="logName1" placeholder="注册手机号或邮箱">
+                    </div>
+                    <div class="form-group input-group-lg">
+                      <input type="password" name="pwd" class="form-control" id="logPwd1" placeholder="密码">
+                    </div>
+                    <div class="form-group input-group-lg">
+                      <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="loginInvestor()">&nbsp;登&nbsp;录&nbsp;</button>  
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-xs-6">
+                        <input type="checkbox"/>
+                        <span class="theme-h5">记住密码</span>
+                      </div>
+                      <div class="col-md-4 col-md-offset-2 col-xs-6">
+                        <a class="theme-h5">忘记密码?</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="type2"> 
+                  <div class="form-horizontal">
+                    <div class="form-group input-group-lg">
+                      <input type="text" name="mobile" class="form-control" id="logName2" placeholder="注册手机号或邮箱">
+                    </div>
+                    <div class="form-group input-group-lg">
+                      <input type="password" name="pwd" class="form-control" id="logPwd2" placeholder="密码">
+                    </div>
+                    <div class="form-group input-group-lg">
+                      <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="loginInnovator()">&nbsp;登&nbsp;录&nbsp;</button>
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-6 col-xs-6">
+                        <input type="checkbox"/>
+                        <span class="theme-h5">记住密码</span>
+                      </div>
+                      <div class="col-md-4 col-md-offset-2 col-xs-6">
+                        <a class="theme-h5">忘记密码?</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="logPwd1"><span class="required">*</span>密码</label>
-                <input type="password" name="pwd" class="form-control" id="logPwd1" placeholder="密码">
-              </div>
-              <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="loginInvestor()">&nbsp;提交&nbsp;</button>    
             </div>
           </div>
         </div>
-      </div>
+    </div>  
+  </div>
       
-      <div class="collapse" id="collapseExample2">
-        <div class="well">
-          <div class="innovator">
-            <div class="row">
-              <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                  <img src="__PUBLIC__/pic/pic-2.jpg"></img>
-                </div>
-              </div>
-              <div class="col-md-4 col-xs-12">   
-                <div class="form-group">
-                  <label for="logName2"><span class="required">*</span>用户名</label>
-                  <input type="text" name="mobile" class="form-control" id="logName2" placeholder="注册手机号或邮箱">
-                </div>
-                <div class="form-group">
-                  <label for="logPwd2"><span class="required">*</span>密码</label>
-                  <input type="password" name="pwd" class="form-control" id="logPwd2" placeholder="密码">
-                </div>
-                <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="loginInnovator()">&nbsp;提交&nbsp;</button>
-              </div>    
-            </div>
-          </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 id="alert_content" style="color:#5B5B5B"></h4>
         </div>
-      </div>
-        
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <h4 id="alert_content" style="color:#5B5B5B"></h4>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
-            </div>
-          </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
         </div>
       </div>
     </div>
   </div>
+  <include file="./Public/tpl/footer_home.html" />
 </body>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/Index/login.js"></script>
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+
 </script>
 </html>

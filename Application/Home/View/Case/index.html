@@ -15,46 +15,96 @@
 
 <body>
   <include file="./Public/tpl/navbar_home.html" />
-  <div class="container" style="margin-top:70px">
-	<div style="height:600px;">
-		<table class="table table-hover table-striped table-condensed table-responsive" style="white-space: nowrap;">
-			<tr class="active">
-				<th>项目</th>
-				<th>创始人</th>
-			</tr>
-
-			<volist name="list" id="vo">
-				<tr>
-					<td>
-						<div class="row">
-			    			<div class="col-md-1 col-xs-3">
-			    				<if condition="$vo['project_logo'] neq ''">
-					    			<input type="image" class="thumbnail theme-profile theme-nav" src="{$vo.project_logo}" width="80px" height="80px" onclick="openProject('{$vo.project_id}')" />
-					    			<else />
-					    			<input type="image" class="thumbnail theme-profile theme-nav" src="/lcb/Public/pic/project.png" width="80px" height="80px" onclick="openProject('{$vo.project_id}')" />
-					    		</if>
-					    	</div>
-			    			<div class="col-md-9 col-xs-9">
-					    		<p><a class="btn theme-color theme-h4 theme-nav" href="__URL__/info?key={$vo.project_id}">&nbsp;&nbsp;&nbsp;{$vo.project_name}</a></p>
-					    		<p class="theme-color">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$vo.project_brief}</p>
-					    	</div>
-				    	</div>
-				    </td>
-					<td>
-						<div class="row">
-			    			<div class="col-md-1 col-xs-2">
-					    		<input type="image" class="thumbnail theme-profile theme-nav" src="{$vo.portrait}" width="48" height="48px" onclick="" />
-					    	</div>
-			    			<div class="col-md-3 col-xs-6">
-					    		<p><a class="btn theme-color theme-h4 theme-nav" href="">&nbsp;&nbsp;&nbsp;{$vo.name}</a></p>
-					    	</div>
-				    	</div>
-					</td>
-				</tr>
-			</volist>
-		</table>
-  	</div>
-  </div>
+  <div class="well">
+	  <div class="container" style="margin-top:70px">
+	  	<div class="row">
+		  	<div class="col-md-10 col-md-offset-1 col-xs-12">
+			  	<div class="panel">
+			  		<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;筛选条件&nbsp;</span>
+						</p>
+					</div>
+			  		<div class="panel-body">
+			  			<div class="row">
+			  				<div class="col-md-1 col-xs-12 text-center">
+			  					<p class="theme-h5">行业</p>
+			  				</div>
+			  				<div class="col-md-10 col-xs-12">
+			  					<div class="row">
+					  				<volist name="fields" id="vo">
+					  					<div class="col-md-2 col-xs-3">
+					  						<span class="btn theme-label-btn">{$vo}</span>
+					  					</div>
+					  				</volist>
+					  			</div>
+					  		</div>
+		                </div>
+		                <hr>
+		                <div class="row">
+		                	<div class="col-md-1 col-xs-12 text-center">
+			  					<p class="theme-h5">地区</p>
+			  				</div>
+			  				<div class="col-md-10 col-xs-12">
+			  					<div class="row">
+					  				<volist name="city" id="vo1">
+					  					<div class="col-md-2 col-xs-3">
+					  						<span class="btn theme-label-btn">{$vo1}</span>
+					  					</div>
+					  				</volist>
+					  			</div>
+				  			</div>
+		                </div>
+			  		</div>
+			  	</div>
+			</div>
+		</div>
+	  	<div class="row">
+		  	<div class="col-md-10 col-md-offset-1 col-xs-12">
+		  		<div class="panel">
+			  		<div class="panel-body">
+						<table class="table table-hover">
+							<tr>
+								<th class="text-center" width="60%">项目</th>
+								<th class="text-center" width="20%">创始人</th>
+								<th class="text-center" width="20%">所在地</th>
+							</tr>
+							<volist name="list" id="vo">
+								<tr>
+									<td>
+										<div class="row">
+							    			<div class="col-md-2 col-xs-4">
+							    				<if condition="$vo['project_logo'] neq ''">
+									    			<input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+									    			<else />
+									    			<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+									    		</if>
+									    	</div>
+							    			<div class="col-md-6 col-xs-8">
+									    		<p><a class="theme-h4" href="__URL__/info?key={$vo.project_id}">{$vo.project_name}</a></p>
+									    		<p class="theme-h5-small">{$vo.project_brief}</p>
+									    	</div>
+								    	</div>
+								    </td>
+									<td class="text-center">
+										<div class="row theme-nav">
+									    	<p><a class="theme-h5" onclick="openUser('{$vo.project_admin}')">{$vo.nickname}</a></p>
+								    	</div>
+									</td>
+									<td class="text-center">
+										<div class="row theme-nav">
+											<p><span class="theme-h5">{$vo.city}</span><p>
+										</div>
+									</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
 </body>
  <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
@@ -62,6 +112,10 @@
 
   	function openProject(id){
 	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
+
+	function openUser(id){
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
 	}
 </script>
 </html>

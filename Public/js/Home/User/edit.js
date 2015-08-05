@@ -1,7 +1,7 @@
 function submitJob(){
   var id = $('#editJob_input').val();
   var xmlHttp = createRequest();
-  if(checkValue("#title",20,0,'职位不能为空')&&checkValue("#company2",20,0,'公司名称不能为空')&&checkValue("#job_info",80,0,"职位描述不能为空")){
+  if(checkValue("#title",20,1,'职位不能为空')&&checkValue("#company2",20,1,'公司名称不能为空')&&checkValue("#job_info",80,1,"职位描述不能为空")){
     var title = "key1="+$("#title").val()+"&";
     var company = "key2="+$("#company2").val()+"&";
     var startyear = "key3="+$("#startyear").val()+"&";
@@ -26,7 +26,7 @@ function submitJob(){
 function case_submit(){
   var id = $('#editCase_input').val();
   var xmlHttp = createRequest();
-  if(checkValue("#company",30,0,'投资公司不能为空') && checkValue("#investor",50,0,'投资代表主体不能为空')){
+  if(checkValue("#company",30,1,'投资公司不能为空') && checkValue("#investor",50,1,'投资代表主体不能为空')){
     var company = 'key1='+$('#company').val()+'&';
     var round = 'key2='+$('#round').val()+'&';
     var currency1 = 'key3='+$('#currency1').val()+'&';
@@ -229,7 +229,7 @@ function editJob(id){
 
 function editBasics(){
   var xmlHttp = createRequest();
-  if(checkValue("#editCompany",30,0,'公司不能为空') && checkValue("#editTitle",30,0,'职位不能为空')){
+  if(checkValue("#editCompany",30,1,'公司不能为空') && checkValue("#editTitle",30,1,'职位不能为空')){
     var basics = "company="+$('#editCompany').val()+"&";
     basics += "title="+$('#editTitle').val()+"&";
     request(xmlHttp,basics,"editInfo");
@@ -268,7 +268,7 @@ function editEducation(){
   var year = 'key3='+$('#eduStartyear').val()+'&';
   var mon = 'key4='+$('#eduStartmon').val()+'&';
   var data = school+degree+year+mon;
-  if(checkValue("#editSchool",128,0,'学校不能为空')){
+  if(checkValue("#editSchool",128,1,'学校不能为空')){
     var xmlHttp = createRequest();
     request(xmlHttp,data,"editEdu");
     if(xmlHttp.responseText==200){
@@ -298,5 +298,60 @@ function editSNS(){
     $('#editSNS').attr('placeholder','URL无效');
     $('#editSNS').focus();
   }
+}
+
+function submitAuth(id){
+  var xmlHttp = createRequest();
+  request(xmlHttp,'val='+id,"requestAuth");
+  if(xmlHttp.responseText == '200'){
+    alert('提交成功');
+    document.location.reload();
+  }
+  else if(xmlHttp.responseText == '4041'){
+    //alert('请填写姓名');
+    $('#alert_window')[0].innerHTML = "<strong>请填写姓名</strong>"; 
+    $('.alert').fadeIn();
+    editName();
+    $("#user_name").focus();
+  }
+  else if(xmlHttp.responseText == '4042'){
+    //alert('请填写公司、职位信息');
+    $('#alert_window')[0].innerHTML = "<strong>请填写公司、职位信息</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4043'){
+    //alert('请上传名片');
+    $('#alert_window')[0].innerHTML = "<strong>请上传名片</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4044'){
+    //alert('请上传公司营业执照');
+    $('#alert_window')[0].innerHTML = "<strong>请上传公司营业执照</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4045'){
+    //alert('请上传组织结构代码证件');
+    $('#alert_window')[0].innerHTML = "<strong>请上传组织结构代码证件</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4046'){
+    //alert('请上传公司近三年财务报表');
+    $('#alert_window')[0].innerHTML = "<strong>请上传公司近三年财务报表</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4047'){
+    //alert('请上传个人财产证明');
+    $('#alert_window')[0].innerHTML = "<strong>请上传个人财产证明</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else if(xmlHttp.responseText == '4048'){
+    //alert('请填写至少三个投资案例');
+    $('#alert_window')[0].innerHTML = "<strong>请填写至少三个投资案例</strong>"; 
+    $('.alert').fadeIn();
+  }
+  else{
+
+  }
+
 }
 

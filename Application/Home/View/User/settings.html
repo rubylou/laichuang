@@ -49,19 +49,29 @@
 						        		<input type="password" class="form-control" id="pwd3">
 						        	</div>
 							  	</div>
+							  	<div class="form-group">
+							  		<input type="hidden" value="{$info.mobile}" id="mobile" />
+							    	<label for="checkCode2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+							    	<div class="col-md-3">
+						        		<input type="text" class="form-control" id="checkCode2">
+						        	</div>
+						        	<div class="col-md-2">
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#mobile')"/>
+						        	</div>
+							  	</div>
 							</div>
 							<div class="row">
 						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
-						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="">&nbsp;保存&nbsp;</button>    
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitSecure()">&nbsp;保存&nbsp;</button>    
 						        </div>
 						    </div>
 
 				  		</div>
 				  		<div class="panel">
-				  			<p class="theme-h5">手机验证状态</p>
+				  			<p class="theme-h5">更改手机号码</p>
 				  			<div class="row">
 				  				<div class="col-md-6 col-md-offset-3">
-				  					<span>{手机状态}</span>
+				  					<span><strong>{$info.mobile}</strong></span>
 				  				</div>
 				  			</div>
 				  			<div class="form-horizontal">
@@ -77,7 +87,7 @@
 						        		<input type="text" class="form-control" id="checkCode">
 						        	</div>
 						        	<div class="col-md-2">
-						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this)"/>
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#phone')"/>
 						        	</div>
 							  	</div>
 							</div>
@@ -88,10 +98,18 @@
 						    </div>
 				  		</div>
 				  		<div class="panel">
-				  			<p class="theme-h5">邮箱验证状态</p>
+				  			<p class="theme-h5">更改邮箱地址</p>
 				  			<div class="row">
 				  				<div class="col-md-6 col-md-offset-3">
-				  					<span>{邮箱状态}</span>
+				  					<span><strong>{$info.email}</strong></span>
+				  					<if condition="$info['active_status']">
+				  						<span class="label label-info">已激活</span>
+				  						<else />
+				  						<span class="label label-warning">未激活</span>
+				  						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  						<input type="hidden" id="email2" value="{$info.email}">
+				  						<button type="submit" class="btn btn-default theme-btn" onclick="submitEmail('#email2')">&nbsp;激活邮箱&nbsp;</button> 
+				  					</if>
 				  				</div>
 				  			</div>
 				  			<div class="form-horizontal">
@@ -104,7 +122,7 @@
 							</div>
 							<div class="row">
 						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
-						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitEmail()">&nbsp;激活邮箱&nbsp;</button>    
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitEmail('#email')">&nbsp;激活邮箱&nbsp;</button>    
 						        </div>
 						    </div>
 				  		</div>
@@ -113,7 +131,21 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
   </div>
   <include file="./Public/tpl/footer_home.html" />
 </body>
@@ -121,36 +153,80 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  	function queryCheckCode(){
-  		var mobile = $('#phone').val();
+  	function queryCheckCode(val){
+  		var mobile = $(val).val();
   		var xmlHttp = createRequest();
   		request(xmlHttp,'mobile='+mobile,'queryCheckCode');
   	}
 
   	function submitMobile(){
-  		var mobile = "key1="+$('#phone').val()+"&";
-  		var code = "key2="+$('#checkCode').val()+"&";
-  		var data = mobile+code;
-  		var xmlHttp = createRequest();
-  		request(xmlHttp,data,'saveMobile');
+  		if(checkPhone('#phone')){
+  			var mobile = "key1="+$('#phone').val()+"&";
+	  		var code = "key2="+$('#checkCode').val()+"&";
+	  		var data = mobile+code;
+	  		var xmlHttp = createRequest();
+	  		request(xmlHttp,data,'saveMobile');
+	  		if(xmlHttp.responseText == 200){
+	  			window.location.href = '{:U("Home/Index/logout")}';
+	  		}
+  		}
+  		
   	}
 
-  	function submitEmail(){
-  		var email = "key1="+$('#email').val()+"&";
-  		var xmlHttp = createRequest();
-  		request(xmlHttp,email,'saveEmail');
+  	function submitEmail(id){
+  		if(checkEmail(id)){
+  			var email = "key1="+$(id).val()+"&";
+  			var xmlHttp = createRequest();
+  			request(xmlHttp,email,'saveEmail');
+  			if(xmlHttp.responseText == 200){
+  				modalShow("alert_content","myModal",'激活邮件已发送，请前往邮箱查收并激活。');
+  			}
+  		}
+  		
   	}
 
+  	function submitSecure(){
+  		if(checkPwd('#pwd2','#pwd3') && checkValue('#pwd1','64','6','密码不能少于6位')){
+  			if($('#pwd1').val()==$('#pwd2').val()){
+  				modalShow("alert_content","myModal",'修改密码与原密码一致，请重新输入');
+  			}
+  			else{
+  				var data = "key1="+CryptoJS.SHA1($('#pwd1').val())+'&';
+	  			data += "key2="+CryptoJS.SHA1($('#pwd2').val())+'&';
+	  			data += "key3="+CryptoJS.SHA1($('#pwd3').val())+'&';
+	  			data += 'key4='+$('#checkCode2').val()+'&';
+	  			var xmlHttp = createRequest();
+	  			request(xmlHttp,data,'saveChange');
+	  			if(xmlHttp.responseText == 200){
+	  				modalShow("alert_content","myModal",'修改密码成功，请重新登录');
+	  			}
+	  			else if(xmlHttp.responseText == 404){
+	  				modalShow("alert_content","myModal",'原密码错误');
+	  			}
+	  			else{
+
+	  			}
+  			}
+  		}
+  	}
+
+</script>
+<script>
 	var wait=60;
-	function settime(o) {
-        if (wait == 0) {
+	function settime(o,val) {
+		if (wait == 0) {
             o.removeAttribute("disabled");            
             o.value="获取验证码";
             wait = 60;
         } 
         else {
         	if (wait == 60){
-	        	submitMobile();
+        		if(checkPhone(val)){
+	        		queryCheckCode(val);
+	        	}
+	        	else{
+	        		wait = 1;
+	        	}
 	        }
             o.setAttribute("disabled", true);
             o.value="重新发送(" + wait + ")";

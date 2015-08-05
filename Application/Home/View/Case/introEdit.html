@@ -15,9 +15,12 @@
 	<include file="./Public/tpl/navbar_home.html" />
 	<div class="container" style="margin-top:70px">
 		<div class="page-header">
-	      <!-- 页面标题 -->
-	    	<h3>项目图文介绍编辑</h3>
-	    </div>
+          <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="theme-h3">项目介绍图文编辑</p>
+            </div>
+          </div>
+        </div>
 	    
 	    <div class="row">
 	    	<div class="col-md-10 col-md-offset-1 col-xs-12">
@@ -28,11 +31,11 @@
 		<div class="row">
 			<div class="col-md-3 col-md-offset-1 col-xs-6">
 				<input type="submit" class="btn btn-default theme-btn-inverse" value="发布" id="change" onclick="saveIntro()"/>
-		        <input type="button" class="btn btn-default" value="预览" onclick="preview()"/>
+		        <input type="button" class="btn theme-btn" value="预览" onclick="preview()"/>
 		    </div>
 		    <div class="text-right">
 		    	<div class="col-md-7 col-xs-6">
-		        <a type="button" class="btn btn-default" href="__URL__/info/key/{:I('get.p')}">返回</a>
+		        <a type="button" class="btn theme-btn" href="__URL__/infoEdit/key/{:I('get.p')}">返回</a>
 		    	</div>
 		    </div>
 	    </div>
