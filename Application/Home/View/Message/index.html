@@ -33,7 +33,7 @@
 				  				<div class="panel-body <if condition='$vo.ifread eq 0'>alert-info</if>">
 								  	<div class='row'>
 								  		<p>{$vo.msg_content}</p>
-								  		<if condition="$vo['msg_type'] eq 1 OR $vo['msg_type'] eq 3">
+								  		<if condition="strlen($vo['msg_attachment']) gt 0">
 								  			<p>附言: <blockquote>{$vo.msg_attachment}</blockquote></p>
 								  		</if>
 									</div>

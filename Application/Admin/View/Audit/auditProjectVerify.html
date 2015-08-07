@@ -192,6 +192,10 @@
 		      <div id="alertBtn">
 		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
 		      </div>
+		      <div id="verifyRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="verify_confirm">确定</button>
+			    <input type="hidden" id="verify_input" />
+		      </div>
 		    </div>
 		  </div>
 		</div>
@@ -236,7 +240,7 @@
 	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
 	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
 	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
-	addInterests({$interests},"#interests");
+	//addInterests({$interests},"#interests");
 
 	function openUser(id){
 	  window.open("{:U('Home/User/innovator/val/"+id+"')}");
@@ -245,5 +249,11 @@
 	function openInvestor(id){
 	  window.open("{:U('Home/User/investor/val/"+id+"')}");
 	}
+
+	$('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
+
 </script>
 </html>

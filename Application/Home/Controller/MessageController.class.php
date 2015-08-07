@@ -58,6 +58,21 @@ class MessageController extends Controller {
 			$data['sent_time'] = date('Y-m-d H:i:s');
 			//dump($data);
 			$result = $Form->add($data);
+
+			//send sms and email to project_admin
+			$innovator = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
+			if($innovator[0]['phone']){
+				$sms = sprintf('您的项目%s收到了投资人%s的投资意愿，请登录查看消息。',$project_name,$name);
+	            //send_forward_msg($innovator[0]['phone'],$sms);
+	        }
+	        if($innovator[0]['email']){
+	        	$url = "http://localhost/lcb/index.php";
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了投资人“%s”的投资意愿，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$innovator[0]['nickname'],$project_name,$name,$url);
+	        	think_send_mail($innovator[0]['email'], 'User', $subject = '您收到了新的投资意愿', $body);
+	        }
+
+			echo json_encode($innovator[0]);
+			//echo 400;
 			//dump($result);
 
 		}
@@ -85,7 +100,20 @@ class MessageController extends Controller {
 			$data['msg_attachment'] = $attach;
 			$data['sent_time'] = date('Y-m-d H:i:s');
 			//dump($data);
+
 			$result = $Form->add($data);
+
+			//send sms and email to project_admin
+			$admin = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
+			if($admin[0]['phone']){
+				$sms = sprintf('您的项目%s收到了创业者%s的合伙意愿，请登录查看消息。',$project_name,$name);
+	            //send_forward_msg($admin[0]['phone'],$sms);
+	        }
+	        if($admin[0]['email']){
+	        	$url = "http://localhost/lcb/index.php";
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了创业者“%s”的合伙意愿，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$admin[0]['nickname'],$project_name,$name,$url);
+	        	think_send_mail($admin[0]['email'], 'User', $subject = '您收到了新的合伙意愿', $body);
+	        }
 			//dump($result);
 
 		}
@@ -110,6 +138,18 @@ class MessageController extends Controller {
 			$data['sent_time'] = date('Y-m-d H:i:s');
 			//dump($data);
 			$result = $Form->add($data);
+
+			//send sms and email to project_admin
+			$investor = $model->query('select name, mobile, email from investor_personal where user_id = "%s"',$to);
+			if($investor[0]['mobile']){
+				$sms = sprintf('尊敬的投资人: 您收到了创业者%s的投资申请，请登录查看详情。',$name);
+	            //send_forward_msg($investor[0]['mobile'],$sms);
+	        }
+	        if($investor[0]['email']){
+	        	$url = "http://localhost/lcb/index.php";
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您收到了创业者“%s”的投资申请，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$investor[0]['name'],$name,$url);
+	        	think_send_mail($investor[0]['email'], 'User', $subject = '您收到了新的投资申请', $body);
+	        }
 			//dump($result);
 		}
 
@@ -211,7 +251,58 @@ class MessageController extends Controller {
 		}
 
 		if($msg_type === 'AUTHORIZATION_CODE'){
-
+			if($object === "PROJECT"){
+				$data['from_id'] = $_SESSION['userid'];
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$verified = $model->query('select status, project_admin, project_name from project_info where project_id = "%s"',$to);
+				if($verified[0]['status']==2){
+					$data['msg_content'] = '您的项目<a onclick="openProject(\''.$to.'\')">'.$verified[0]['project_name'].'</a>已经通过审核, 成为来创认证的创业项目!';
+					$data['to_id'] = $verified[0]['project_admin'];
+				}
+				else if($verified[0]['status']==0){
+					$data['msg_content'] = '您的项目<a onclick="openProject(\''.$to.'\')">'.$verified[0]['project_name'].'</a>未通过管理员审核, 请修改信息并重新提交审核!';
+					$data['to_id'] = $verified[0]['project_admin'];
+					$data['msg_attachment'] = $attach;
+				}
+				
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				//dump($data);
+				$result = $Form->add($data);
+			}
+			if($object === "INVESTOR"){
+				$data['from_id'] = $_SESSION['userid'];
+				$data['to_id'] = $to;
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$verified = $model->query('select reg_status from investor_personal where user_id = "%s"',$to);
+				if($verified[0]['reg_status']==2){
+					$data['msg_content'] = '您已经通过审核, 成为来创认证的投资人!';
+				}
+				else if($verified[0]['reg_status']==0){
+					$data['msg_content'] = '您未通过管理员审核, 请修改资料并重新提交审核!';
+					$data['msg_attachment'] = $attach;
+				}
+				
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				//dump($data);
+				$result = $Form->add($data);
+			}
+			if($object === "INNOVATOR"){
+				$data['from_id'] = $_SESSION['userid'];
+				$data['to_id'] = $to;
+				$data['msg_type'] = C(MESSAGE_CODE)[$msg_type];
+				$verified = $model->query('select reg_status from entrepreneur_personal where user_id = "%s"',$to);
+				if($verified[0]['reg_status']==2){
+					$data['msg_content'] = '您已经通过审核, 成为来创认证的创业者!';
+				}
+				else if($verified[0]['reg_status']==0){
+					$data['msg_content'] = '您未通过管理员审核, 请修改资料并重新提交审核!';
+					$data['msg_attachment'] = $attach;
+				}
+				
+				$data['sent_time'] = date('Y-m-d H:i:s');
+				//dump($data);
+				$result = $Form->add($data);
+			}
 		}
 	}
 }

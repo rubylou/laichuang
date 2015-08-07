@@ -297,16 +297,14 @@
 		  <div class="modal-content">
 		    <div class="modal-body">
 		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
-		      <textarea rows="3" class="form-control" id="request_info" style="display:none"></textarea>
 		    </div>
 		    <div class="modal-footer">
 		      <div id="alertBtn">
 		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
 		      </div>
-		      <div id="requireRequest">
-		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="require_confirm">确定</button>
-			    <button type="button" class="btn btn-default" data-dismiss="modal" id="require_cancel">取消</button>
-			    <input type="hidden" id="require_input" />
+		      <div id="verifyRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="verify_confirm">确定</button>
+			    <input type="hidden" id="verify_input" />
 		      </div>
 		    </div>
 		  </div>
@@ -338,8 +336,13 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script type="text/javascript">
-function openProject(id){
+	function openProject(id){
 	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
  	}
+
+ 	$('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
 </script>
 </html>

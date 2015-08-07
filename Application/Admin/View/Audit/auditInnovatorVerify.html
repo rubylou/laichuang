@@ -139,13 +139,35 @@
 		
 	</div>
   </div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="verifyRequest">
+		      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="verify_confirm">确定</button>
+			    <input type="hidden" id="verify_input" />
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script src="__PUBLIC__/js/Home/User/edit.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script>
-  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-
+    $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+    $('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
 </script>
 </html>
