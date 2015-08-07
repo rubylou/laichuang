@@ -28,13 +28,13 @@
 			  		<div class="panel-body">
 			  			<div class="row">
 			  				<div class="col-md-1 col-xs-12 text-center">
-			  					<p class="theme-h5">行业</p>
+			  					<p class="theme-h5-small">行业</p>
 			  				</div>
 			  				<div class="col-md-10 col-xs-12">
 			  					<div class="row">
-					  				<volist name="fields" id="vo">
+					  				<volist name="fields" id="vo" key="k">
 					  					<div class="col-md-2 col-xs-3">
-					  						<span class="btn theme-label-btn">{$vo}</span>
+					  						<span class="btn theme-label-btn" name="field" value="{$k}">{$vo}</span>
 					  					</div>
 					  				</volist>
 					  			</div>
@@ -43,17 +43,26 @@
 		                <hr>
 		                <div class="row">
 		                	<div class="col-md-1 col-xs-12 text-center">
-			  					<p class="theme-h5">地区</p>
+			  					<p class="theme-h5-small">地区</p>
 			  				</div>
 			  				<div class="col-md-10 col-xs-12">
 			  					<div class="row">
-					  				<volist name="city" id="vo1">
+					  				<volist name="city" id="vo1" key="k1">
 					  					<div class="col-md-2 col-xs-3">
-					  						<span class="btn theme-label-btn">{$vo1}</span>
+					  						<span class="btn theme-label-btn" name="city" value="{$k1}">{$vo1}</span>
 					  					</div>
 					  				</volist>
 					  			</div>
 				  			</div>
+		                </div>
+		                <hr>
+		                <div class="row">
+		                	<div class="col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-2">
+		                		<a class="btn theme-btn-inverse form-control" onclick="getQueryCode('{:U('Home/Case/index')}')">查询</a>
+		                	</div>
+		                	<div class="col-md-2 col-xs-4">
+		  						<span class="btn theme-btn form-control" onclick="clearQuery()">清空</span>
+		  					</div>
 		                </div>
 			  		</div>
 			  	</div>
@@ -65,9 +74,9 @@
 			  		<div class="panel-body">
 						<table class="table table-hover">
 							<tr>
-								<th class="text-center" width="60%">项目</th>
-								<th class="text-center" width="20%">创始人</th>
-								<th class="text-center" width="20%">所在地</th>
+								<th class="text-center theme-h5-small" width="60%">项目</th>
+								<th class="text-center theme-h5-small" width="20%">创始人</th>
+								<th class="text-center theme-h5-small" width="20%">所在地</th>
 							</tr>
 							<volist name="list" id="vo">
 								<tr>
@@ -81,19 +90,19 @@
 									    		</if>
 									    	</div>
 							    			<div class="col-md-6 col-xs-8">
-									    		<p><a class="theme-h4" href="__URL__/info?key={$vo.project_id}">{$vo.project_name}</a></p>
+									    		<p><a class="theme-h4 theme-color" href="__URL__/info?key={$vo.project_id}">{$vo.project_name}</a></p>
 									    		<p class="theme-h5-small">{$vo.project_brief}</p>
 									    	</div>
 								    	</div>
 								    </td>
 									<td class="text-center">
 										<div class="row theme-nav">
-									    	<p><a class="theme-h5" onclick="openUser('{$vo.project_admin}')">{$vo.nickname}</a></p>
+									    	<p><a class="theme-h5 theme-color" onclick="openUser('{$vo.project_admin}')">{$vo.nickname}</a></p>
 								    	</div>
 									</td>
 									<td class="text-center">
 										<div class="row theme-nav">
-											<p><span class="theme-h5">{$vo.city}</span><p>
+											<p><span class="theme-h5 theme-color">{$vo.city}</span><p>
 										</div>
 									</td>
 								</tr>
@@ -109,6 +118,14 @@
  <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	$('.theme-label-btn').each(function(){
+  		if($(this).attr('name')=='city' && $(this).attr('value')=='{:I("get.city")}'){
+  			$(this).addClass('active');
+  		}
+  		else if($(this).attr('name')=='field' && $(this).attr('value')=='{:I("get.field")}'){
+  			$(this).addClass('active');
+  		}
+  	});
 
   	function openProject(id){
 	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
@@ -116,6 +133,21 @@
 
 	function openUser(id){
 		window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function getQueryCode(url){
+		var data = '?';
+		$('.theme-label-btn.active').each(function(){
+			data += $(this).attr('name')+'='+$(this).attr('value')+'&';
+		});
+		url = url+data;
+		window.location.href = url;
+	}
+
+	function clearQuery(){
+		$('.theme-label-btn.active').each(function(){
+			$(this).removeClass('active');
+		});
 	}
 </script>
 </html>

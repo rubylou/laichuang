@@ -139,6 +139,14 @@ ul li.active {
 
 }
 
+.theme-label-btn.active{
+  border-radius: .25em;
+  border-bottom:1px solid #253B58;
+  border-top: 1px solid #253B58;
+  border-left: 1px solid #253B58;
+  border-right: 1px solid #253B58;
+}
+
 .theme-profile:active,
 .theme-profile:focus,
 .theme-profile:hover{
@@ -189,15 +197,25 @@ ul li.active {
   background-color:rgba(0,0,0,0.2);
 }
 
-.theme-btn-inverse:active,
-.theme-btn-inverse:focus,
-.theme-btn-inverse:hover,
 .theme-btn-alpha:active,
 .theme-btn-alpha:focus,
 .theme-btn-alpha:hover{
   background-color:#FFFFFF;
   color:#253B58;
   outline:none;
+}
+
+.theme-btn-inverse:active,
+.theme-btn-inverse:focus,
+.theme-btn-inverse:hover{
+  background-color:#FFFFFF;
+  color:#253B58;
+  border-radius: .25em;
+  border-bottom:1px solid #253B58;
+  border-top: 1px solid #253B58;
+  border-left: 1px solid #253B58;
+  border-right: 1px solid #253B58;
+  outline:none; 
 }
 
 .theme-small {

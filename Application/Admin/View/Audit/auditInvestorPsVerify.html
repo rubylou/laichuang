@@ -501,41 +501,45 @@
 		<div class="modal-dialog">
 		  <div class="modal-content">
 		    <div class="modal-body">
-		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
-		      <div id="editField" style="display:none">
-		      	<div class="row">
-		      		<div class="col-md-8 col-md-offset-2">
-					  	<div class="form-group">
-			                <div id="conditions">
-			                </div>
-			                <div class="row"></div>
-			                <label for="choices">已选择:</label>
-			                <div id="choices">
-			                </div>
-			            </div>
-			        </div>
-			  </div>
-		    </div>
-		    <div class="modal-footer">
-		      <div id="alertBtn">
-		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
-		      </div>
-		      <div id="delCaseBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delCase_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delCase_cancel">取消</button>
-			      <input type="hidden" id="delCase_input" />
-			  </div>
-			  <div id="delJobBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
-			      <input type="hidden" id="delJob_input" />
-			  </div>
-			  <div id="editFieldBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
-			  </div>
-		    </div>
-		  </div>
+				<h4 id="alert_content" style="color:#5B5B5B"></h4>
+				<div id="editField" style="display:none">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+						  	<div class="form-group">
+					            <div id="conditions">
+					            </div>
+					            <div class="row"></div>
+					            <label for="choices">已选择:</label>
+					            <div id="choices">
+					            </div>
+					        </div>
+				    	</div>
+					</div>
+				</div>
+			    <div class="modal-footer">
+			      <div id="alertBtn">
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+			      </div>
+			      <div id="verifyRequest">
+			      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="verify_confirm">确定</button>
+				    <input type="hidden" id="verify_input" />
+			      </div>
+			      <div id="delCaseBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delCase_confirm">确定</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="delCase_cancel">取消</button>
+				      <input type="hidden" id="delCase_input" />
+				  </div>
+				  <div id="delJobBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
+				      <input type="hidden" id="delJob_input" />
+				  </div>
+				  <div id="editFieldBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+				  </div>
+			    </div>
+		  	</div>
 		</div>
 	</div>
   </div>
@@ -568,10 +572,15 @@
 <script src="__PUBLIC__/js/Admin/User/edit.js"></script>
 <script src="__PUBLIC__/js/Admin/User/init.js"></script>
 <script type="text/javascript">
-function openProject(id){
+	function openProject(id){
 	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
 
  	}
+
+ 	$('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
 
 $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 	var field = {$field};
@@ -601,6 +610,5 @@ $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
 		}
 	});
 
-	
 </script>
 </html>

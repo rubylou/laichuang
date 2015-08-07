@@ -34,20 +34,28 @@ function send_message(data,url){
   	if(xmlHttp.responseText==200){
     	document.location.reload();
   	}
+  	else {
+  		var json = JSON.parse(xmlHttp.responseText);
+  		if(json['phone'] || json['email']){
+  			$('#alert_window')[0].innerHTML = "<strong>项目团队联系方式: 手机--"+json['phone']+", 邮箱--"+json['email']+"</strong>"; 
+    		$('.alert').fadeIn();
+  		}
+  	}
 }
 
 
 
-function request_message(id,value,obj,attach){
+function request_message(id,value,obj,attachment){
 	var to = 'to='+id+"&";
 	var type = 'type='+value+"&";
 	var obj = "obj="+obj+"&";
-
-	if(attach){
-		var attach = "attach="+attach+"&";
+ 	var data = to+type+obj;
+ 	
+	if(attachment){
+		var attach = "attach="+attachment+"&";
+		data = data+attach;
 	}
-
-	var data = to+type+obj+attach;
+	
 	if(value=="JOIN"){
 		$('#join_input').val(data);
 		$('#request_info').show();
@@ -98,10 +106,10 @@ function request_message(id,value,obj,attach){
 		modalShow('alert_content','myModal','添加成功!<br><br>是否将新增创业项目的消息发送给相关领域的投资者?');
 	}
 	else if(value=="AUTHORIZATION"){
-		$('#projects_input').val(data);
+		$('#verify_input').val(data);
 		$('.modal-footer').find('div').hide();
-		$('.modal-footer').find('div').filter('#projectsRequest').show();
-		modalShow('alert_content','myModal','审核成功!<br><br>请返回首页继续审核');
+		$('.modal-footer').find('div').filter('#verifyRequest').show();
+		modalShow('alert_content','myModal','审核成功,将发送消息给审核对象!<br><br>请返回首页继续审核');
 	}
 	
 }

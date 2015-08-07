@@ -35,18 +35,19 @@ invesPApp.controller("userController", function($scope,$http) {
   		{
   			if (xmlhttp.readyState==4 && xmlhttp.status==200)
     		{
-    			//alert(xmlhttp.responseText);
-    			//window.location.href="index";
                 if(xmlhttp.responseText=='200')
                 {
-                    request_message($scope.user_id,'AUTHORIZATION','INVESTOR','');
-                    window.location.href="index";
+                    request_message($scope.user_id,'AUTHORIZATION','INVESTOR',$scope.verifynote);
                 }else
                 {
+                    $('.modal-footer').find('div').hide();
+                    $('.modal-footer').find('div').filter('#alertBtn').show(); 
                     modalShow("alert_content","myModal","审核失败，请稍候再试！");
                 }
     		}else
             {
+                $('.modal-footer').find('div').hide();
+                $('.modal-footer').find('div').filter('#alertBtn').show(); 
                 modalShow("alert_content","myModal","审核失败，请稍候再试！");
             }
 		}

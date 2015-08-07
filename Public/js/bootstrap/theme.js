@@ -14,3 +14,8 @@ $('.dropdown-toggle').hover(function(){
 $('.dropdown-menu').mouseleave(function(){
 	$(this).hide();
 });
+
+$('.theme-label-btn').mousedown(function(){
+	$(this).parent().parent().find('.theme-label-btn.active').removeClass('active');
+	$(this).addClass('active');
+})

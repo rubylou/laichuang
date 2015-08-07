@@ -5,7 +5,28 @@ use Think\Model;
 class CaseController extends Controller {
 	public function index(){
 		$Form = new Model();
-		$result = $Form->query('select project_id, project_name, project_logo, project_brief, nickname, city, project_admin from project_info inner join entrepreneur_personal on project_admin = user_id');
+
+        if(I('get.city')){
+            $city = sprintf('city=%d',I('get.city'));
+        }
+
+        if(I('get.field')){
+            $field = sprintf('interest_field=%d',I('get.field'));
+        }
+
+        if($city && $field){
+            $where = "where ".$city." and ".$field;
+        }
+        else if($city || $field){
+            $where = "where ".($city?$city:$field);
+        }
+        else{
+            $where = '';
+        }
+
+		$result = $Form->query('select distinct project_id, project_name, project_logo, project_brief, nickname, city, project_admin 
+            from project_info inner join entrepreneur_personal on project_admin = user_id 
+            inner join interest_project on project_id = id '.$where);
 		foreach ($result as $key => $value) {
             $result[$key]['city'] = C('PROVINCE_CODE')[$value['city']];
         }
@@ -17,7 +38,7 @@ class CaseController extends Controller {
         $this->assign('fields',$fields);
         $city = C("PROVINCE_CODE");
         $this->assign('city',$city);
-
+ 
 		$this->display();
 	}
 
@@ -78,6 +99,7 @@ class CaseController extends Controller {
         }
 
         $this->info = $result[0];
+        //dump($result[0]);
 
         
 		//所属领域
@@ -496,6 +518,13 @@ class CaseController extends Controller {
         }
         else{
             echo 400;
+        }
+    }
+
+    public function queryPro(){
+        dump($_POST);
+        if(I('post.city')){
+            
         }
     }
 }
