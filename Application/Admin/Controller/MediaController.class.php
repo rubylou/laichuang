@@ -5,22 +5,41 @@ use Think\Model;
 class MediaController extends Controller {
     //articleList
     public function index(){
-        $Form = new Model();
+        if(session('?userid')&&session('?usertype')&&($_SESSION[usertype]==1||$_SESSION[usertype]==2))
+        {
+            $Form = new Model();
 
-        $articlesRaw=$Form->query("select article_id,article_title,article_type,article_time,admin_id 
-            from admin_articles order by article_time desc");
-        if($articlesRaw){
+            $articlesRaw=$Form->query("select article_id,article_title,article_type,article_time,admin_id 
+                from admin_articles order by article_time desc");
+            if($articlesRaw){
                 foreach ($articlesRaw as $key => $value) {
                     $articlesRaw[$key]['article_type'] = C('MODULE_CODE')[$articlesRaw[$key]['article_type']];
                 }
                 $this->x = $articlesRaw;
                 $this->assign('articlelist',$articlesRaw);
             }
+        }else
+        {
+
+            $this->redirect('Index/index');
+        
+        }
+        
 
     	$this->display();
         
     }
-
+    public function articleDel(){
+        if(session('?userid')&&session('?usertype')){
+            $key=$_GET['key'];
+            $Form= new Model();
+            $Form->execute("delete from admin_articles where article_id='%s'",$key);
+            $this->redirect('index');
+        }else
+        {
+            $this->redirect('Index/index');
+        }
+    }
     public function articleEdit(){
     	//dump($_SESSION);
         if(session('?userid')&&session('?usertype')){
@@ -91,8 +110,6 @@ class MediaController extends Controller {
 
     }
 
-    public function articleDel(){
-
-    }
+   
 
 }

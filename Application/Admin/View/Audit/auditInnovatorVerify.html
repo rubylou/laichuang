@@ -51,18 +51,104 @@
 				
 			  	<div class="panel panel-default theme-outline">
 					<div class="panel-heading theme-heading">
-						<h3 class="panel-title">工作经历</h3>
+						<span class="theme-heading theme-h4">工作经历</span>
+						<!--a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2">
+								<span class="glyphicon glyphicon-plus theme-color" aria-hidden="true"></span>
+							</a-->
 					</div>
 				  	<div class="panel-body">
+				  		<div class="collapse" id="collapseExample2">
+							<hr>
+					        <div class="form-horizontal">
+							  <div class="form-group">
+							    <label for="title" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>职位</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="title">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="company2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>公司名称</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="company2" placeholder="例: 来创">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="startyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>开始日期</label>
+							    <div class="col-md-3 col-xs-6 ">
+							    	<div class="input-group">
+							        	<select class="form-control" id="startyear">
+							            </select>
+							            <span class="input-group-addon">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6 ">
+						        	<div class="input-group">
+						        		<select class="form-control" id="startmon">
+						            	</select>
+						            	<span class="input-group-addon">月</span>
+						            </div>
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="endyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>结束日期</label>
+							    <div class="col-md-3 col-xs-6 ">
+							    	<div class="input-group">
+							        	<select class="form-control" id="endyear">
+							            </select>
+							            <span class="input-group-addon">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6 ">
+						        	<div class="input-group">
+						        		<select class="form-control" id="endmon">
+						            	</select>
+						            	<span class="input-group-addon">月</span>
+						            </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6 ">
+							      <div class="checkbox">
+							        <label>
+							          <input type="checkbox" id="untilnow" onclick="disableEnd(this.checked)">至今
+							        </label>
+							      </div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="job_info" class="col-md-2 col-md-offset-1 control-label"><span class="required">*</span>职位描述</label>
+							    <div class="col-md-7">
+						        	<textarea rows="3" class="form-control" id="job_info"></textarea>
+						        </div>
+							  </div>
+							</div>
+						    <div class="row">
+						    	<div class="col-md-3 col-md-offset-3 col-xs-6 ">
+						        	<button type="submit" class="btn btn-default form-control theme-btn-inverse" onclick="submitJob()">&nbsp;提交&nbsp;</button> 
+						        </div>
+						        <input type="hidden" id="editJob_input"/>
+						        <div class="col-md-3 col-xs-6 ">
+						        	<button type="submit" class="btn btn-default form-control theme-btn" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</button>    
+						        </div>
+						    </div>
+						    <hr>
+						</div>
+
+
 						<volist name="joblist" id="jobs">
-							<div class="panel">
+							<div class="panel theme-well">
 					  			<div class="panel-body hide-edit">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-6">
-											<p class="theme-h4"><strong>{$jobs.job_title}</strong></p>
-											<p class="theme-h4">{$jobs.job_company}</p>
-											<p>{$jobs.job_start}至{$jobs.job_end}</p>
-											<p>{$jobs.job_info}</p>
+										<div class="col-md-6 col-xs-10">
+											<p class="theme-h4">{$jobs.job_title}</p>
+											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
+										</div>
+										<div class="col-md-2 col-md-offset-4 col-xs-2">
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
@@ -77,8 +163,8 @@
 						<h3 class="panel-title">个人资料</h3>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
 								<p class="theme-h4">基本信息</p>
 								<p>&nbsp;&nbsp;<small>姓名:{$user.name}</small></p>
 								<p>&nbsp;&nbsp;<small>电话:{$user.phone}</small></p>
@@ -90,19 +176,96 @@
 								<p >&nbsp;&nbsp;<small>地区: {$user.city}</small></p>
 
 							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none" onclick=""><span class="glyphicon glyphicon-edit theme-color"></span></a>
+							</div>
+						</div>
+						<div class="collapse" id="collapseExample3">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1 col-xs-12">
+									<div class="form-group">
+						              <label for="editGender"><span class="required">*</span>性别</label>
+						              <select class="form-control" name="gender" id="editGender">
+						                <option value="1">男</option>
+						                <option value="2">女</option>
+						              </select>
+						            </div>
+						            <div class="form-group">
+						              <label for="editBirth"><span class="required">*</span>生日</label>
+						              <input type="text" class="form-control" id="editBirth" placeholder="格式: yyyy-mm-dd">
+						            </div>
+						            <div class="form-group">
+						              <label for="editCity"><span class="required">*</span>地区</label>
+						              <select class="form-control" name="field" id="editCity">
+                					  </select>
+						            </div>
+						            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="editInnovatorBasics()">&nbsp;保存&nbsp;</button>
+						        </div>
+							</div>
 						</div>
 					</div>
 					<div class="panel-body">
-						<div class="row">
-							<div class="col-md-12">
+						<hr>
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
 								<p class="theme-h4">教育背景</p>
-								<p class="theme-h4">
-									<small>&nbsp;&nbsp;{$edu.school}</small>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;学校: </span><span class="theme-h5">{$edu.school}</span>
 								</p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.degree}</small></p>
-								<p class="theme-h4"><small>&nbsp;&nbsp;{$edu.year}年{$edu.mon}月入学</small></p>
+								<p>
+									<span class="theme-h5-small">&nbsp;&nbsp;学历: </span><span class="theme-h5">{$edu.degree}</span>
+								</p>
+								<if condition="strlen($edu['year']) gt 0">
+									<p>
+										<span class="theme-h5-small">&nbsp;&nbsp;入学年月: </span><span class="theme-h5">{$edu.year}年{$edu.mon}月</span>
+									</p>
+								</if>
+								
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" style="display:none" onclick=""><span class="glyphicon glyphicon-edit theme-color"></span></a>
 							</div>
 						</div>
+						<div class="collapse" id="collapseExample1">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1 col-xs-12">
+						            <div class="form-group">
+						              <label for="editSchool"><span class="required">*</span>学校</label>
+						              <input type="text" class="form-control" id="editSchool">
+						            </div>
+						            <div class="form-group">
+						              <label for="editDegree"><span class="required">*</span>学历</label>
+						              <select class="form-control" id="editDegree">
+						                <option value="1">高中及以下</option>
+						                <option value="2">本科</option>
+						                <option value="3">硕士</option>
+						                <option value="4">博士</option>
+						              </select>
+						            </div>
+						            <div class="form-group">
+									    <label for="eduStartyear"><span class="required">*</span>入学年月</label>
+									    <div class="row">
+										    <div class="col-md-6 col-xs-6">
+										    	<div class="input-group">
+										        	<select class="form-control" id="eduStartyear">
+										            </select>
+										            <span class="input-group-addon" id="basic-addon2">年</span>
+										        </div>
+									        </div>
+									        <div class="col-md-6 col-xs-6">
+									        	<div class="input-group">
+									        		<select class="form-control" id="eduStartmon">
+									            	</select>
+									            	<span class="input-group-addon" id="basic-addon2">月</span>
+									            </div>
+									        </div>
+									    </div>
+									</div>
+						            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="editEducation()">&nbsp;保存&nbsp;</button>
+						        </div>
+							</div>
+						</div>
+						<hr>
 					</div>
 				  	<div class="panel-body">
 						<div class="row">
@@ -119,6 +282,49 @@
 			</div>
 		</div>
 	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		      <div id="editField" style="display:none">
+		      	<div class="row">
+		      		<div class="col-md-10 col-md-offset-1">
+					  	<div class="form-group">
+			                <div id="conditions">
+			                </div>
+			                <div class="row"></div>
+			                <label for="choices">已选择:</label>
+			                <div id="choices">
+			                </div>
+			            </div>
+			        </div>
+			  </div>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		      <div id="delProBtn">
+			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delPro_confirm">确定</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delPro_cancel">取消</button>
+			      <input type="hidden" id="delPro_input" />
+			  </div>
+			  <div id="delJobBtn">
+			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
+			      <input type="hidden" id="delJob_input" />
+			  </div>
+			  <div id="editFieldBtn">
+			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+			  </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+  </div>
 	<div class="container" ng-app="myinnovatorapp" ng-controller="innovatorController">
 		<form>
   			<div class="form-group">
@@ -141,11 +347,58 @@
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
-<script src="__PUBLIC__/js/Home/User/edit.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
-<script src="__PUBLIC__/js/Home/User/init.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
+<script src="__PUBLIC__/js/Admin/User/edit.js"></script>
+<script src="__PUBLIC__/js/Admin/User/init.js"></script>
 <script>
+  
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	addYM('#startyear','#startmon',1960);
+  	addYM('#endyear','#endmon',1960);
+  	addYM('#eduStartyear','#eduStartmon',1960);
+
+  	var field = {$field};
+	var rows = ({$fieldlen})/8;
+	initializeField(rows,field);
+	addInterests({$interests},"#interests");
+
+	var city = {$city};
+  	initailizeCity(city);
+
+  	$('#editGender').children('option').each(function(){
+	    if($(this).text()=='{$user.gender}'){
+	      $(this).attr('selected','selected');
+	    }
+	});
+
+	$('#editBirth').val('{$user.birthday}');
+
+    $('#editCity').children('option').each(function(){
+	    if($(this).text()=='{$user.city}'){
+	      $(this).attr('selected','selected');
+	    }
+	});
+
+	$('#editSchool').val('{$edu.school}');
+
+	$('#editDegree').children('option').each(function(){
+	    if($(this).text()=='{$edu.degree}'){
+	      $(this).attr('selected','selected');
+	    }
+	});
+
+	$('#eduStartyear').children('option').each(function(){
+	    if($(this).val()=='{$edu.year}'){
+	      $(this).attr('selected','selected');
+	    }
+	});
+  	
+  	$('#eduStartmon').children('option').each(function(){
+	    if($(this).val()=='{$edu.mon}'){
+	      $(this).attr('selected','selected');
+	    }
+	});
 
 </script>
 </html>

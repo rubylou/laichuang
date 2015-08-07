@@ -7,12 +7,18 @@ class MessageController extends Controller {
     public function index(){
         //$a=send_active_mail("1154066164",2,C(TESTMAIL));
         //dump(sha1('supersuper'));
-        $Form = new Model();
-        $this->iwantyou=$Form->query("select * from messagebox where msg_type='2' order by sent_time desc");
-        $this->ineedyou=$Form->query("select * from messagebox where msg_type='1' order by sent_time desc");
-        $this->ijoinyou=$Form->query("select * from messagebox where msg_type='3' order by sent_time desc");
+        if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
 
+            $Form = new Model();
+            $this->iwantyou=$Form->query("select * from messagebox where msg_type='2' order by sent_time desc");
+            $this->ineedyou=$Form->query("select * from messagebox where msg_type='1' order by sent_time desc");
+            $this->ijoinyou=$Form->query("select * from messagebox where msg_type='3' order by sent_time desc");
 
+        }
+        else
+        {
+           $this->redirect('Index/index'); 
+        }
         $this->display();
     }
     public function messageDetail(){

@@ -1,3 +1,4 @@
+//*********************************************angular section************************//
 var user_id;
 
 var init=function(id)
@@ -46,3 +47,6 @@ innovatorApp.controller("innovatorController", function($scope,$http) {
     };
 
 });
+
+
+

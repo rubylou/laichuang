@@ -79,6 +79,7 @@ class CaseController extends Controller {
 
         $this->info = $result[0];
 
+        
 		//所属领域
 		$result = $Form->query('select interest_field from interest_project where id="%s"',$id);
         if($result){

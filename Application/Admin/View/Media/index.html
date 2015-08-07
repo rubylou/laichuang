@@ -43,7 +43,7 @@
                     <td class="text-center">{$x.article_time}</td>
                     <td class="text-center">
                       <a data-toggle="tooltip" data-placement="top" title="编辑" class="btn" href="__URL__/articleEdit?key={$x.article_id}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href={{"__URL__/auditInvestorPsDel?key="+x.user_id}}><span class="glyphicon glyphicon-trash" aria-hidden="true">
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href="__URL__/articleDel?key={$x.article_id}"><span class="glyphicon glyphicon-trash" aria-hidden="true">
                       </td>
                   </tr>
                    </volist>

@@ -163,19 +163,55 @@
 						<h3 class="panel-title">其他说明</h3>
 					</div>
 				  	<div class="panel-body">
-						<div class="row">
-							<div class="col-md-9">
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
 								<p class="theme-h4">招聘信息</p>
-								<p id="project_recruit"></p>
+								<p class="theme-h5-small" id="project_recruit"></p>
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="showEditPanel('#editRecruit')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-9">
-								<p class="theme-h4">融资需求</p>
-								<p id="project_require"></p>
+							<div class="col-md-12">
+								<div id="editRecruit" style="display:none">
+				  					<textarea rows='5' id="pro_recruit" class="theme-form-control-8"></textarea>
+									<a id="saveRecruit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRecruit('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</div>
 							</div>
 						</div>
-						
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
+								<p class="theme-h4">融资需求</p>
+								<p class="theme-h5-small" id="project_require"></p>
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="showEditPanel('#editRequire')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div id="editRequire" style="display:none">
+				  					<textarea rows='5' id="pro_require" class="theme-form-control-8"></textarea>
+									<a id="saveRequire" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRequire('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">浏览量:&nbsp;&nbsp;{$info.project_visits}</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">关注量:&nbsp;&nbsp;{$info.project_watches}</p>
+							</div>
+						</div>
 					</div>
 			  	</div>
 			</div>
@@ -222,7 +258,9 @@
   </div>
 </body>
 <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
-<script src="__PUBLIC__/js/Home/Case/edit.js"></script>
+<script src="__PUBLIC__/js/Admin/Case/edit.js"></script>
+<script src="__PUBLIC__/js/Admin/Case/init.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
@@ -231,19 +269,95 @@
 	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	
-	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
-	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
-	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
-	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
-	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
+	initializeProject('{$info.project_intro}','{$info.project_member}','{$info.project_fi}','{$info.project_recruit}','{$info.project_require}');
+	
+	var field = {$field};
+	var rows = ({$fieldlen})/8;
+	initializeField(rows,field);
 	addInterests({$interests},"#interests");
+	addRound({$rounds},"#round");
+	addCur({$currency},"#currency1");
+	addCur({$currency},"#currency2");
+	addYM('#investyear','#investmon',1980);
+
+	$('img').addClass('img-responsive');
 
 	function openUser(id){
-	  window.open("{:U('Home/User/innovator/val/"+id+"')}");
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
 	}
 
 	function openInvestor(id){
-	  window.open("{:U('Home/User/investor/val/"+id+"')}");
+		window.open("{:U('Home/User/investor/val/"+id+"')}");
 	}
+
+	$('#editField_confirm').click(function(){
+		var field = 'field=';
+		$('#choices').children().each(function(){
+			field = field + $(this).attr('value') + ',';
+		});
+		field = field + "&";
+		var xmlHttp = createRequest();
+		request(xmlHttp,field,"__URL__/editCaseInfo/p/{$info.project_id}");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	
+
+	$('#delMember_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'m='+$("#delMember_input").val()+"&p={:I('get.key')}","__URL__/delMember");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	$('#delMember_cancel').click(function(){
+		$('#delMember_input').val('');
+	});
+
+	$('#delInvestor_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'key='+$('#delInvestor_input').val()+"&p={:I('get.key')}","__URL__/delInvestor");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+
+	$('#delInvestor_cancel').click(function(){
+		$('#delInvestor_input').val('');
+	});
+
+	$('#delFi_confirm').click(function(){
+	  var xmlHttp = createRequest();
+	  request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
+	  if(xmlHttp.responseText==200){
+	    document.location.reload();
+	  }
+	});
+
+	$('#delFi_cancel').click(function(){
+	  $('#delFi_input').val('');
+	});
+	
+	$('#members_confirm').click(function(){
+		send_message($('#members_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#members_cancel').click(function(){
+		$('#members_input').val('');
+		document.location.reload();
+	});
+
+	$('#financial_confirm').click(function(){
+		send_message($('#financial_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#financial_cancel').click(function(){
+		$('#financial_input').val('');
+		document.location.reload();
+	});
+	
 </script>
 </html>
