@@ -1,6 +1,21 @@
 <?php
 use Think\Model;
 require 'PHPMailerAutoload.php';
+    function insertAdminRecord($admin_id,$audition_type,$audition_object,$audition_note)
+    {
+        $Form = new Model();
+        //update the admin_audition
+        $time = date('Y-m-d');
+        $id=time();
+        $splstr=sprintf('insert into admin_audition (admin_id,audition_type,audition_object,audition_time,audition_note) 
+            values ("%d","%s","%d","%s","%s","%s")',
+        $admin_id,$audition_type,$audition_object,$time,$audition_note);
+        $res=$Form->execute($sqlstr);
+        if($res)
+            echo $sqlstr."200";
+        else
+            echo $sqlstr."400";
+    }
     function getCode($num,$w,$h) {  
         $code = "";  
         for ($i = 0; $i < $num; $i++) {  
