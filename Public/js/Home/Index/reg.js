@@ -95,19 +95,24 @@ function submitInvestor(){
       var pwd = 'key7='+CryptoJS.SHA1($('#regPwd1').val())+'&';
       var pwdfirm = 'key8='+CryptoJS.SHA1($('#regPwdfirm1').val())+'&';
       var field = 'key9=';
-      $('#choices').children().each(function(){
-        field = field + $(this).attr('value') + ',';
-      });
-      field = field + "&";
-
-      var data = status+name+mobile+email+company+title+type+pwd+pwdfirm+field;
-      request(xmlHttp,data,"userSave");
-      if(xmlHttp.responseText==200){
-        modalShow('alert_content','myModal','注册成功,2秒内即将跳转');
-        setTimeout("window.location.href = 'index';",2000);
+      if($("#choices").children().length==0){
+        alert("请至少选择一个感兴趣领域");
       }
       else{
-        modalShow('alert_content','myModal','注册出现异常');
+        $('#choices').children().each(function(){
+          field = field + $(this).attr('value') + ',';
+        });
+        field = field + "&";
+
+        var data = status+name+mobile+email+company+title+type+pwd+pwdfirm+field;
+        request(xmlHttp,data,"userSave");
+        if(xmlHttp.responseText==200){
+          modalShow('alert_content','myModal','注册成功,2秒内即将跳转');
+          setTimeout("window.location.href = 'index';",2000);
+        }
+        else{
+          modalShow('alert_content','myModal','注册出现异常');
+        }
       }
     }
     else if(xmlHttp.responseText==2002){

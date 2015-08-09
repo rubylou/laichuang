@@ -170,7 +170,7 @@ class CaseController extends Controller {
             $this->redirect('Home/Index/login');
         }
 
-        $id = $_GET['key'];
+        $id = I('get.key',0);
         $Form = new Model();
         $result = $Form->query('select project_info.*, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id where project_id="%s"',$id);
         foreach ($result as $key => $value) {
@@ -238,9 +238,14 @@ class CaseController extends Controller {
         $familiar = $Form->query('select distinct familiar.id as project_id,project_name, project_logo from interest_project as original 
             inner join interest_project as familiar on original.interest_field = familiar.interest_field 
             inner join project_info on familiar.id = project_id
-            where original.id = "%s" and familiar.id <> "%s" limit 5',$id, $id);
+            where original.id = "%s" and familiar.id <> "%s"',$id, $id);
         $this->familiar = $familiar;
         $this->assign('prolist',$familiar);   
+
+        //相关资讯
+        $articles = $Form->query('select article_id, article_title, article_time from admin_articles
+            where article_about = 1 and article_object = "%s"',$id);
+        $this->assign('news',$articles);
 
         $this->display();
     }
