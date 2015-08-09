@@ -3,8 +3,9 @@
     <title>内容管理员</title>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
-    <script type="text/javascript" src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
 </head>
 <body>
 	<include file="./Public/tpl/navbar_admin.html" />
@@ -43,7 +44,7 @@
                     <td class="text-center">{$x.article_time}</td>
                     <td class="text-center">
                       <a data-toggle="tooltip" data-placement="top" title="编辑" class="btn" href="__URL__/articleEdit?key={$x.article_id}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" href="__URL__/articleDel?key={$x.article_id}"><span class="glyphicon glyphicon-trash" aria-hidden="true">
+                      <a data-toggle="tooltip" data-placement="top" title="删除" class="btn" onclick="delArticle('{$x.article_id}')" ><span class="glyphicon glyphicon-trash" aria-hidden="true">
                       </td>
                   </tr>
                    </volist>
@@ -53,9 +54,61 @@
             </div>
         </div>
 	</div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 id="alert_content" style="color:#5B5B5B"></h4>
+          <div id="editField" style="display:none">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+              <div class="form-group">
+                      <div id="conditions">
+                      </div>
+                      <div class="row"></div>
+                      <label for="choices">已选择:</label>
+                      <div id="choices">
+                      </div>
+                  </div>
+              </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <div id="alertBtn">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+            </div>
+        <div id="delArticleBtn">
+            <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delArticle_confirm">确定</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="delArticle_cancel">取消</button>
+            <input type="hidden" id="delArtid_input" />
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 </body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
     $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+    function delArticle(id){
+      $('.modal-footer').find('div').hide();
+      $('.modal-footer').find('div').filter('#delArticleBtn').show();
+      $('#delArtid_input').val(id);
+      modalShow('alert_content','myModal','确认删除该咨询?');
+    }
+    $('#delArticle_confirm').click(function(){
+    var xmlHttp = createRequest();
+    var data='key='+$("#delArtid_input").val();
+    request(xmlHttp,data,"articleDel");
+    if(xmlHttp.responseText==200){
+      document.location.reload();
+    }
+  });
+
 </script>
 
 </html>

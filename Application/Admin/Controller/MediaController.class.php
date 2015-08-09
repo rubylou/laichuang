@@ -31,10 +31,16 @@ class MediaController extends Controller {
     }
     public function articleDel(){
         if(session('?userid')&&session('?usertype')){
-            $key=$_GET['key'];
+            $key=$_POST['key'];
             $Form= new Model();
-            $Form->execute("delete from admin_articles where article_id='%s'",$key);
-            $this->redirect('index');
+            $res=$Form->execute("delete from admin_articles where article_id='%s'",$key);
+            if($res)
+            {
+                echo 200;
+            }else
+            {
+                echo 400;
+            }
         }else
         {
             $this->redirect('Index/index');

@@ -72,7 +72,7 @@ class AuditController extends Controller {
         $this->info = $result[0];
         $_SESSION['id']=$this->info['project_admin'];
 
-        dump($this->info);
+        //dump($this->info);
         //所属领域
         $result = $Form->query('select interest_field from interest_project where id="%s"',$id);
         if($result){
@@ -915,7 +915,138 @@ class AuditController extends Controller {
         header("Location: auditInvestorPsVerify?key=".$_SESSION['id']);
 
     }
+    public function queryUser(){
+        $Form = new Model();
+        $exist = $Form->query('select user_id, email, phone from entrepreneur_personal where email = "%s" or phone="%s"',$_POST['key1'],$_POST['key1']);
+        if(!$exist){
+            echo 404; 
+        }
+        else{
+            $admin = $Form->query('select project_admin from project_info where project_id="%s"',$_POST['p']);
+            if($admin[0]['project_admin']===$exist[0]['user_id']){
+                echo 409;
+            }
+            else{
+                $result = $Form->execute('replace into project_member (project_id, user_id, title) 
+                values ("%s","%s","%s")',$_POST['p'],$exist[0]['user_id'],$_POST['key2']);
+                if($result){
+                    echo 200;
+                }     
+            }
+                
+        }
 
+    }
+    public function delMember(){
+        //dump($_POST);
+        $Form = new Model();
+        $result = $Form->execute('delete from project_member where project_id="%s" and user_id="%s"',$_POST['p'],$_POST['m']);
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
+    }
+    public function profiAdd(){
+        if(I('post.p')){
+            $Form = new Model();
+            if(count($_POST['c'])>0){
+                $id = $_POST['c'];
+                $result = $Form->execute('update project_fi set round = %d,
+                    invest_cur=%d,invest_amount=%d,assess_cur=%d,assess_amount=%d,investor_name="%s",invest_time="%s" 
+                    where project_id = "%s" and id=%d',$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'].'-'.$_POST['key8'].'-'.'-00',I('post.p'),$_POST['c']);
+                if($result){
+                    echo 200;
+                }
+                else{
+                    echo 400;
+                }
+            }
+            else{
+                $result = $Form->execute('insert into project_fi (project_id,round,
+                    invest_cur,invest_amount,assess_cur,assess_amount,investor_name,invest_time) 
+                values ("%s",%d,%d,%d,%d,%d,"%s","%s")',I('post.p'),$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'].'-'.$_POST['key8'].'-00');
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
+            
+        }
+        else{
+            echo 400;
+        }
+        
+    }
+    public function editProFi(){
+        $Form = new Model();
+        $result = $Form->query('select * from project_fi where id = "%s" and project_id="%s"',$_POST['c'],$_GET['p']);
+        $result[0]['year'] = substr($result[0]['invest_time'], 0,4);
+        $result[0]['mon'] = intval(substr($result[0]['invest_time'], 5,2));
+        echo json_encode($result[0]);
+    }
+    public function delFi(){
+        $Form = new Model();
+        $result = $Form->execute('delete from project_fi where project_id="%s" and id=%d',$_GET['p'],$_POST['c']);
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
+    }
+    public function queryInvestor(){
+        $Form = new Model();
+        $exist = $Form->query('select user_id, email, mobile from investor_personal where email = "%s" or mobile="%s"',$_POST['key1'],$_POST['key1']);
+        if(!$exist){
+            echo 404; 
+        }
+        else{
+            $result = $Form->execute('replace into project_investor (project_id, user_id) 
+            values ("%s","%s")',$_POST['p'],$exist[0]['user_id']);
+            if($result){
+                echo 200;
+            }     
+                
+        }
+
+    }
+    public function delInvestor(){
+        //dump($_POST);
+        $Form = new Model();
+        $result = $Form->execute('delete from project_investor where project_id="%s" and user_id="%s"',$_POST['p'],$_POST['key']);
+        if($result){
+            echo 200;
+        }
+        else{
+            echo 400;
+        }
+    }
+
+    public function introEdit(){
+        $id = $_GET['p'];
+        $Form = new Model();
+        $result = $Form->query('select project_intro from project_info where project_id = "%s"',$id);
+        $result[0]['project_intro'] = htmlspecialchars_decode($result[0]['project_intro']);
+        $this->content = $result[0]['project_intro'];
+        $this->display();
+    }
+    public function saveIntro(){
+        $Form = new Model();
+        if(count($_POST['c'])>0 && count($_POST['p'])>0){
+            $result = $Form->execute('update project_info set project_intro="%s" where project_id="%s"',$_POST['c'],$_POST['p']);
+            if($result){
+                echo 200;
+            }
+            else{
+                echo 400;
+            }
+        }
+    }
+    
     public function auditInvestorPsDel(){
         $user_id=$_GET['key'];
     }
