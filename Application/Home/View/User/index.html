@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧|投资人</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <link href="__PUBLIC__/css/theme.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+	  <div class="container" style="margin-top:70px">
+	  	<!--<div class="row">
+		  	<div class="col-md-10 col-md-offset-1 col-xs-12">
+			  	<div class="panel">
+			  		<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;筛选条件&nbsp;</span>
+						</p>
+					</div>
+			  		<div class="panel-body">
+			  			<div class="row">
+			  				<div class="col-md-1 col-xs-12 text-center">
+			  					<p class="theme-h5-small">行业</p>
+			  				</div>
+			  				<div class="col-md-10 col-xs-12">
+			  					<div class="row">
+					  				<volist name="fields" id="vo" key="k">
+					  					<div class="col-md-2 col-xs-3">
+					  						<span class="btn theme-label-btn" name="field" value="{$k}">{$vo}</span>
+					  					</div>
+					  				</volist>
+					  			</div>
+					  		</div>
+		                </div>
+		                <hr>
+		                <div class="row">
+		                	<div class="col-md-1 col-xs-12 text-center">
+			  					<p class="theme-h5-small">地区</p>
+			  				</div>
+			  				<div class="col-md-10 col-xs-12">
+			  					<div class="row">
+					  				<volist name="city" id="vo1" key="k1">
+					  					<div class="col-md-2 col-xs-3">
+					  						<span class="btn theme-label-btn" name="city" value="{$k1}">{$vo1}</span>
+					  					</div>
+					  				</volist>
+					  			</div>
+				  			</div>
+		                </div>
+		                <hr>
+		                <div class="row">
+		                	<div class="col-md-2 col-md-offset-4 col-xs-4 col-xs-offset-2">
+		                		<a class="btn theme-btn-inverse form-control" onclick="getQueryCode('{:U('Home/Case/index')}')">查询</a>
+		                	</div>
+		                	<div class="col-md-2 col-xs-4">
+		  						<span class="btn theme-btn form-control" onclick="clearQuery()">清空</span>
+		  					</div>
+		                </div>
+			  		</div>
+			  	</div>
+			</div>
+		</div>-->
+	  	<div class="row">
+		  	<div class="col-md-10 col-md-offset-1 col-xs-12">
+		  		<div class="panel">
+			  		<div class="panel-body">
+						<table class="table table-hover">
+							<tr>
+								<th class="text-center theme-h5-small" width="60%">投资人</th>
+								<th class="text-center theme-h5-small" width="20%">投资领域</th>
+								<th class="text-center theme-h5-small" width="20%">投资的项目</th>
+							</tr>
+							<volist name="list" id="vo">
+								<tr>
+									<td>
+										<div class="row">
+							    			<div class="col-md-2 col-xs-4">
+							    				<if condition="$vo['portrait'] neq ''">
+									    			<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" width="56px" height="56px" onclick="openInvestor('{$vo.user_id}')" style="margin-left:auto;margin-right:auto"/>
+									    			<else />
+									    			<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/investor.png" width="56px" height="56px" onclick="openInvestor('{$vo.user_id}')" style="margin-left:auto;margin-right:auto"/>
+									    		</if>
+									    	</div>
+							    			<div class="col-md-6 col-xs-8">
+									    		<p><a class="theme-h4 theme-color" href="__URL__/investor?val={$vo.user_id}">{$vo.name}</a></p>
+									    	</div>
+								    	</div>
+								    </td>
+									<td class="text-center">
+										<div class="row theme-nav">
+											<volist name="vo['fields']" id="f">
+												<span class="theme-small">{$f.interest_field}&nbsp;&nbsp;</span>
+											</volist>
+								    	</div>
+									</td>
+									<td class="text-center">
+										<div class="row theme-nav">
+											<volist name="vo['cases']" id="k">
+												&nbsp;<a class="theme-color" onclick="openProject('{$k.project_id}')">{$k.project_name}</a>&nbsp;
+											</volist>
+										</div>
+									</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	  </div>
+	</div>
+	<include file="./Public/tpl/footer_home.html" />
+</body>
+ <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script>
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+
+  	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
+
+	function openUser(id){
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function openInvestor(id){
+		window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
+
+</script>
+</html>
