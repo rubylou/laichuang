@@ -5,7 +5,7 @@ use Think\Model;
 class IndexController extends Controller {
     public function index(){
         $Form = new Model();
-        $result = $Form->query('select * from admin_articles limit 3');
+        /*$result = $Form->query('select * from admin_articles limit 3');
         foreach ($result as $key => $value) {
             $result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
             $result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
@@ -33,7 +33,7 @@ class IndexController extends Controller {
         }
 
         $this->vo = $result;
-        $this->assign("list",$result);
+        $this->assign("list",$result);*/
     	$this->display();
     }
 
