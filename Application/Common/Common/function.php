@@ -76,7 +76,12 @@ require 'PHPMailerAutoload.php';
         $str=$matches[3][0];
         //dump($str);
         if (preg_match('/'.$prefix.'\/Public\/upload\/pic/', $str)){
-          $str1 = ".".substr($str, strlen($prefix)-1);
+	  if(strlen($prefix)>0){
+              $str1 = ".".substr($str, strlen($prefix)-1);
+	  }
+          else{
+	      $str1 = ".".$str;
+          }
           //dump($str1);
           return $str1;
         }

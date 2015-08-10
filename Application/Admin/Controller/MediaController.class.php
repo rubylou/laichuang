@@ -146,7 +146,7 @@ class MediaController extends Controller {
             ->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
             ->text('   '.C('MODULE_CODE')[I('post.key2',0)],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
             ->save($thumb);
-            
+    
             if($unlink !== false){
                 $thumb = C(PREFIX).substr($thumb,1);
             }
