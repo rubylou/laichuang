@@ -15,37 +15,47 @@ class ActiveController extends Controller {
         //dump($r);
         if($r)
         {
+            $mesg;
             $record=$r[0];
             //dump($record);
             //dump($record[mail_address]);
             if($record[mail_address]!=$key2)
             {
-                echo "请使用注册邮箱激活！";
+                $mesg= "请使用注册邮箱激活！";
+                //dump($this->mesg);
 
             }else
             {
                 if($record[active_code]!=$key3)
                 {
-                    echo "激活码错误！";
+                    $mesg= "激活码错误！";
+                    //dump($this->mesg);
                 }else
                 {
                     if(intval($record[over_time])<time())
                     {
-                        echo "激活码过期！";
+                        $mesg= "激活码过期！";
+                        //dump($this->mesg);
                     }else
                     {
                         $res=$Form->execute('update email_active set active_status="1" where user_id="%s"',$key1);
                         if($res)
                         {
-                            echo " 激活成功！";
+                            //dump($res);
+                            $mesg= " 激活成功！";
+                            //dump($this->mesg);
                         }
                     }
                 }
             }
         }else
         {
-            echo "激活失败！";
+            $mesg= "激活失败！";
         }
+        $this->tip=$mesg;
+        //dump($this->tip);
+        $this->display();
     }
+
    
 }
