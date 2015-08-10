@@ -84,7 +84,7 @@ class MediaController extends Controller {
     public function articleSave(){
     	//dump($_POST);
     	$Form = new Model();
-    	$date = date("Y-m-d");
+    	$date = date("Y-m-d H:i:s");
     	$id = date("Ymdhis");
     	$result = $Form->execute("replace into admin_articles (article_id,admin_id,article_title,article_type,
     		article_field,article_object,article_about,article_content,article_time) values 
@@ -100,7 +100,7 @@ class MediaController extends Controller {
     public function articleUpdate(){
         //dump($_POST);
         $Form = new Model();
-        $date = date("Y-m-d");
+        $date = date("Y-m-d H:i:s");
         $id = date("Ymdhis");
         //'update project_info set status=%d where project_id="%s"'
         $sqlstr=sprintf("update admin_articles set admin_id='%s',article_title='%s',article_type=%d,
