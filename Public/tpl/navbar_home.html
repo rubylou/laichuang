@@ -29,6 +29,12 @@
             </a>
           </li>
           <li>
+            <a href="{:U('Home/User/index')}" class="theme-nav">
+              <span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+              <span class="text-default theme-color">投资人</span>
+            </a>
+          </li>
+          <li>
             <a href="#" class="theme-nav">
               <span class="glyphicon glyphicon-info-sign text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
               <span class="text-default theme-color">关于我们</span>
@@ -52,7 +58,7 @@
                 <ul class="dropdown-menu">
                   <li class="dropdown-header"><span class="theme-h4">{:session('user')}</span></li>
                   <li role="separator" class="divider"></li>
-                  <li><a href="{:U('Home/User/index')}"><span class="glyphicon glyphicon-cog text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">个人主页</span></a></li>
+                  <li><a href="{:U('Home/User/innovatorEdit')}"><span class="glyphicon glyphicon-cog text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">个人主页</span></a></li>
                   <li><a href="{:U('Home/User/settings')}"><span class="glyphicon glyphicon-home text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">账号设置</span></a></li>
                   <li><a href="{:U('Home/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>
                 </ul>

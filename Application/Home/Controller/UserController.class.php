@@ -5,6 +5,34 @@ use Think\Model;
 
 class UserController extends Controller {
     public function index(){
+        $Form = new Model();
+        $investors = $Form->query('select user_id, name, portrait, user_type from investor_personal where reg_status = 2');
+        //dump($investors);
+        foreach ($investors as $key => $value) {
+            $cases = $Form->query('select project_investor.project_id, project_name from project_investor 
+                inner join project_info on project_info.project_id = project_investor.project_id 
+                where user_id = "%s"',$value['user_id']);
+            if($cases){
+                $investors[$key]['cases'] = $cases;
+            }
+
+            $fields = $Form->query('select interest_field from interest_investor where id = "%s"',$value['user_id']);
+            if($fields){
+                foreach ($fields as $key1 => $value1) {
+                    $fields[$key1]['interest_field'] = C('INTEREST_FIELD')[$value1['interest_field']];
+                }
+                $investors[$key]['fields'] = $fields;
+            }
+
+        }
+
+        //dump($investors);
+        $this->assign('list',$investors);
+
+        $this->display();
+    }
+
+    public function innovatorEdit(){
     	//dump($_SESSION);
     	
         if(!session('?type') || !session('?id')){
@@ -82,7 +110,7 @@ class UserController extends Controller {
 
         $id = I('get.val',0);
         if(!$id){
-            $this->redirect('Index/index');
+            $this->redirect('User/innovatorEdit');
         }
 
         //创业项目
@@ -235,7 +263,7 @@ class UserController extends Controller {
         
         $id = I('get.val',0);
         if(!$id){
-            $this->redirect('Index/index');
+            $this->redirect('User/investorEdit');
         }
 
         $Form = new Model();
