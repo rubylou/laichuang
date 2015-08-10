@@ -89,7 +89,7 @@ class MediaController extends Controller {
         
         //生成缩略图
         $info = htmlspecialchars_decode(I('post.key6'));
-        $origin = getPic($info);
+        $origin = getPic($info,C(EXP_PREFIX));
         //dump($origin);
         //dump($origin);
         if($origin!=null){
@@ -135,7 +135,7 @@ class MediaController extends Controller {
 
         //生成缩略图
         $info = htmlspecialchars_decode(I('post.key6'));
-        $origin = getPic($info);
+        $origin = getPic($info,C(EXP_PREFIX));
         //dump($origin);
         if($origin!=null){
             $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
