@@ -83,7 +83,7 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
                     </div>
                     <div id="articlesRequest">
-                        <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="articles_confirm">发送</button>
+                        <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="articles_confirm" >发送</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="articles_cancel">不发送</button>
                         <input type="hidden" id="articles_input" />
                     </div>
@@ -97,7 +97,9 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/util/init.js"></script>
 <script type="text/javascript">
-
+    addField({$type},"#artiType");
+    addField({$field},"#artiField");
+    addField({$object},"#artiAbout");
     if({$fill_type}==1){
         preFill();
     }
@@ -117,9 +119,7 @@
         }
     }
     
-    addField({$type},"#artiType");
-    addField({$field},"#artiField");
-    addField({$object},"#artiAbout");
+    
     
     
     function preFill()
@@ -151,13 +151,14 @@
     }
 
     function submitArticle(){
+        var abstract="key0="+um.getContentTxt().substring(0,50)+"&";
         var title = "key1="+$("#subject").val()+"&";
         var type = "key2="+$("#artiType").val()+"&";
         var field = "key3="+$("#artiField").val()+"&";
         var object = "key4="+$("#artiObj").val()+"&";
         var about = "key5="+$("#artiAbout").val()+"&"; 
         var content = "key6="+getContent(um)+"&";
-        var data = title+type+field+object+about+content;
+        var data = abstract+title+type+field+object+about+content;
         var xmlhttp = createRequest();
 
         xmlhttp.onreadystatechange=function()
@@ -165,6 +166,7 @@
             if (xmlhttp.readyState==4 && xmlhttp.status==200)
             {
                 request_message(xmlhttp.responseText,'ARTICLES',$("#artiAbout").val(),$("#artiObj").val());
+                //window.location.href="index";
             }
         }
         if ({$fill_type}==1) 
@@ -186,12 +188,14 @@
 
     $('#articles_confirm').click(function(){
         send_message($('#articles_input').val(),'{:U("Home/Message/receiver")}');
-        document.location.reload();
+        //document.location.reload();
+        window.location.href='{:U("Admin/Media/index")}';
     });
 
     $('#articles_cancel').click(function(){
         $('#articles_input').val('');
-        document.location.reload();
+        //document.location.reload();
+        window.location.href='{:U("Admin/Media/index")}';
     });
 
     

@@ -18,3 +18,9 @@ function getContent(um) {
   content = escape(content);
   return (content);  
 }
+function getContentTxt(um,l)
+{
+	var plain=um.getContentTxt();
+	var r=plain.substring(0,l);
+	return r;
+}
