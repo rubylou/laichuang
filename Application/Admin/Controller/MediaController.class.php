@@ -87,8 +87,8 @@ class MediaController extends Controller {
     	$date = date("Y-m-d");
     	$id = date("Ymdhis");
     	$result = $Form->execute("replace into admin_articles (article_id,admin_id,article_title,article_type,
-    		article_field,article_object,article_about,article_content,article_time) values 
-    	('%s','%s','%s',%d,%d,'%s',%d,'%s','%s')",$id,$_SESSION['userid'],$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$date);
+    		article_field,article_object,article_about,article_content,article_time,article_abstract) values 
+    	('%s','%s','%s',%d,%d,'%s',%d,'%s','%s','%s')",$id,$_SESSION['userid'],$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$date,$_POST['key0']);
     	if($result){
     		echo $id;
     	}
@@ -104,8 +104,8 @@ class MediaController extends Controller {
         $id = date("Ymdhis");
         //'update project_info set status=%d where project_id="%s"'
         $sqlstr=sprintf("update admin_articles set admin_id='%s',article_title='%s',article_type=%d,
-            article_field=%d,article_object=%d,article_about=%d,article_content='%s',article_time='%s' where article_id='%s'",  
-            $_SESSION['userid'],$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$date,$_POST['key7']);
+            article_field=%d,article_object=%d,article_about=%d,article_content='%s',article_time='%s',article_abstract='%s' where article_id='%s'",  
+            $_SESSION['userid'],$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$date,$_POST['key0'],$_POST['key7']);
         $result = $Form->execute($sqlstr);
         if($result){
             echo $result;
