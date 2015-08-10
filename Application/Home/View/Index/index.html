@@ -30,21 +30,23 @@
       <div class="carousel-inner">
         <div class="item active">
           <!--<img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">-->
-          <img src="__PUBLIC__/pic/indexbg.jpg" alt="First slide">
+          <img src="__PUBLIC__/pic/indexbg1.jpg" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <div class="row">
-                <div class="col-md-6 col-md-offset-6">
+                <div class="col-md-8 col-md-offset-2">
                   <h1>最好的创业投资平台</h1>
                   <p>来创,让你发现最具投资价值的创业项目!</p>
+                  <br>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 col-md-offset-6">
-                  <a class="btn btn-default form-control theme-bg theme-white" href="{:U('Home/Index/register')}" role="button">免费注册</a>
-                </div>
-                <div class="col-md-3">
-                  <a class="btn btn-default form-control" href="{:U('Index/Honesttest/index')}" role="button">了解我们</a>
+                <div class="col-md-4 col-md-offset-4">
+                  <if condition="session('?id')">
+                     <button class="form-control theme-btn-alpha" onclick="javascript:window.location.href='{:U('Home/User/innovatorEdit')}'" role="button">个人主页</button>
+                    <else />
+                     <button class="form-control theme-btn-alpha" onclick="javascript:window.location.href='{:U('Home/Index/login')}'" role="button">我要登录</button>
+                  </if>
                 </div>
               </div>
               <br><br><br>
@@ -53,7 +55,27 @@
         </div>
         <div class="item">
           <!--<img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">-->
-          <img src="__PUBLIC__/pic/indexbg.jpg" alt="First slide">
+          <img src="__PUBLIC__/pic/indexbg2.jpg" alt="First slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                  <h1>最好的创业投资平台</h1>
+                  <p>来创,让你发现最具投资价值的创业项目!</p>
+                  <br>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3 col-md-offset-3 col-xs-6">
+                  <button class="form-control theme-btn-alpha" onclick="javascript:window.location.href='{:U('Home/Index/register')}'" role="button">免费注册</button>
+                </div>
+                <div class="col-md-3 col-xs-6">
+                  <button class="form-control theme-btn-alpha" role="button">了解我们</button>
+                </div>
+              </div>
+              <br><br><br>
+            </div>
+          </div>
 
         </div>
 

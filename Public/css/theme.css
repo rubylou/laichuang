@@ -350,3 +350,10 @@ textarea.theme-form-control-6 {
 textarea.theme-form-control-8 {
   height: auto;
 }
+
+.theme-hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #878B91;
+}
