@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+  <style>
+    .jumbotron{
+      background:url(__PUBLIC__/pic/reg.jpg);
+      background-size: cover; 
+      -moz-background-size: cover;
+      height:400px;
+    }
+  </style>
+<body>
+  
+  
+<include file="./Public/tpl/navbar_home.html" />
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h4 id="alert_content" class="theme-color"></h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ <include file="./Public/tpl/footer_home.html" />
+</body>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+
+<script>
+ var show='{$tip}'+"5秒内即将跳转至首页";
+ modalShow('alert_content','myModal',show);
+ var url='{:U("Home/Index/index")}';
+ var command="window.location.href='"+url+"';";
+ setTimeout(command,5000);
+ $('#modal_confirm').click(function(){
+        
+        window.location.href='{:U("Home/Index/index")}';
+    });
+</script>
+</html>
