@@ -70,7 +70,9 @@ require 'PHPMailerAutoload.php';
      * @return [type]          [description]
      */
     function getPic($content){
+      //dump($content);
       if(preg_match_all("/(src)=([\"|']?)([^ \"'>]+\.(gif|jpg|jpeg|bmp|png))\\2/i", $content, $matches)) {
+        //dump($matches);
         $str=$matches[3][0];
         //dump($str);
         if (preg_match('/\/lcb\/Public\/upload\/pic/', $str)){
