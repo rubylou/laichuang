@@ -643,7 +643,7 @@ class AuditController extends Controller {
 
 
             //insert admin record
-            $audition_type;
+           /* $audition_type;
             if($_SESSION['type']==1)
                 $audition_type=C[INVESTOR_CODE];
             else if($_SESSION['type']==2)
@@ -652,6 +652,7 @@ class AuditController extends Controller {
                 $audition_type=C[PROJECT_CODE];
             //$res=insertAdminRecord($_SESSION['userid'],$audition_type,$_SESSION['id'],"编辑用户个人信息");
            // echo "jiguo".$res;
+           */
         }
 
         else{
