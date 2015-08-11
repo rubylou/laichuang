@@ -644,9 +644,9 @@ class AuditController extends Controller {
 
             //insert admin record
             $audition_type;
-            if(_SESSION['type']==1)
+            if($_SESSION['type']==1)
                 $audition_type=C[INVESTOR_CODE];
-            else if(_SESSION['type']==2)
+            else if($_SESSION['type']==2)
                 $audition_type=C[INNOVATOR_CODE];
             else
                 $audition_type=C[PROJECT_CODE];

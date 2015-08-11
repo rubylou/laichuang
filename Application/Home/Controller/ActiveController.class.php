@@ -56,6 +56,6 @@ class ActiveController extends Controller {
         //dump($this->tip);
         $this->display();
     }
-
+    
    
 }

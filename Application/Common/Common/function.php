@@ -269,6 +269,43 @@ require 'PHPMailerAutoload.php';
         return 400;
 
     }
+    //找回密码的邮件
+    function send_find_mail($user_id,$objectid,$to_address)
+    {
+        $Form = new Model();
+        $name='';
+        $pwd='';
+        $active_code='';
+        if($objectid==2)//investor
+        {
+            $names=$Form->query('select name from investor_personal where user_id="%s"',$user_id);
+            $pwds=$Form->query('select user_pwd from investor_security where user_id="%s"',$user_id);
+            $name=$names[0][name];
+            $pwd=$pwds[0][user_pwd];
+        }else
+        {
+            $names=$Form->query('select name from entrepreneur_personal where user_id="%s"',$user_id);
+            $pwds=$Form->query('select user_pwd from entrepreneur_security where user_id="%s"',$user_id);
+            $name=$names[0][name];
+            $pwd=$pwds[0][user_pwd];
+        }
+
+        $active_time=time();
+        $over_time=$active_time+24*60*60;
+        $active_code=md5($user_id.$name.$pwd.$active_time);
+        $sqlstr=sprintf("replace into email_find_pwd (user_id,active_code,mail_address,over_time,active_status)
+             values ('%s','%s','%s','%d','%d')",$user_id,$active_code,$to_address,$over_time,0);
+        $res=$Form->execute($sqlstr);
+        if($res)
+        {
+            $url=sprintf("http://localhost:8888/lcb/index.php/Home/Account/setting?key1=%s&key2=%s&key3=%s",
+                $user_id,$to_address,$active_code);
+            $body=sprintf("尊敬的用户 %s：请点击以下链接重置密码，如不能点击请将地址拷贝至浏览器栏。<br><a>%s</a>",$name,$url);
+            return think_send_mail($to_address, $name, $subject = '来创科技重置密码', $body);
+        }
+        return 400;
+
+    }
     //---------------------------php post--------------------------------//
     function send_post($url, $post_data) {
         $postdata = http_build_query($post_data);

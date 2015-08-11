@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;忘记密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_home.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">忘记密码</span>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		
+				  		<div class="panel" id="mobilefind">
+				  			<p class="theme-h5">手机找回密码</p>
+				  			<div class="row">
+				  				<div class="col-md-6 col-md-offset-3">
+				  					<span><strong></strong></span>
+				  				</div>
+				  			</div>
+				  			<div class="form-horizontal">
+							  	<div class="form-group">
+							    	<label for="phone" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>注册手机号</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="phone">
+						        	</div>
+							  	</div>
+							  	<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<select class="form-control" id="mobileusertype">
+									  <option value="1">创业者</option>
+									  <option value="2">投资人</option>
+									</select>   
+						        </div>
+						      </div>
+							  	<div class="form-group">
+							    	<label for="checkCode" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+							    	<div class="col-md-3">
+						        		<input type="text" class="form-control" id="checkCode">
+						        	</div>
+						        	<div class="col-md-2">
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#phone')"/>
+						        	</div>
+							  	</div>
+							</div>
+
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitMobile()">&nbsp;重置密码&nbsp;</button>    
+						        </div>
+						    </div>
+				  		</div>
+				  		<div class="panel" id="emailfind">
+				  			<p class="theme-h5">输入注册邮箱地址找回密码</p>
+				  			
+				  			<div class="form-horizontal">
+							  	<div class="form-group">
+							    	<label for="email" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="email"  >
+						        	</div>
+							  	</div>
+							</div>
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<select class="form-control" id="emailusertype">
+									  <option value="1">创业者</option>
+									  <option value="2">投资人</option>
+									</select>   
+						        </div>
+						    </div>
+							
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitEmail('#email')">&nbsp;发送邮件&nbsp;</button>    
+						        </div>
+						    </div>
+				  		</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+  </div>
+  <include file="./Public/tpl/footer_home.html" />
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	function queryCheckCode(val){
+  		//var mobile = $(val).val();
+  		//var xmlHttp = createRequest();
+  		//request(xmlHttp,'mobile='+mobile,'queryCheckCode');
+  	}
+  	function sendCheckCode(val){
+  		var mobile = $(val).val();
+  		var usertype=$('#mobileusertype').val();
+  		var xmlHttp = createRequest();
+  		request(xmlHttp,'mobile='+mobile+'&usertype='+usertype,'sendMobileCheck');
+  	}
+  	function submitMobile(){
+  		if(checkPhone('#phone')){
+  			var mobile = "key1="+$('#phone').val()+"&";
+	  		var code = "key2="+$('#checkCode').val()+"&";
+	  		var usertype="key3="+$('#mobileusertype').val()+"&";
+	  		var data = mobile+code+usertype;
+	  		
+	  		var xmlHttp = createRequest();
+	  		request(xmlHttp,data,'checkMobile');
+	  		if(xmlHttp.responseText == 200){
+	  			window.location.href = '{:U("Home/Account/mobileSetting")}';
+	  		}else if(xmlHttp.responseText == 404){
+	  			modalShow("alert_content","myModal",'验证码出错，请稍好再试。');
+	  		}else
+	  		{
+	  			modalShow("alert_content","myModal",'请填写注册手机。');
+	  		}
+  		}
+  		
+  	}
+
+  	function submitEmail(id){
+  		if(checkEmail(id)){
+  			var email = "key1="+$(id).val()+"&";
+  			var usertype="key2="+$('#emailusertype').val()+"&";
+  			var data=email+usertype;
+  			var xmlHttp = createRequest();
+  			request(xmlHttp,data,'{:U("Home/Account/findByEmail")}');
+  			if(xmlHttp.responseText == 200){
+  				modalShow("alert_content","myModal",'邮件已发送，请前往邮箱查收。');
+  			}else if(xmlHttp.responseText==404)
+  			{
+  				modalShow("alert_content","myModal",'该邮箱非注册邮箱，请更换邮箱地址。');
+  			}else if(xmlHttp.responseText==410)
+  			{
+  				modalShow("alert_content","myModal",'邮件发送失败，请检查邮件地址或稍后再试。');
+  			}
+  		}
+  		
+  	}
+
+</script>
+<script>
+	var wait=60;
+	function settime(o,val) {
+		if (wait == 0) {
+            o.removeAttribute("disabled");            
+            o.value="获取验证码";
+            wait = 60;
+        } 
+        else {
+        	if (wait == 60){
+        		if(checkPhone(val)){
+	        		//queryCheckCode(val);
+	        		sendCheckCode(val);
+	        	}
+	        	else{
+	        		wait = 1;
+	        	}
+	        }
+            o.setAttribute("disabled", true);
+            o.value="重新发送(" + wait + ")";
+            wait--;
+            setTimeout(function() {
+                settime(o)
+            },
+            1000)
+        }
+    }
+</script>
+</html>
