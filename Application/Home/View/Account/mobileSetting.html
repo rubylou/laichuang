@@ -82,7 +82,7 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
 
-	
+	var my=0;
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	
 
@@ -99,6 +99,7 @@
 	  			var xmlHttp = createRequest();
 	  			request(xmlHttp,data,'saveChange');
 	  			if(xmlHttp.responseText == 200){
+	  				my=1;
 	  				var show="修改密码成功，请重新登录。5秒内即将跳转至首页";
 					 modalShow('alert_content','myModal',show);
 					 var url='{:U("Home/Index/index")}';
@@ -106,6 +107,7 @@
 					 setTimeout(command,5000);
 	  			}
 	  			else if(xmlHttp.responseText == 404){
+	  				my=1;
 	  				modalShow("alert_content","myModal",'修改密码错误，请重试。5秒内即将跳转至首页');
 
 					var url='{:U("Home/Index/index")}';
@@ -124,8 +126,8 @@
 	var wait=60;
 
 	 $('#modal_confirm').click(function(){
-	        
-	        window.location.href='{:U("Home/Index/index")}';
+	        if(my==1)
+	        	window.location.href='{:U("Home/Index/index")}';
 	    });
 	function settime(o,val) {
 		if (wait == 0) {
