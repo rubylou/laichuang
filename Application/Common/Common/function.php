@@ -69,12 +69,19 @@ require 'PHPMailerAutoload.php';
      * @param  [type] $content [description]
      * @return [type]          [description]
      */
-    function getPic($content){
+    function getPic($content,$prefix=''){
+      //dump($content);
       if(preg_match_all("/(src)=([\"|']?)([^ \"'>]+\.(gif|jpg|jpeg|bmp|png))\\2/i", $content, $matches)) {
+        //dump($matches);
         $str=$matches[3][0];
         //dump($str);
-        if (preg_match('/\/lcb\/Public\/upload\/pic/', $str)){
-          $str1 = ".".substr($str, 4);
+        if (preg_match('/'.$prefix.'\/Public\/upload\/pic/', $str)){
+	  if(strlen($prefix)>0){
+              $str1 = ".".substr($str, strlen($prefix)-1);
+	  }
+          else{
+	      $str1 = ".".$str;
+          }
           //dump($str1);
           return $str1;
         }

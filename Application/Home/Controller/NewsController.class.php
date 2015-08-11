@@ -13,34 +13,7 @@ class NewsController extends Controller {
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
 			$result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
             $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-
-            if($origin!=null){
-	            $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-	            if(file_exists($thumb)){
-	            	$unlink = true;
-	            }
-	            else{
-	            	//ThinkImage类方法
-		            $image = new \Think\Image(); 
-					$image->open($origin);
-					$unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)
-					->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
-					->text('   '.C('MODULE_CODE')[1],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
-					->save($thumb);
-	            }
-
-	            if($unlink !== false){
-					$result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-				}
-	            else{
-	            	$result[$key]['thumb'] = '';
-	            }
-
-	        }else{
-	            $result[$key]['thumb'] = '';
-	        }
+            
 		}
 		//dump($result);
 		$this->assign("list1",$result);
@@ -53,34 +26,7 @@ class NewsController extends Controller {
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
 			$result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
             $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-            if($origin!=null){
-	            $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-	            if(file_exists($thumb)){
-	            	$unlink = true;
-	            }
-	            else{
-	            	//ThinkImage类方法
-		            $image = new \Think\Image(); 
-					$image->open($origin);
-					$unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)
-					->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
-					->text('   '.C('MODULE_CODE')[2],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
-					->save($thumb);
-	            }
-	            
-
-				if($unlink !== false){
-					$result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-				}
-	            else{
-	            	$result[$key]['thumb'] = '';
-	            }
-
-	        }else{
-	            $result[$key]['thumb'] = '';
-	        }
+            
 		}
 		//dump($result);
 		$this->assign("list2",$result);
@@ -93,33 +39,7 @@ class NewsController extends Controller {
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
 			$result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
             $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-            if($origin!=null){
-	            $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-	            if(file_exists($thumb)){
-	            	$unlink = true;
-	            }
-	            else{
-	            	//ThinkImage类方法
-		            $image = new \Think\Image(); 
-					$image->open($origin);
-					$unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)
-					->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
-					->text('   '.C('MODULE_CODE')[3],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
-					->save($thumb);
-	            }
-
-				if($unlink !== false){
-					$result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-				}
-	            else{
-	            	$result[$key]['thumb'] = '';
-	            }
-
-	        }else{
-	            $result[$key]['thumb'] = '';
-	        }
+            
 		}
 		//dump($result);
 		$this->assign("list3",$result);
@@ -132,33 +52,7 @@ class NewsController extends Controller {
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
 			$result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
             $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-            if($origin!=null){
-	            $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-	            if(file_exists($thumb)){
-	            	$unlink = true;
-	            }
-	            else{
-	            	//ThinkImage类方法
-		            $image = new \Think\Image(); 
-					$image->open($origin);
-					$unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)
-					->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
-					->text('   '.C('MODULE_CODE')[4],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
-					->save($thumb);
-	            }
-
-				if($unlink !== false){
-					$result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-				}
-	            else{
-	            	$result[$key]['thumb'] = '';
-	            }
-
-	        }else{
-	            $result[$key]['thumb'] = '';
-	        }
+            
 		}
 		//dump($result);
 		$this->assign("list4",$result);
@@ -171,33 +65,7 @@ class NewsController extends Controller {
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
 			$result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
             $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-            if($origin!=null){
-	            $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-	            if(file_exists($thumb)){
-	            	$unlink = true;
-	            }
-	            else{
-	            	//ThinkImage类方法
-		            $image = new \Think\Image(); 
-					$image->open($origin);
-					$unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)
-					->water('./Public/pic/water.png',\Think\Image::IMAGE_WATER_NORTHWEST,80)
-					->text('   '.C('MODULE_CODE')[5],'./Public/fonts/1.ttf',12,'#FFFFFF',\Think\Image::IMAGE_WATER_NORTHWEST)
-					->save($thumb);
-	            }
-
-				if($unlink !== false){
-					$result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-				}
-	            else{
-	            	$result[$key]['thumb'] = '';
-	            }
-
-	        }else{
-	            $result[$key]['thumb'] = '';
-	        }
+            
 		}
 		//dump($result);
 		$this->assign("list5",$result);
@@ -210,6 +78,7 @@ class NewsController extends Controller {
 			inner join admin_personal on admin_articles.admin_id = admin_personal.admin_id
 			where article_id="%s"',$_GET['p']);
 		if($result){
+			$result[0]['article_type'] = C('MODULE_CODE')[$result[0]['article_type']];
 			$this->p = $result[0];
 		}
 
