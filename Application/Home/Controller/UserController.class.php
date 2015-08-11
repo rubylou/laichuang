@@ -39,6 +39,11 @@ class UserController extends Controller {
             $this->redirect('Index/login');
         }
 
+        if(I('get.action')!=='crop'){
+            session('crop',null);
+            session('thumb',null);
+        }
+
         if($_SESSION['type']==='2'){
             $Form = new Model();
 
@@ -166,6 +171,11 @@ class UserController extends Controller {
 
         if(!session('?type') || !session('?id')){
             $this->redirect('Index/login');
+        }
+
+        if(I('get.action')!=='crop'){
+            session('crop',null);
+            session('thumb',null);
         }
 
         $Form = new Model();
@@ -341,32 +351,72 @@ class UserController extends Controller {
             $upload->subName = '';
             // 上传文件 
             $info = $upload->upload();
+            //dump($info);
             if(!$info) {// 上传错误提示错误信息
                 $this->error($upload->getError());
             }else{// 上传成功
                 $src = $upload->rootPath.$upload->savePath.$info['profile']['savename'];
                 $image = new \Think\Image(); 
                 $image->open($src);
-                $filename = explode('.', $info['profile']['savename']);
-                $filename = $filename[0].'.png';
-
-                $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
-                
-                $result = $image->thumb(100, 100,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
+                $thumbName = $src;
+                $result = $image->thumb(480,360)->save($thumbName);
+                //dump($result);
                 if($result){
-                    $Form = new Model();
-                    if($_SESSION['type']=="1"){
-                        $success = $Form->execute('update investor_personal set portrait="%s" 
-                            where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        header("Location: investorEdit");
+                    session('crop',C(UPLOAD).'pic/profile/'.$upload->savePath.$info['profile']['savename']);
+                    session('thumb',$thumbName);
+                    //dump($_SESSION);
+                    if(session('type')==1){
+                        header("Location: investorEdit?action=crop");
                     }
                     else{
-                        $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
-                            where user_id="%s"',C(UPLOAD).'pic/profile/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        header("Location: index");
+                        header("Location: innovatorEdit?action=crop");
                     }
+                    
                 }
             }
+        }
+        else{
+            echo 401;
+        }
+        
+    }
+
+    public function profileCrop(){
+        $x1 = intval(I('post.x1',0));
+        $y1 = intval(I('post.y1',0));
+        $w = intval(I('post.w',100));
+        $h = intval(I('post.h',100));
+
+        if(session('?type') && session('?id')){
+            // 上传成功
+            $src = session('?thumb')?session('thumb'):null;
+
+            $image = new \Think\Image(); 
+            $image->open($src);
+            $filename = explode('.', $src);
+            $filename = '.'.$filename[1].'_thumb.png';
+            $thumbName = $filename;
+            
+            $result = $image->crop($w,$h,$x1,$y1)->save($thumbName);
+
+            if($result){
+                $Form = new Model();
+                $filename = explode('.', session('crop'));
+                $filename = $filename[0].'_thumb.png';
+
+                if($_SESSION['type']=="1"){
+                    $success = $Form->execute('update investor_personal set portrait="%s" 
+                        where user_id="%s"',$filename,$_SESSION['id']);
+                }
+                else{
+                    $success = $Form->execute('update entrepreneur_personal set portrait="%s" 
+                        where user_id="%s"',$filename,$_SESSION['id']);
+                }
+                session('crop',null);
+                session('thumb',null);
+                session('portrait',$filename);
+                echo 200;
+            } 
         }
         else{
             echo 401;

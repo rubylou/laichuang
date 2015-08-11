@@ -1,3 +1,19 @@
+$("#target").Jcrop({
+	setSelect:[60,0,420,360],
+	aspectRatio: 1 / 1,
+	onChange:   showCoords,
+  	onSelect:   showCoords,
+});
+
+function showCoords(c)
+{
+	$('#x1').val(c.x);
+    $('#y1').val(c.y);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+
+}
+
 function addInterests(value,id){
   var interests = value;
   for(var i in interests){
@@ -36,7 +52,7 @@ function disableEnd(value){
 
 function initializeField(rows,field){
 	for(var i=0;i<=rows;i++){
-		$('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
+		$('#conditions').append($('<p></p>').attr("id","row"+i));
 	}
 
 	for(var i in field){

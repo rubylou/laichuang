@@ -1,3 +1,4 @@
+//add a job
 function submitJob(){
   var id = $('#editJob_input').val();
   var xmlHttp = createRequest();
@@ -23,6 +24,7 @@ function submitJob(){
   }
 }
 
+//add a case
 function case_submit(){
   var id = $('#editCase_input').val();
   var xmlHttp = createRequest();
@@ -55,70 +57,38 @@ function case_submit(){
   
 }
 
-function editName(){
-  $('#user_name').attr('type','text');
-  $('#saveName').show();
-}
-
-function saveName(){
+function saveInfo(){
   var xmlHttp = createRequest();
-  request(xmlHttp,'name='+$('#user_name').val(),"editInfo");
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-  else{
-    $('#user_name').val('');
-    $('#user_name').attr('placeholder','姓名带有特殊字符');
-    $('#user_name').focus();
-  }
-}
-
-function editBrief(){
-  $('#user_brief').attr('type','text');
-  $('#saveBrief').show();
-}
-
-function saveBrief(){
-  var xmlHttp = createRequest();
-  request(xmlHttp,'brief='+$('#user_brief').val(),"editInfo");
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-  else{
-    $('#user_brief').val('');
-    $('#user_brief').attr('placeholder','简介带有特殊字符');
-    $('#user_brief').focus();
+  if(checkValue('#edit_name',16,1,'姓名不能为空') && checkValue('#edit_brief',80,0,'')){
+    if($("#choices").children().length==0){
+      alert("请至少选择一个感兴趣领域");
+    }
+    else{
+      var name = 'name='+$('#edit_name').val()+'&';
+      var brief = "brief="+$('#edit_brief').val()+'&';
+      var field = 'field=';
+      $('#choices').children().each(function(){
+        field = field + $(this).attr('value') + ',';
+      });
+      field = field + "&";
+      var data = name+brief+field;
+      request(xmlHttp,data,"editInfo");
+      if(xmlHttp.responseText.match('200')){
+        document.location.reload();
+      }
+    }
   }
 }
 
-function editField(){
-  $('#editField').show();
-  $('.modal-footer').find('div').hide();
-  $('.modal-footer').find('div').filter('#editFieldBtn').show();
-  modalShow('alert_content','myModal','请重新选择感兴趣领域(最多选5个)');
-}
-
-$('#editField_confirm').click(function(){
-  var field = 'field=';
-  $('#choices').children().each(function(){
-    field = field + $(this).attr('value') + ',';
-  });
-  field = field + "&";
-  var xmlHttp = createRequest();
-  request(xmlHttp,field,"editInfo");
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-});
-
+//delete a case?
 function delCase(id){
   $('.modal-footer').find('div').hide();
-  $('#editField').hide();
   $('.modal-footer').find('div').filter('#delCaseBtn').show();
   $('#delCase_input').val(id);
   modalShow('alert_content','myModal','确认删除该投资案例?');
 }
 
+//confirm deleting a case
 $('#delCase_confirm').click(function(){
   var xmlHttp = createRequest();
   request(xmlHttp,'c='+$("#delCase_input").val(),"delCase");
@@ -130,10 +100,12 @@ $('#delCase_confirm').click(function(){
   }
 });
 
+//cancel deleting a case
 $('#delCase_cancel').click(function(){
   $('#delCase_input').val('');
 });
 
+//edit a case
 function editCase(id){
   var xmlHttp = createRequest();
   request(xmlHttp,'c='+id,"editCase");
@@ -172,9 +144,9 @@ function editCase(id){
   
 }
 
+//delete a job?
 function delJob(id){
   $('.modal-footer').find('div').hide();
-  $('#editField').hide();
   $('.modal-footer').find('div').filter('#delJobBtn').show();
   $('#delJob_input').val(id);
   modalShow('alert_content','myModal','确认删除该工作经历?');
@@ -196,6 +168,7 @@ $('#delJob_cancel').click(function(){
 });
 
 
+//edit a job
 function editJob(id){
   var xmlHttp = createRequest();
   request(xmlHttp,'c='+id,"editJob");
@@ -227,6 +200,7 @@ function editJob(id){
   $('#editJob_input').val(id);
 }
 
+//edit and save company and title
 function editBasics(){
   var xmlHttp = createRequest();
   if(checkValue("#editCompany",30,1,'公司不能为空') && checkValue("#editTitle",30,1,'职位不能为空')){
@@ -245,6 +219,7 @@ function editBasics(){
   
 }
 
+//edit and save gender/birthday/city
 function editInnovatorBasics(){
   var gender = "gender="+$('#editGender').val()+'&';
   var birth = "birth="+$('#editBirth').val()+'&';
@@ -262,6 +237,7 @@ function editInnovatorBasics(){
   }
 }
 
+//edit education
 function editEducation(){
   var school = 'key1='+$('#editSchool').val()+'&';
   var degree = 'key2='+$('#editDegree').val()+'&';
@@ -280,6 +256,7 @@ function editEducation(){
   }
 }
 
+//edit sns account
 function editSNS(){
   var xmlHttp = createRequest();
   if($("#editSNS").val().match('weibo.com')){
@@ -311,8 +288,6 @@ function submitAuth(id){
     //alert('请填写姓名');
     $('#alert_window')[0].innerHTML = "<strong>请填写姓名</strong>"; 
     $('.alert').fadeIn();
-    editName();
-    $("#user_name").focus();
   }
   else if(xmlHttp.responseText == '4042'){
     //alert('请填写公司、职位信息');
@@ -354,4 +329,18 @@ function submitAuth(id){
   }
 
 }
+
+function crop(url){
+  var x1 = "x1="+$('#x1').val()+"&";
+  var y1 = "y1="+$('#y1').val()+"&";
+  var w = "w="+$('#w').val()+"&";
+  var h = "h="+$('#h').val()+"&";
+  var data = x1+y1+w+h;
+  var xmlHttp = createRequest();
+  request(xmlHttp,data,"profileCrop");
+    if(xmlHttp.responseText==200){
+        window.location.href=url;
+    }
+}
+
 

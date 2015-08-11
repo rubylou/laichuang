@@ -151,16 +151,6 @@ function editProFi(id,url){
   
 }
 
-function editName(){
-  $('#pro_name').attr('type','text');
-  $('#saveName').show();
-}
-
-function editBrief(){
-  $('#pro_brief').attr('type','text');
-  $('#saveBrief').show();
-}
-
 function saveMember(url){
   var str = $('#pro_member').val();
   str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
@@ -219,44 +209,32 @@ function saveRequire(url){
   }
 }
 
-function saveName(url){
+function saveInfo(url){
   var xmlHttp = createRequest();
-  request(xmlHttp,'name='+$('#pro_name').val(),url);
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-  else{
-    $('#pro_name').val('');
-    $('#pro_name').attr('placeholder','名称带有特殊字符');
-    $('#pro_name').focus();
-  }
-}
-
-
-
-function saveBrief(url){
-  var xmlHttp = createRequest();
-  request(xmlHttp,'brief='+$('#pro_brief').val(),url);
-  if(xmlHttp.responseText==200){
-    document.location.reload();
-  }
-  else{
-    $('#pro_brief').val('');
-    $('#pro_brief').attr('placeholder','简介带有特殊字符');
-    $('#pro_brief').focus();
+  if(checkValue('#edit_name',16,1,'姓名不能为空') && checkValue('#edit_brief',80,1,'简介不能为空')){
+    if($("#choices").children().length==0){
+      alert("请至少选择一个所属领域");
+    }
+    else{
+      var name = 'name='+$('#edit_name').val()+'&';
+      var brief = "brief="+$('#edit_brief').val()+'&';
+      var field = 'field=';
+      $('#choices').children().each(function(){
+        field = field + $(this).attr('value') + ',';
+      });
+      field = field + "&";
+      var data = name+brief+field;
+      request(xmlHttp,data,url);
+      if(xmlHttp.responseText.match('200')){
+        document.location.reload();
+      }
+    }
   }
 }
 
-function editField(){
-  $('#editField').show();
-  $('.modal-footer').find('div').hide();
-  $('.modal-footer').find('div').filter('#editFieldBtn').show();
-  modalShow('alert_content','myModal','请重新选择该项目所涉及的领域(最多选5个)');
-}
 
 function delMember(id){
   $('.modal-footer').find('div').hide();
-  $('#editField').hide();
   $('.modal-footer').find('div').filter('#delMemberBtn').show();
   $('#delMember_input').val(id);
   modalShow('alert_content','myModal','确认删除该项目成员?');
@@ -264,7 +242,6 @@ function delMember(id){
 
 function delInvestor(id){
   $('.modal-footer').find('div').hide();
-  $('#editField').hide();
   $('.modal-footer').find('div').filter('#delInvestorBtn').show();
   $('#delInvestor_input').val(id);
   modalShow('alert_content','myModal','确认删除该投资人?');
@@ -272,11 +249,22 @@ function delInvestor(id){
 
 function delFi(id){
   $('.modal-footer').find('div').hide();
-  $('#editField').hide();
   $('.modal-footer').find('div').filter('#delFiBtn').show();
   $('#delFi_input').val(id);
   modalShow('alert_content','myModal','确认删除该融资信息?');
 }
 
+function crop(url,send){
+  var x1 = "x1="+$('#x1').val()+"&";
+  var y1 = "y1="+$('#y1').val()+"&";
+  var w = "w="+$('#w').val()+"&";
+  var h = "h="+$('#h').val()+"&";
+  var data = x1+y1+w+h;
+  var xmlHttp = createRequest();
+  request(xmlHttp,data,send);
+  if(xmlHttp.responseText==200){
+      window.location.href=url;
+  }
+}
 
 
