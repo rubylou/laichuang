@@ -7,10 +7,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="__PUBLIC__/Jcrop/css/jquery.Jcrop.css" type="text/css" />
+
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
-    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/Jcrop/js/jquery.Jcrop.js"></script>
   </head>
 
 <body>
@@ -34,13 +38,10 @@
 				  	<div class="panel-body">
 					  	<div class='row'>
 					  		<div class="col-md-1 col-xs-12 text-center">
-					  			<form method="post" action="__URL__/profileSave" enctype="multipart/form-data" id="profile_form">
-								    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
-								</form>
 								<if condition="strlen($user['portrait']) gt 0">
-									<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+									<input type="image" class="thumbnail theme-profile" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 									<else />
-									<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/innovator.png' alt="头像" height="90px" width="90px">
+									<input type="image" class="thumbnail theme-profile" src='__PUBLIC__/pic/innovator.png' alt="头像" height="90px" width="90px">
 								</if>
 							    
 					  		</div>
@@ -48,41 +49,98 @@
 								<p class="hide-edit">
 									<span class="theme-h3">&nbsp;&nbsp;&nbsp;{:session('user')}&nbsp;&nbsp;</span>
 									<span class="label label-info">{$user.reg_status}</span>
-									<a class="btn show-edit" style="display:none" onclick="editName()">
-										<span class="glyphicon glyphicon-pencil theme-color"></span>
-									</a>
-									<input type="hidden" id="user_name" value="{:session('user')}" class="theme-form-control-1"/>
-									<a id="saveName" class="btn btn-default" onclick="saveName()" style="display:none">
-										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
-									</a>
 								</p>
 								<p class="hide-edit">
 									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
-									<a class="btn show-edit" style="display:none" onclick="editBrief()">
-										<span class="glyphicon glyphicon-pencil theme-color"></span>
-									</a>
-									<input type="hidden" id="user_brief" value="" class="theme-form-control-4"/>
-									<a id="saveBrief" class="btn btn-default" onclick="saveBrief()" style="display:none">
-										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
-									</a>
 								</p>
 								<div class="row">
 									<div class="col-md-6 col-xs-12">
 										<p id="interests" class="hide-edit theme-small">&nbsp;&nbsp;&nbsp;
 											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-											<a class="btn show-edit" style="display:none" onclick="editField()">
-												<span class="glyphicon glyphicon-pencil theme-color"></span>
-											</a>
 										</p>
 									</div>
-									<div class="col-md-2 col-md-offset-3 col-xs-6 text-right">
+									<div class="col-md-2 col-md-offset-1 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn" href="__URL__/innovator/val/{$user.user_id}">预览</a>
+									</div>
+									<div class="col-md-2 col-xs-6 text-right">
+										<a class="btn btn-default form-control theme-btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample0" href="#collapseExample0">编辑</a>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 			  	</div>
+			</div>
+			<div class="col-md-12">
+				<div class="collapse" id="collapseExample0">
+					<div class="well">
+						<div class="row">
+							<div class="col-md-6">
+								<br>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="col-md-2 col-xs-12 control-label">上传头像</label>
+										<div class="col-md-7">
+											<form method="post" action="__URL__/profileSave" enctype="multipart/form-data" id="profile_form">
+											    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
+											</form>
+											<if condition="strlen($user['portrait']) gt 0">
+										    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+										    	<else />
+										    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/investor.png' alt="头像" height="90px" width="90px">
+										    </if>
+										</div>
+
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 col-xs-12 control-label">姓名</label>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="edit_name">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 col-xs-12 control-label">简介</label>
+										<div class="col-md-9">
+											<input type="text" class="form-control" id="edit_brief">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 col-xs-12 control-label">创业领域</label>
+										<div class="col-md-9">
+								            <div id="conditions">
+								            </div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-2 col-xs-12 control-label">已选择:</label>
+										<div class="col-md-9">
+											<div id="choices">
+								            </div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-4 col-md-offset-2">
+											<input type="submit" class="btn theme-btn form-control" value="保存" onclick="saveInfo()">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-5">
+								<if condition="session('?crop')">
+									<img src="{:session('crop')}" id="target" class="img-responsive"></img>
+									<p>
+										<br>
+										<input type="button" class="btn theme-btn" value="保存头像" onclick="crop('{:U('Home/User/innovatorEdit')}')"/>
+									</p>
+									<input id="x1" type="hidden"></input>
+									<input id="y1" type="hidden"></input>
+									<input id="w" type="hidden"></input>
+									<input id="h" type="hidden"></input>
+								</if>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -384,19 +442,6 @@
 		  <div class="modal-content">
 		    <div class="modal-body">
 		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
-		      <div id="editField" style="display:none">
-		      	<div class="row">
-		      		<div class="col-md-10 col-md-offset-1">
-					  	<div class="form-group">
-			                <div id="conditions">
-			                </div>
-			                <div class="row"></div>
-			                <label for="choices">已选择:</label>
-			                <div id="choices">
-			                </div>
-			            </div>
-			        </div>
-			  </div>
 		    </div>
 		    <div class="modal-footer">
 		      <div id="alertBtn">
@@ -411,10 +456,6 @@
 			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
 			      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
 			      <input type="hidden" id="delJob_input" />
-			  </div>
-			  <div id="editFieldBtn">
-			      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
-			      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
 			  </div>
 		    </div>
 		  </div>
@@ -475,6 +516,12 @@
 	      $(this).attr('selected','selected');
 	    }
 	});
+
+	$('#edit_name').val('{:session("user")}');
+	$('#edit_brief').val('{$user.brief}');
+	if('{:I("get.action")}'=="crop"){
+		$("#collapseExample0").collapse('show');
+	}
 
 	function submitAuth(id){
 		var xmlHttp = createRequest();

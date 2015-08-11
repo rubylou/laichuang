@@ -81,6 +81,15 @@ class CaseController extends Controller {
     }
 
 	public function infoEdit(){
+        if(!session('?type') || !session('?id')){
+            $this->redirect('Index/login');
+        }
+
+        if(I('get.action')!=='crop'){
+            session('crop',null);
+            session('thumb',null);
+        }
+
 		$id = $_GET['key'];
 		$Form = new Model();
 		$result = $Form->query('select project_info.*, name, portrait from project_info 
@@ -182,6 +191,8 @@ class CaseController extends Controller {
         $follow = $Form->query('select count(user_id) from relation_follow where object_type=%d and object_id="%s"',C(PROJECT_CODE),$id);
         $result[0]['project_watches'] = $follow[0]['count(user_id)'];
         $this->info = $result[0];
+        $update = $Form->execute('update project_info set project_visits=%d where project_id="%s"',$result[0]['project_visits']+1,$id);
+
 
         //所属领域
         $result = $Form->query('select interest_field from interest_project where id="%s"',$id);
@@ -246,6 +257,7 @@ class CaseController extends Controller {
         $articles = $Form->query('select article_id, article_title, article_time from admin_articles
             where article_about = 1 and article_object = "%s"',$id);
         $this->assign('news',$articles);
+
 
         $this->display();
     }
@@ -314,18 +326,50 @@ class CaseController extends Controller {
 	            $src = $upload->rootPath.$upload->savePath.$info['profile']['savename'];
 	            $image = new \Think\Image(); 
 	            $image->open($src);
-                $filename = explode('.', $info['profile']['savename']);
-                $filename = $filename[0].'.png';
-	            $thumbName = $upload->rootPath.$upload->savePath.'thumb_'.$filename;
-	            $result = $image->thumb(100, 100,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
+                
+	            $thumbName = $src;
+	            $result = $image->thumb(480,360)->save($thumbName);
 	            if($result){
-	                $Form = new Model();
-                    $success = $Form->execute('update project_info set project_logo="%s" 
-                        where project_id="%s"',C(UPLOAD).'pic/logo/'.$upload->savePath.'thumb_'.$filename,I('get.p'));
-                    header("Location: infoEdit/key/".I('get.p'));
+	                session('crop',C(UPLOAD).'pic/logo/'.$upload->savePath.$info['profile']['savename']);
+                    session('thumb',$thumbName);
+                    //dump($_SESSION);
+                    header("Location: infoEdit/action/crop/key/".I('get.p'));
 	            }
 	        }
 		}  
+    }
+
+    public function logoCrop(){
+        if(I('get.p')){
+            $x1 = intval(I('post.x1',0));
+            $y1 = intval(I('post.y1',0));
+            $w = intval(I('post.w',100));
+            $h = intval(I('post.h',100));
+
+            $src = session('?thumb')?session('thumb'):null;
+
+            $image = new \Think\Image(); 
+            $image->open($src);
+
+            $filename = explode('.', $src);
+            $filename = '.'.$filename[1].'_thumb.png';
+            $thumbName = $filename;
+
+            $result = $image->crop($w,$h,$x1,$y1)->save($thumbName);
+            if($result){
+                $filename = explode('.', session('crop'));
+                $filename = $filename[0].'_thumb.png';
+
+                $Form = new Model();
+                $success = $Form->execute('update project_info set project_logo="%s" 
+                    where project_id="%s"',$filename,I('get.p'));
+                
+                session('crop',null);
+                session('thumb',null);
+                echo 200;
+            }
+            
+        }  
     }
 
     public function queryUser(){

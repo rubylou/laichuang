@@ -1,3 +1,19 @@
+$("#target").Jcrop({
+	setSelect:[60,0,420,360],
+	aspectRatio: 1 / 1,
+	onChange:   showCoords,
+  	onSelect:   showCoords,
+});
+
+function showCoords(c)
+{
+	$('#x1').val(c.x);
+    $('#y1').val(c.y);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+
+}
+
 function addInterests(value,id){
   var interests = value;
   for(var i in interests){
@@ -11,7 +27,7 @@ function addInterests(value,id){
 
 function initializeField(rows,field){
 	for(var i=0;i<=rows;i++){
-	$('#conditions').append($('<div class="row"></div>').attr("id","row"+i));
+	$('#conditions').append($('<p></p>').attr("id","row"+i));
 	}
 
 	for(var i in field){
@@ -64,7 +80,7 @@ function addInterest(id,field){
 	}
 	else{
 		var label = $('<span></span>').text(field[id]);
-		label.addClass('btn btn-default label label-default theme-btn');
+		label.addClass('btn btn-default label theme-btn-inverse');
 		label.attr('value',id);
 		label.attr("id","field"+id);
 		label.click(function(){
@@ -82,11 +98,11 @@ function addLabel(id,field){
 	}
 	else{
 		var label = $('<span></span>').text(field[id]);
-		label.addClass('btn btn-default label theme-bg theme-white');
+		label.addClass('btn btn-default label theme-btn');
 		label.attr('value',id);
 		label.attr("id","field"+id);
 		label.click(function(){
-		  if($("#choices").children().length==5){
+		  if($("#choices").children().length==3){
 		    alert("选择已达上限");
 		  }
 		  else{
@@ -95,8 +111,8 @@ function addLabel(id,field){
 		  }
 		});
 
-		var row = parseInt(id/8);
-		if(id%8==0){
+		var row = parseInt(id/6);
+		if(id%6==0){
 		  --row;
 		}
 		$('#row'+row).append(label);
