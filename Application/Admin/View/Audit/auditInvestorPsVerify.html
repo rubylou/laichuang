@@ -364,14 +364,14 @@
 						</div>
 
 						<hr>
-				  		<form method="post" action="__URL__/cardSave" enctype="multipart/form-data" id="card_form" style="display:none">
+				  		<!--form method="post" action="__URL__/cardSave" enctype="multipart/form-data" id="card_form" style="display:none">
 						    <input type="file" name="mycard" id="mycard" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#mycard','#card_form')"/>
-						</form>
+						</form-->
 						<br>
 						<div class="row">
-							<div class="col-md-4 col-xs-6">
+							<!--div class="col-md-4 col-xs-6">
 								<a class="btn btn-default theme-btn form-control" onclick="upload('#mycard')">上传名片</a>
-							</div>
+							</div-->
 						</div>
 						<div class="row">
 							<div class="col-md-12 col-xs-12">
@@ -418,21 +418,21 @@
 										    <if condition="strlen($auth['license']) gt 0">
 										    	<a href="{$auth.license}">已上传营业执照</a>
 										    </if>
-										    <input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+										    <!--input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
 										</div>
 										<div class="form-group">
 							              	<label><span class="required">*</span>组织机构代码证</label>
 							              	<if condition="strlen($auth['company_code']) gt 0">
 							              		<a href="{$auth.company_code}">已上传机构代码证</a>
 							              	</if>
-											<input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+											<!--input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
 										</div>
 										<div class="form-group">
 							              	<label><span class="required">*</span>近三年财务报表</label>
 							              	<if condition="strlen($auth['fi_statement']) gt 0">
 							              		<a href="{$auth.fi_statement}">已上传财物报表</a>
 							              	</if>
-											<input type="file" name="statement" id="statement" accept="application/pdf" height="0px" width="0px"/>
+											<!--input type="file" name="statement" id="statement" accept="application/pdf" height="0px" width="0px"/-->
 										</div>
 									</if>
 									<if condition="$user.user_type eq 2">
@@ -449,7 +449,7 @@
 							              	<if condition="strlen($auth['financial_doc']) gt 0">
 							              		<a href="{$auth.financial_doc}">已上传财产证明</a>
 							              	</if>
-											<input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+											<!--input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
 										</div>
 										<div class="form-group">
 											<label><span class="required">*</span>说明</label>
@@ -458,7 +458,7 @@
 											</div>
 										</div>
 									</if>
-									<input type="submit" class="btn theme-btn" value="保存"/>
+									<!--input type="submit" class="btn theme-btn" value="保存"/-->
 								</form>
 							</div>
 						</div>
