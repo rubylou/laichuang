@@ -1,0 +1,33 @@
+<html>
+	<link href="__PUBLIC__/galereya/css/jquery.galereya.css" rel="stylesheet">
+    <link href="__PUBLIC__/galereya/css/jquery.galereya.ie.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/galereya/js/jquery.galereya.min.js"></script>
+
+<body>
+	<div id="gal1">
+      <volist name="newslist" id="vo">
+         <img src="{$vo.article_content}"
+              alt="Title"
+              title="{$vo.article_title}"
+              data-fullsrc="{$vo.article_content}"
+              id="{$vo.content_id}"/>
+      </volist>
+    </div>
+</body>
+<script>
+	$('#gal1').galereya({
+	    wave:false,
+	    // set to true, if you don't want to show the slider on a cell click.
+	    disableSliderOnClick: true,
+	    //Cell click handler. Works even when the 'disableSliderOnClick' property is true.
+	    onCellClick: function(e) {
+	      requestNews(e['currentTarget']['firstElementChild']['id']);
+	    }
+	});
+
+	function requestNews(value){
+   		window.open("{:U('Home/News/detail')}" + "?p=" + value);
+  	}
+</script>
+</html>
