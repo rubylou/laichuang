@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;首页项目</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+		<div class="row">
+			<div class="col-md-10 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">首页资讯设置</span>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="panel">
+				  			
+				  			<div class="form-horizontal">
+							  	
+							  	<div class="form-group">
+							    	<label for="pro1" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章1</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro1">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro2" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章2</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro2">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro3" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章3</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro3">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro4" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章4</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro4">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro5" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章5</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro5">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro6" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章6</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro6">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro7" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章7</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro7">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro8" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章8</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro8">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro9" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章9</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro9">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro10" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章10</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro10">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro11" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章11</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro11">
+						        	</div>
+							  	</div>
+							  	<div class="form-group">
+							    	<label for="pro12" class="col-md-2 col-md-offset-1 col-xs-12 control-label">文章12</label>
+							    	<div class="col-md-6">
+						        		<input type="text" class="form-control" id="pro12">
+						        	</div>
+							  	</div>
+							  	
+							</div>
+							<div class="row">
+						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitProject()">&nbsp;保存&nbsp;</button>    
+						        </div>
+						    </div>
+
+				  		</div>
+				  		
+				  		
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		    </div>
+		    <div class="modal-footer">
+		      <div id="alertBtn">
+		      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+  </div>
+  
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+
+	var  raw='{$news}';
+	var news=$.parseJSON(raw);
+	if(news!=null)
+	{
+		for(var i=1;i<=12;i++)
+		{
+			var n=news[i-1];
+			var id=n.content_id;
+			$('#pro'+i).val(id);
+		}
+	}
+	
+  	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	
+
+  	function submitProject(){
+  		var flag=1;
+  		var data="";
+  		for (var i=1;i!=12;i++)
+  		{
+  			if($('#pro'+i).val()=='')
+  				continue;
+  			var tag='#pro'+i;
+  			if(checkValue(tag,14,14,'资讯id为14位'))
+  			{
+  				if($('#pro'+i).val()!='')
+  				{
+  					var key="key"+i+"="+$('#pro'+i).val()+"&";
+  					data+=key;
+  				}
+  				continue;
+  			}
+  			else
+  				return ;
+  		}
+
+  		var xmlHttp = createRequest();
+  		//var data="key1="+homeProjects;
+		request(xmlHttp,data,'saveNews');
+		if(xmlHttp.responseText==200)
+			window.location.href='{:U("Admin/Media/index")}';
+		/*if(xmlHttp.responseText == 200){
+			my=1;
+			var show="修改密码成功，请重新登录。5秒内即将跳转至首页";
+		 modalShow('alert_content','myModal',show);
+		 var url='{:U("Home/Index/index")}';
+		 var command="window.location.href='"+url+"';";
+		 setTimeout(command,5000);
+		}
+		else if(xmlHttp.responseText == 404){
+			my=1;
+			modalShow("alert_content","myModal",'修改密码错误，请重试。5秒内即将跳转至首页');
+
+		var url='{:U("Home/Index/index")}';
+		var command="window.location.href='"+url+"';";
+		setTimeout(command,5000);
+		}
+		else{
+
+		}*/
+
+  		/*if(checkPwd('#pwd2','#pwd3') && checkValue('#pwd2','64','6','密码不能少于6位')){
+  			if($('#pwd1').val()==$('#pwd2').val()){
+  				modalShow("alert_content","myModal",'修改密码与原密码一致，请重新输入');
+  			}
+  			else{
+  				var data = "key1="+"{$user_id}"+'&';
+	  			data += "key2="+CryptoJS.SHA1($('#pwd2').val())+'&';
+	  			data += "key3="+CryptoJS.SHA1($('#pwd3').val())+'&';
+	  			
+	  			var xmlHttp = createRequest();
+	  			request(xmlHttp,data,'saveChange');
+	  			if(xmlHttp.responseText == 200){
+	  				my=1;
+	  				var show="修改密码成功，请重新登录。5秒内即将跳转至首页";
+					 modalShow('alert_content','myModal',show);
+					 var url='{:U("Home/Index/index")}';
+					 var command="window.location.href='"+url+"';";
+					 setTimeout(command,5000);
+	  			}
+	  			else if(xmlHttp.responseText == 404){
+	  				my=1;
+	  				modalShow("alert_content","myModal",'修改密码错误，请重试。5秒内即将跳转至首页');
+
+					var url='{:U("Home/Index/index")}';
+					var command="window.location.href='"+url+"';";
+					setTimeout(command,5000);
+	  			}
+	  			else{
+
+	  			}
+  			}
+  		}*/
+  	}
+
+</script>
+
+</html>

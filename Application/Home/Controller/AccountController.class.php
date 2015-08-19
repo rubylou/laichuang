@@ -126,6 +126,7 @@ class AccountController extends Controller {
             else
                 echo 404;
         }
+        session('[destroy]');
     }
     public function sendMobileCheck(){
         $phone = $_POST["mobile"];
