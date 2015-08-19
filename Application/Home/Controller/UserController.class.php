@@ -430,8 +430,8 @@ class UserController extends Controller {
             $upload->maxSize = 3145728 ;// 设置附件上传大小
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
             $upload->rootPath = './Public/upload/pic/card/'; // 设置附件上传根目录
-            $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
-            $upload->saveName = $_SESSION['id']."card";
+            $upload->savePath = sha1($_SESSION['id']).'/'; // 设置附件上传（子）目录
+            $upload->saveName = sha1($_SESSION['id'])."card";
             $upload->replace = true;
             $upload->subName = '';
             // 上传文件 
@@ -476,7 +476,7 @@ class UserController extends Controller {
 
         $upload = new \Think\Upload();// 实例化上传类
         $upload->maxSize = 3145728 ;// 设置附件上传大小
-        $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
+        $upload->savePath = sha1($_SESSION['id']).'/'; // 设置附件上传（子）目录
         $upload->rootPath = './Public/upload/authorization/'; // 设置附件上传根目录
         $upload->replace = true;
         $upload->subName = '';
@@ -485,7 +485,7 @@ class UserController extends Controller {
 
         if(strlen($_FILES['license']['name'])>0){
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-            $upload->saveName = $_SESSION['id']."_license";
+            $upload->saveName = sha1($_SESSION['id']."_license");
             // 上传文件 
             $info = $upload->uploadOne($_FILES['license']);
             if(!$info) {// 上传错误提示错误信息
@@ -499,7 +499,7 @@ class UserController extends Controller {
 
         if(strlen($_FILES['companyCode']['name'])>0){
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-            $upload->saveName = $_SESSION['id']."_companyCode";
+            $upload->saveName = sha1($_SESSION['id']."_companyCode");
             // 上传文件 
             $info = $upload->uploadOne($_FILES['companyCode']);
             if(!$info) {// 上传错误提示错误信息
@@ -512,7 +512,7 @@ class UserController extends Controller {
 
         if(strlen($_FILES['statement']['name'])>0){
             $upload->exts = array('pdf');// 设置附件上传类型
-            $upload->saveName = $_SESSION['id']."_statement";
+            $upload->saveName = sha1($_SESSION['id']."_statement");
             // 上传文件 
             $info = $upload->uploadOne($_FILES['statement']);
             if(!$info) {// 上传错误提示错误信息
@@ -525,7 +525,7 @@ class UserController extends Controller {
         
         if(strlen($_FILES['finance']['name'])>0){
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-            $upload->saveName = $_SESSION['id']."_finance";
+            $upload->saveName = sha1($_SESSION['id']."_finance");
             // 上传文件 
             $info = $upload->uploadOne($_FILES['finance']);
             if(!$info) {// 上传错误提示错误信息
