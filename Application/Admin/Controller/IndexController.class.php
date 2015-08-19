@@ -17,6 +17,7 @@ class IndexController extends Controller {
         //echo  json_encode($user[0]);
     	if($user[0]['admin_pwd']===$_POST['loginpwd']){
     		$_SESSION['userid'] = $user[0]['admin_id'];
+            //session(array('name'=>'userid','expire'=>2),$user[0]['admin_id']);
     		$_SESSION['usertype'] = $user[0]['admin_type'];
 
             if($_SESSION['usertype']==1){
