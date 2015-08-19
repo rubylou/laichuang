@@ -985,10 +985,35 @@ class UserController extends Controller {
     }
 
     public function queryCheckCode(){
-        dump($_POST);
-        if(I('post.mobile')){
-            //$result = send_msg(I('post.mobile'));
-            echo $result;
+        //dump($_POST);
+        if($_SESSION['type']==1){
+            $Form = M('investor_personal');
+            $data['user_id'] = session('id');
+            $data['mobile'] = I('post.mobile');
+            $exist = $Form->where('mobile="%s" and user_id <> "%s"',$data['mobile'],$data['user_id'])->select();
+            if($exist){
+                echo 409;
+            }
+            else{
+                //$result = send_msg(I('post.mobile'));
+                echo $result;
+            }
+        }
+        else if($_SESSION['type']==2){
+            $Form = M('entrepreneur_personal');
+            $data['user_id'] = session('id');
+            $data['phone'] = I('post.mobile');
+            $exist = $Form->where('phone="%s" and user_id <> "%s"',$data['phone'],$data['user_id'])->select();
+            if($exist){
+                echo 409;
+            }
+            else{
+                //$result = send_msg(I('post.mobile'));
+                echo $result;
+            }
+        }
+        else{
+            echo 401;
         }
     }
 
@@ -1020,30 +1045,46 @@ class UserController extends Controller {
 
     public function saveEmail(){
         //dump($_POST);
-        if(send_active_mail(session('id'),session('type'),I('post.key1'))){
-            if($_SESSION['type']==1){
-                $Form = M('investor_personal');
-                $data['user_id'] = session('id');
-                $data['email'] = I('post.key1');
-                $result = $Form->save($data);
-                if($result){
-                    echo 200;
-                    session('[destroy]');
-                }
-            }
-            else if($_SESSION['type']==2){
-                $Form = M('entrepreneur_personal');
-                $data['user_id'] = session('id');
-                $data['email'] = I('post.key1');
-                $result = $Form->save($data);
-                if($result){
-                    echo 200;
-                    session('[destroy]');
-                }
+        if($_SESSION['type']==1){
+            $Form = M('investor_personal');
+            $data['user_id'] = session('id');
+            $data['email'] = I('post.key1');
+
+            $exist = $Form->where('email="%s" and user_id <> "%s"',$data['email'],$data['user_id'])->select();
+            if($exist){
+                echo 409;
             }
             else{
-                echo 401;
+                if(send_active_mail(session('id'),session('type'),I('post.key1'))){
+                    $result = $Form->save($data);
+                    if($result){
+                        echo 200;
+                        session('[destroy]');
+                    }
+                }
+                
             }
+        }
+        else if($_SESSION['type']==2){
+            $Form = M('entrepreneur_personal');
+            $data['user_id'] = session('id');
+            $data['email'] = I('post.key1');
+            $exist = $Form->where('email="%s" and user_id <> "%s"',$data['email'],$data['user_id'])->select();
+            if($exist){
+                echo 409;
+            }
+            else{
+                if(send_active_mail(session('id'),session('type'),I('post.key1'))){
+                    $result = $Form->save($data);
+                    if($result){
+                        echo 200;
+                        session('[destroy]');
+                    }
+                }
+            }
+        }
+        else{
+            echo 401;
         }
     }
 

@@ -5,36 +5,28 @@ use Think\Model;
 class IndexController extends Controller {
     public function index(){
         $Form = new Model();
-        /*$result = $Form->query('select * from admin_articles limit 3');
-        foreach ($result as $key => $value) {
-            $result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
-            $result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
-            $result[$key]['article_content'] = preg_replace("/\n/", "", $result[$key]['article_content']);
-            $result[$key]['article_content'] = htmlspecialchars_decode($result[$key]['article_content']);
-            $result[$key]['info'] = getPic($result[$key]['article_content']);
-            $origin = $result[$key]['info'];
-            if($origin!=null){
-                $thumb=substr($origin,0,strlen($origin)-4).'thumb.jpg';
-                //ThinkImage类方法
-                $image = new \Think\Image(); 
-                $image->open($origin);
-                $unlink = $image->thumb(240,135,\Think\Image::IMAGE_THUMB_CENTER)->save($thumb);
+        $projects = $Form->query('select content_id, project_name, project_logo, project_brief from home_show 
+            inner join project_info on content_id = project_id 
+            where tag = 1');
+        //dump($projects);
+        $this->assign('proslist',$projects);
+        $this->display();
+    }
 
-                if($unlink !== false){
-                    $result[$key]['thumb'] = '/lcb'.substr($thumb,1);
-                }
-                else{
-                    $result[$key]['thumb'] = '';
-                }
-
-            }else{
-                $result[$key]['thumb'] = '';
-            }
+    public function news(){
+        $Form = new Model();
+        $articles = $Form->query('select content_id, article_title, article_content from home_show 
+            inner join admin_articles on content_id = article_id 
+            where tag = 4');
+        foreach ($articles as $key => $value) {
+            $pic = getPic($value['article_content'],C(EXP_PREFIX));
+            $pic = C(PREFIX).substr($pic,1);
+            $articles[$key]['article_content'] = $pic;
         }
+        $this->assign('newslist',$articles);
+        //dump($articles);
 
-        $this->vo = $result;
-        $this->assign("list",$result);*/
-    	$this->display();
+        $this->display();
     }
 
     public function login(){

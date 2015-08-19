@@ -8,14 +8,71 @@
     <meta name="author" content="">
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <link href="__PUBLIC__/css/carousel.css" rel="stylesheet">
+    
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    
 
   </head>
+<style>
+.theme-carousel-control {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 15%;
+  font-size: 20px;
+  color: #253B58;
+  text-align: center;
+}
 
+.theme-carousel-control.right {
+  right: 0;
+  left: auto;
+}
+
+.theme-carousel-control:hover,
+.theme-carousel-control:focus {
+  color: #253B58;
+  text-decoration: none;
+  outline: none;
+  
+}
+
+.theme-carousel-control .icon-prev,
+.theme-carousel-control .icon-next,
+.theme-carousel-control .glyphicon-chevron-left,
+.theme-carousel-control .glyphicon-chevron-right {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  display: inline-block;
+}
+
+.theme-carousel-control .icon-prev,
+.theme-carousel-control .glyphicon-chevron-left {
+  left: 50%;
+}
+
+.theme-carousel-control .icon-next,
+.theme-carousel-control .glyphicon-chevron-right {
+  right: 50%;
+}
+
+.theme-carousel-control .icon-prev,
+.theme-carousel-control .icon-next {
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  margin-left: -10px;
+  font-family: serif;
+}
+
+</style>
 <body>
   <include file="./Public/tpl/navbar_home.html" />
   <div class="well">
@@ -30,7 +87,7 @@
       <div class="carousel-inner">
         <div class="item active">
           <!--<img data-src="holder.js/900x500/auto/#777:#7a7a7a/text:First slide" alt="First slide">-->
-          <img src="__PUBLIC__/pic/indexbg1.jpg" alt="First slide">
+          <img src="__PUBLIC__/pic/indexbg1.jpg" class="img-responsive" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <div class="row">
@@ -55,7 +112,7 @@
         </div>
         <div class="item">
           <!--<img data-src="holder.js/900x500/auto/#666:#6a6a6a/text:Second slide" alt="Second slide">-->
-          <img src="__PUBLIC__/pic/indexbg2.jpg" alt="First slide">
+          <img src="__PUBLIC__/pic/indexbg2.jpg" class="img-responsive" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <div class="row">
@@ -87,141 +144,120 @@
         <span class="glyphicon glyphicon-chevron-right">  </span>
       </a>
     </div><!-- /.carousel -->
-
-    <div class="row">
-      <div class="col-md-10 col-md-offset-1 col-xs-12">
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#"><span class="theme-color">公司新闻</span></a></li>
-          <li><a href="#"><span class="theme-color">创业快讯</span></a></li>
-          <li><a href="#"><span class="theme-color">前沿科技</span></a></li>
-          <li><a href="#"><span class="theme-color">创业政策</span></a></li>
-          <li><a href="#"><span class="theme-color">创业者故事</span></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="container">
-      <volist name="list" id="vo">
-        <div class="panel">
-          <div class="theme-container">
-            <div class="row">
-              <div class="col-md-2">
-                <if condition="$vo.thumb neq ''">
-                  <img src="{$vo['thumb']}" alt="资讯图片" height="135" width="240"/>
-                </if>
-              </div>
-              <div class="col-md-9 col-md-offset-1">
-                <a class="btn theme-color" style="font-size:18px;" onclick="requestNews('{$vo[\'article_id\']}')"><strong>{$vo.article_title}</strong></a>
-                <h4><small><span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-primary">{$vo.admin_id}</span>&nbsp;&middot;&nbsp;{$vo.article_time}</small></h4>
-                <br>
-                <p>&nbsp;&nbsp;文章简要介绍</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </volist>
-    </div>
-    <div class="row">
+    <iframe src='__URL__/news.html' frameborder='0' class='sourceView' noresize='noresize' style="height:800px;width:100%;"></iframe>
+    <br>
+    <div class="row" style="margin-top:20px">
       <div class="col-md-2 col-md-offset-5">
         <a class="btn btn-default theme-btn form-control" href="{:U('Home/News/index')}">更多资讯</a>
       </div>
     </div>
     <br>
-   
-    <div class="row">
-      <div class="text-center theme-color">
-        <h3>我们的创业项目</h3>
-      </div>
-    </div>
+
     <!-- Carousel
     ================================================== -->
-    <div id="myCarousel1" class="carousel slide marketing" data-ride="carousel" style="height:400px">
+    <div id="myCarousel1" class="carousel slide marketing" data-ride="carousel">
       <!-- Indicators -->
-      <div class="carousel-inner" style="height:400px">
-        <div class="item active item-container" style="background-color:#FFFFFF">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel1" data-slide-to="0" class="active theme-indicator"></li>
+        <li data-target="#myCarousel1" data-slide-to="1" class="theme-indicator"></li>
+        <li data-target="#myCarousel1" data-slide-to="2" class="theme-indicator"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active" style="background-color:#f5f5f5">
           <div class="row">
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label Thumbnail label</h3>
-                  <p>图文信息图文信息图文信息图文信息图文信息图文信息图文信息图文信息图文信息图文信息</p>
-                </div>
-              </div>
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="text-center theme-color">我们的创业项目</h1>
             </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
+          </div>
+          <div class="container theme-item-container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <volist name="proslist" id="vo" offset="0" length="3">
+                  <div class="col-md-4 col-xs-12">
+                    <div class="col-md-10 col-md-offset-1 theme-item">
+                      <div class="col-md-4 col-xs-4">
+                        <if condition="$vo['project_logo'] neq ''">
+                          <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                          <else />
+                          <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                        </if>
+                      </div>
+                      <div class="col-md-8 col-xs-8">
+                        <p class="theme-h4 theme-color">{$vo.project_name}</p>
+                        <p class="theme-h5-small">{$vo.project_brief}</p>
+                      </div>
+                    </div>
+                  </div>
+                </volist>
               </div>
             </div>
           </div>
         </div>
-        <div class="item item-container" style="background-color:#FFFFFF">
+        <div class="item" style="background-color:#f5f5f5">
           <div class="row">
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="text-center theme-color">我们的创业项目</h1>
+            </div>
+          </div>
+          <div class="container theme-item-container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <volist name="proslist" id="vo" offset="3" length="3">
+                  <div class="col-md-4 col-xs-12">
+                    <div class="col-md-10 col-md-offset-1 theme-item">
+                      <div class="col-md-4 col-xs-4">
+                        <if condition="$vo['project_logo'] neq ''">
+                          <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                          <else />
+                          <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                        </if>
+                      </div>
+                      <div class="col-md-8 col-xs-8">
+                        <p class="theme-h4 theme-color">{$vo.project_name}</p>
+                        <p class="theme-h5-small">{$vo.project_brief}</p>
+                      </div>
+                    </div>
+                  </div>
+                </volist>
               </div>
             </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="item" style="background-color:#f5f5f5">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <h1 class="text-center theme-color">我们的创业项目</h1>
             </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/pic-1.jpg" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="thumbnail">
-                <a href="#"><img src="__PUBLIC__/pic/profile.png" alt="..."></a>
-                <div class="caption">
-                  <h3>Thumbnail label</h3>
-                  <p>图文信息图文信息</p>
-                </div>
+          </div>
+          <div class="container theme-item-container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <volist name="proslist" id="vo" offset="6" length="3">
+                  <div class="col-md-4 col-xs-12">
+                    <div class="col-md-10 col-md-offset-1 theme-item">
+                      <div class="col-md-4 col-xs-4">
+                        <if condition="$vo['project_logo'] neq ''">
+                          <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                          <else />
+                          <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
+                        </if>
+                      </div>
+                      <div class="col-md-8 col-xs-8">
+                        <p class="theme-h4 theme-color">{$vo.project_name}</p>
+                        <p class="theme-h5-small">{$vo.project_brief}</p>
+                      </div>
+                    </div>
+                  </div>
+                </volist>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <a class="left carousel-control" href="#myCarousel1" data-slide="prev">
+      <a class="left theme-carousel-control" href="#myCarousel1" data-slide="prev">
          <span class="glyphicon glyphicon-chevron-left">  </span>
       </a>
-      <a class="right carousel-control" href="#myCarousel1" data-slide="next">
+      <a class="right theme-carousel-control" href="#myCarousel1" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right">  </span>
       </a>
       <br>
@@ -247,7 +283,7 @@
     <div class='row'>
       <div class="col-md-3 col-md-offset-2">
         <div class="panel">
-          <img src='/lcb/Public/pic/profile.png' width='80px' height='80px'></img>
+          <img src='/lcb/Public/pic/profile.png' width='80px' height='80px'/>
           <strong>姓名</strong>
           <hr>
           <p>他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍</p>
@@ -263,8 +299,8 @@
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   $('a[data-toggle=popover]').mouseover(function(){$(this).popover('hide');}); 
 
-  function requestNews(value){
-    window.location.href = "{:U('Home/News/detail')}" + "?p=" + value;
+  function openProject(id){
+      window.open("{:U('Home/Case/info/key/"+id+"')}");
   }
 </script>
 </html>
