@@ -24,7 +24,7 @@ class IndexController extends Controller {
             $articles[$key]['article_content'] = $pic;
         }
         $this->assign('newslist',$articles);
-        dump($articles);
+        //dump($articles);
 
         $this->display();
     }
