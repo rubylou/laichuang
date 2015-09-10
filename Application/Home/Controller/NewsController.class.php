@@ -79,6 +79,25 @@ class NewsController extends Controller {
 			where article_id="%s"',$_GET['p']);
 		if($result){
 			$result[0]['article_type'] = C('MODULE_CODE')[$result[0]['article_type']];
+			//dump($result[0]);
+			if($result[0]['article_about'] == C(PROJECT_CODE)){
+				$object = $Form->query('select project_name as name, project_logo as portrait from project_info
+					where project_id = "%s"',$result[0]['article_object']);
+				//dump($object);
+				$this->obj = $object[0];
+			}
+			else if($result[0]['article_about'] == C(INVESTOR_CODE)){
+				$object = $Form->query('select name, portrait from investor_personal
+					where user_id = "%s"',$result[0]['article_object']);
+				//dump($object);
+				$this->obj = $object[0];
+			}
+			else if($result[0]['article_about'] == C(INNOVATOR_CODE)){
+				$object = $Form->query('select name, portrait from entrepreneur_personal
+					where user_id = "%s"',$result[0]['article_object']);
+				//dump($object);
+				$this->obj = $object[0];
+			}
 			$this->p = $result[0];
 		}
 

@@ -87,7 +87,7 @@
 										<label class="col-md-2 col-xs-12 control-label">上传Logo</label>
 										<div class="col-md-7">
 											<form method="post" action="__URL__/logoSave?p={$info.project_id}" enctype="multipart/form-data" id="profile_form">
-											    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
+											    <input type="file" name="profile" id="profile" accept="image/jpg,image/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
 											</form>
 											<if condition="strlen($info['project_logo']) gt 0">
 									      		<input type="image" src="{$info.project_logo}" class="thumbnail theme-profile" alt="项目Logo" height="90px" width="90px" onclick="upload('#profile')">
@@ -176,23 +176,25 @@
 				  		<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
-							  		<div class="col-md-3 theme-well">
-										<div class="col-md-4 col-xs-3 theme-nav">
+							  		<div class="col-lg-3 col-md-4 col-sm-6 theme-well">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
 											<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
 										</div>
-										<div class="col-md-8 col-xs-8 theme-nav">
+										<div class="col-md-8 col-sm-8 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
 											<p>&nbsp;&nbsp;&nbsp;创始人<p>
 										</div>
 									</div>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									<div class="col-lg-3 col-md-4 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<volist name="memberlist" id="vo">
 										<div class="memberField">
-											<div class="col-md-3 theme-well">
+											<div class="col-lg-3 col-md-4 col-sm-6 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
 													<if condition="strlen($vo['portrait']) gt 0">
 														<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
@@ -265,8 +267,10 @@
 					  	<div class="panel">
 				  			<div class="panel-body">
 				  				<div class='row'>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									<div class="col-lg-3 col-md-4 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 				  				<div class="collapse" id="collapseExample1">
@@ -393,14 +397,16 @@
 					  	<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/>
+									<div class="col-lg-3 col-md-4 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<volist name="investorlist" id="it">
 										<div class="investorField">
-											<div class="col-md-3 theme-well">
+											<div class="col-lg-3 col-md-4 col-sm-6 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
 													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
 												</div>

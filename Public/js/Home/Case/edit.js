@@ -1,13 +1,27 @@
 function submitProject(){
   var xmlHttp = createRequest();
-  if(checkValue("#proName",20,0,'名称不能为空')&&checkValue("#proBrief",30,0,"简要介绍不能为空")){
+  if(checkValue("#proName",20,1,'名称不能为空')&&checkValue("#proBrief",30,1,"简要介绍不能为空")){
     var name = "key1="+$("#proName").val()+"&";
     var brief = "key3="+$("#proBrief").val()+"&";
-    var member = "key4="+$("#proMember").val()+"&";
-    var fi = "key5="+$("#proFi").val()+"&";
+
+    var member = $("#proMember").val();
+    member = (member.replace(/(\n|\r|(\r\n))/g,"<br>"));
+    member = "key4="+ escape(member) +"&";
+
+    var fi = $("#proFi").val();
+    fi = (fi.replace(/(\n|\r|(\r\n))/g,"<br>"));
+    fi = "key5="+ escape(fi) +"&";
+
     var type = "key6="+$("#proField").val()+"&";
-    var recruit = "key7="+$("#proRecruit").val()+"&";
-    var require = "key8="+$('#proRequire').val()+"&";
+
+    var recruit = $("#proRecruit").val();
+    recruit = (recruit.replace(/(\n|\r|(\r\n))/g,"<br>"));
+    recruit = "key7="+ escape(recruit) +"&";
+
+    var require = $('#proRequire').val();
+    require = (require.replace(/(\n|\r|(\r\n))/g,"<br>"));
+    require = "key8="+ escape(require) +"&";
+
     var content="key9="+getContent(um)+"&";
     var data = name+brief+member+fi+type+recruit+require+content;
     request(xmlHttp,data,"proSave");
