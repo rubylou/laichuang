@@ -28,13 +28,13 @@
 			  		<div class="panel-body">
 			  			<div class="row">
 			  				<div class="col-md-1 col-xs-12 text-center">
-			  					<p class="theme-h5-small">行业</p>
+			  					<a class="theme-h5-small" onclick="showField()" style="cursor:pointer">行业<span class="caret"></span></a>
 			  				</div>
 			  				<div class="col-md-10 col-xs-12">
 			  					<div class="row">
 					  				<volist name="fields" id="vo" key="k">
 					  					<div class="col-md-2 col-xs-3">
-					  						<span class="btn theme-label-btn" name="field" value="{$k}">{$vo}</span>
+					  						<span class="btn theme-label-btn" name="field" value="{$k}" style="display:none">{$vo}</span>
 					  					</div>
 					  				</volist>
 					  			</div>
@@ -43,13 +43,13 @@
 		                <hr>
 		                <div class="row">
 		                	<div class="col-md-1 col-xs-12 text-center">
-			  					<p class="theme-h5-small">地区</p>
+			  					<a class="theme-h5-small" onclick="showCity()" style="cursor:pointer">地区<span class="caret"></span></a>
 			  				</div>
 			  				<div class="col-md-10 col-xs-12">
 			  					<div class="row">
 					  				<volist name="city" id="vo1" key="k1">
 					  					<div class="col-md-2 col-xs-3">
-					  						<span class="btn theme-label-btn" name="city" value="{$k1}">{$vo1}</span>
+					  						<span class="btn theme-label-btn" name="city" value="{$k1}" style="display:none">{$vo1}</span>
 					  					</div>
 					  				</volist>
 					  			</div>
@@ -119,6 +119,34 @@
  <script src="__PUBLIC__/js/bootstrap/theme.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	$("[name='field']").each(function(){
+  		if($(this).attr('value')<=6){
+  			$(this).fadeIn();
+  		}
+  	});
+
+  	$("[name='city']").each(function(){
+  		if($(this).attr('value')<=6){
+  			$(this).fadeIn();
+  		}
+  	});
+
+  	function showField(){
+  		$("[name='field']").each(function(){
+	  		if($(this).attr('value')>6){
+	  			$(this).fadeToggle();
+	  		}
+	  	});
+  	}
+
+  	function showCity(){
+  		$("[name='city']").each(function(){
+	  		if($(this).attr('value')>6){
+	  			$(this).fadeToggle();
+	  		}
+	  	});
+  	}
+
   	$('.theme-label-btn').each(function(){
   		if($(this).attr('name')=='city' && $(this).attr('value')=='{:I("get.city")}'){
   			$(this).addClass('active');

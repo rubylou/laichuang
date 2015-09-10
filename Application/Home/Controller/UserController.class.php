@@ -49,7 +49,7 @@ class UserController extends Controller {
 
             //创业项目
             $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
-                from project_info where project_admin='%s'", $_SESSION['id']);
+                from project_info where project_admin='%s' and project_canceled = 0", $_SESSION['id']);
             $this->projects = $projects;
             $this->assign('prolist',$projects);
 
@@ -121,7 +121,7 @@ class UserController extends Controller {
         //创业项目
         $Form = new Model();
         $projects = $Form->query("select project_id, project_name, project_logo, project_admin, project_brief 
-                from project_info where project_admin='%s'", $id);
+                from project_info where project_admin='%s' and project_canceled = 0", $id);
         $this->projects = $projects;
         $this->assign('prolist',$projects);
 
@@ -534,7 +534,10 @@ class UserController extends Controller {
                 $result = $Form->execute('update investor_fi set financial_doc = "%s", financial_type=%d, financial_info = "%s" 
                     where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$fi_type,$fi_info,$_SESSION['id']);
             }
-        } 
+        }
+        else if($fi_info){
+            $result = $Form->execute('update investor_fi set financial_info = "%s" where user_id = "%s"',$fi_info,$_SESSION['id']);
+        }
 
         header("Location: investorEdit");
 
@@ -666,6 +669,22 @@ class UserController extends Controller {
         }
         else{
             echo 401;
+        }
+    }
+
+    public function delPro(){
+        //dump($_POST);
+        $id = I('post.c',0);
+        if($id){
+            $Form = M('project_info');
+            $data['project_id'] = $id;
+            $data['project_canceled'] = true;
+            $data['cancel_date'] = date('Y-m-d h:i:s');
+            $result = $Form->save($data);
+            //dump($result);
+            if($result){
+                echo 200;
+            }
         }
     }
 
