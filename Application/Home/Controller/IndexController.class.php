@@ -4,6 +4,7 @@ use Think\Controller;
 use Think\Model;
 class IndexController extends Controller {
     public function index(){
+        //dump($_SESSION);
         $Form = new Model();
         $projects = $Form->query('select content_id, project_name, project_logo, project_brief from home_show 
             inner join project_info on content_id = project_id 
@@ -34,7 +35,11 @@ class IndexController extends Controller {
     }
 
     public function logout(){
-        $_SESSION = array();
+        unset($_SESSION['user']);
+        unset($_SESSION['id']);
+        unset($_SESSION['type']);
+        unset($_SESSION['portrait']);
+        unset($_SESSION['msg']);
         header("Location: index"); 
     }
 

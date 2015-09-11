@@ -214,7 +214,7 @@ class UserController extends Controller {
             //投资项目
             $pros = $Form->query('select project_investor.project_id, project_name, project_logo from project_investor 
                 inner join project_info on project_investor.project_id = project_info.project_id
-                where user_id="%s"', $_SESSION['id']);
+                where user_id="%s" and project_canceled = 0', $_SESSION['id']);
             if($pros){
                 $this->pros = $pros;
                 $this->assign('prolist',$pros);
@@ -309,7 +309,7 @@ class UserController extends Controller {
         //投资项目
         $pros = $Form->query('select project_investor.project_id, project_name, project_logo from project_investor 
             inner join project_info on project_investor.project_id = project_info.project_id
-            where user_id="%s"', $id);
+            where user_id="%s" and project_canceled = 0', $id);
         if($pros){
             $this->pros = $pros;
             $this->assign('prolist',$pros);
