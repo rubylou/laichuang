@@ -32,7 +32,8 @@ function send_message(data,url){
 	var xmlHttp = createRequest();
   	request(xmlHttp,data,url);
   	if(xmlHttp.responseText==200){
-    	document.location.reload();
+    	//document.location.reload();
+    	return;
   	}
   	else {
   		var json = JSON.parse(xmlHttp.responseText);
