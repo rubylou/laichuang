@@ -9,7 +9,10 @@ function submitJob(){
     var startmon = "key4="+$("#startmon").val()+"&";
     var endyear = "key5="+$("#endyear").val()+"&";
     var endmon = "key6="+$("#endmon").val()+"&";
-    var info = "key7="+$("#job_info").val()+"&";
+
+    var info = $("#job_info").val();
+    info = (info.replace(/(\n|\r|(\r\n))/g,"<br>"));
+    info = "key7="+ escape(info) +"&";
     var now = "key8="+document.getElementById('untilnow').checked+'&';
     var data = title+company+startyear+startmon+endyear+endmon+info+now;
     if(id.length>0){
@@ -144,6 +147,27 @@ function editCase(id){
   
 }
 
+//delete a project?
+function delPro(id){
+  $('.modal-footer').find('div').hide();
+  $('.modal-footer').find('div').filter('#delProBtn').show();
+  $('#delPro_input').val(id);
+  modalShow('alert_content','myModal','确认删除该创业项目?');
+}
+
+$('#delPro_confirm').click(function(){
+  var xmlHttp = createRequest();
+  request(xmlHttp,'c='+$("#delPro_input").val(),"delPro");
+  if(xmlHttp.responseText==200){
+    alert('删除成功');
+    document.location.reload();
+  }
+});
+
+$('#delPro_cancel').click(function(){
+  $('#delPro_input').val('');
+});
+
 //delete a job?
 function delJob(id){
   $('.modal-footer').find('div').hide();
@@ -196,7 +220,10 @@ function editJob(id){
       $(this).attr('selected','selected');
     }
   });
-  $('#job_info').val(info.job_info);
+
+  str = unescape(info.job_info);
+  str = str.replace(/<br>/g,"\r");
+  $('#job_info').val(str);
   $('#editJob_input').val(id);
 }
 

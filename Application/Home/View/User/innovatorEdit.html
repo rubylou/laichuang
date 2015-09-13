@@ -170,9 +170,9 @@
 											<p class="theme-h4">{$projects.project_name}</p>
 											<p class="theme-h5-small">{$projects.project_brief}</p>
 										</div>
-										<!--<div class="col-md-2 col-md-offset-2 col-xs-2">
-											<a class="btn theme-icon-btn show-edit" style="display:none"><span class="glyphicon glyphicon-trash theme-color"></span></a>
-										</div>-->
+										<div class="col-md-2 col-md-offset-2 col-xs-2">
+											<a class="btn theme-icon-btn show-edit" style="display:none" onclick="delPro('{$projects.project_id}')" data-toggle="tooltip" data-placement="top" title="删除"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -273,12 +273,12 @@
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-10">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small unescape">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
-											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-edit theme-color"></span></a>
-											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob('{$jobs.job_id}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob('{$jobs.job_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
 									</div>
 								</div>
@@ -425,7 +425,7 @@
 	 							<div class="col-md-10 col-md-offset-1">
 	 								<div class="form-group">
 						              <label for="editSNS">新浪微博URL</label>
-						              <input type="text" name="company" class="form-control" id="editSNS" placeholder="" value="http://">
+						              <input type="text" name="company" class="form-control" id="editSNS" placeholder="" value="{$user.sns_id}">
 						            </div>
 						            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="editSNS()">&nbsp;保存&nbsp;</button>
 	 							</div>
@@ -471,6 +471,10 @@
 <script src="__PUBLIC__/js/util/init.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  	$('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+	});
+
   	addYM('#startyear','#startmon',1960);
   	addYM('#endyear','#endmon',1960);
   	addYM('#eduStartyear','#eduStartmon',1960);

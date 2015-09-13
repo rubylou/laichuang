@@ -26,7 +26,7 @@ class CaseController extends Controller {
 
 		$result = $Form->query('select distinct project_id, project_name, project_logo, project_brief, nickname, city, project_admin 
             from project_info inner join entrepreneur_personal on project_admin = user_id 
-            inner join interest_project on project_id = id '.$where);
+            inner join interest_project on project_id = id where project_canceled = 0'.$where);
 		foreach ($result as $key => $value) {
             $result[$key]['city'] = C('PROVINCE_CODE')[$value['city']];
         }

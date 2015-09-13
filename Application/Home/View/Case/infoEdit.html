@@ -37,14 +37,14 @@
 				<div class="panel panel-default theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-12">
+					  		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12">
 								<if condition="strlen($info['project_logo']) gt 0">
 						      		<input type="image" src="{$info.project_logo}" class="thumbnail theme-profile" alt="项目Logo" height="90px" width="90px" >
 						      		<else />
 						      		<input type="image" src="__PUBLIC__/pic/project.png" class="thumbnail theme-profile" alt="项目Logo" height="90px" width="90px">
 						      	</if>
 					  		</div>
-							<div class="col-md-11 col-xs-12">
+							<div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
 								<p class="hide-edit">
 									<span class="theme-h3">&nbsp;&nbsp;{$info.project_name}&nbsp;&nbsp;</span>
 									<span class="label label-info">{$info.status}</span>
@@ -53,7 +53,7 @@
 									&nbsp;&nbsp;&nbsp;{$info.project_brief}
 								</p>
 								<div class="row">
-									<div class="col-md-6 col-xs-12">
+									<div class="col-md-6 col-sm-6 col-xs-12">
 										<p id="interests" class="hide-edit theme-small">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
 									</div>
 									<!--<div class="col-md-2 col-md-offset-3 text-right">
@@ -64,10 +64,10 @@
 										</if>
 										
 									</div>-->
-									<div class="col-md-2 col-md-offset-1 col-xs-6 text-right">
+									<div class="col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn" href="__URL__/info/key/{$info.project_id}">预览</a>
 									</div>
-									<div class="col-md-2 col-xs-6 text-right">
+									<div class="col-md-2 col-sm-2 col-xs-6 text-right">
 										<a class="btn btn-default form-control theme-btn" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample0" href="#collapseExample0">编辑</a>
 									</div>
 								</div>
@@ -80,14 +80,14 @@
 				<div class="collapse" id="collapseExample0">
 					<div class="well">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-6 col-sm-12 col-xs-12">
 								<br>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-md-2 col-xs-12 control-label">上传Logo</label>
-										<div class="col-md-7">
+										<label class="col-md-2 col-sm-3 col-xs-12 control-label">上传Logo</label>
+										<div class="col-md-7 col-sm-8 col-xs-12">
 											<form method="post" action="__URL__/logoSave?p={$info.project_id}" enctype="multipart/form-data" id="profile_form">
-											    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
+											    <input type="file" name="profile" id="profile" accept="image/jpg,image/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
 											</form>
 											<if condition="strlen($info['project_logo']) gt 0">
 									      		<input type="image" src="{$info.project_logo}" class="thumbnail theme-profile" alt="项目Logo" height="90px" width="90px" onclick="upload('#profile')">
@@ -98,39 +98,39 @@
 
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 col-xs-12 control-label">项目名称</label>
-										<div class="col-md-5">
+										<label class="col-md-2 col-sm-3 col-xs-12 control-label">项目名称</label>
+										<div class="col-md-5 col-sm-8 col-xs-12">
 											<input type="text" class="form-control" id="edit_name">
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 col-xs-12 control-label">简介</label>
-										<div class="col-md-9">
+										<label class="col-md-2 col-sm-3 col-xs-12 control-label">简介</label>
+										<div class="col-md-9 col-sm-8 col-xs-12">
 											<input type="text" class="form-control" id="edit_brief">
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 col-xs-12 control-label">所属领域</label>
-										<div class="col-md-9">
+										<label class="col-md-2 col-sm-3 col-xs-12 control-label">所属领域</label>
+										<div class="col-md-9 col-sm-8 col-xs-12">
 								            <div id="conditions">
 								            </div>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="col-md-2 col-xs-12 control-label">已选择:</label>
-										<div class="col-md-9">
+										<label class="col-md-2 col-sm-3 col-xs-12 control-label">已选择:</label>
+										<div class="col-md-9 col-sm-8 col-xs-12">
 											<div id="choices">
 								            </div>
 										</div>
 									</div>
 									<div class="form-group">
-										<div class="col-md-4 col-md-offset-2">
+										<div class="col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 											<input type="submit" class="btn theme-btn form-control" value="保存" onclick="saveInfo('__URL__/editInfo/p/{$info.project_id}')">
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-5">
+							<div class="col-md-5 col-sm-12 col-xs-12">
 								<if condition="session('?crop')">
 									<img src="{:session('crop')}" id="target" class="img-responsive"></img>
 									<p>
@@ -176,23 +176,25 @@
 				  		<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
-							  		<div class="col-md-3 theme-well">
-										<div class="col-md-4 col-xs-3 theme-nav">
+							  		<div class="col-lg-4 col-md-6 col-sm-6 theme-well">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
 											<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
 										</div>
-										<div class="col-md-8 col-xs-8 theme-nav">
+										<div class="col-md-8 col-sm-8 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
 											<p>&nbsp;&nbsp;&nbsp;创始人<p>
 										</div>
 									</div>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									<div class="col-lg-4 col-md-6 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<volist name="memberlist" id="vo">
 										<div class="memberField">
-											<div class="col-md-3 theme-well">
+											<div class="col-lg-4 col-md-6 col-sm-6 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
 													<if condition="strlen($vo['portrait']) gt 0">
 														<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
@@ -213,23 +215,23 @@
 										<hr>
 										<div class="form-horizontal">
 										  <div class="form-group">
-										    <label for="member" class="col-md-3 control-label"><span class="required">*</span>成员账号</label>
-										    <div class="col-md-7">
+										    <label for="member" class="col-md-3 col-sm-3 col-xs-12 control-label"><span class="required">*</span>成员账号</label>
+										    <div class="col-md-7 col-sm-7 col-xs-12 ">
 									        	<input type="text" class="form-control" id="member" placeholder="手机号或邮箱">
 									        </div>
 										  </div>
 										  <div class="form-group">
-										    <label for="title" class="col-md-3 control-label"><span class="required">*</span>成员职位</label>
-										    <div class="col-md-7">
+										    <label for="title" class="col-md-3 col-sm-3 col-xs-12 control-label"><span class="required">*</span>成员职位</label>
+										    <div class="col-md-7 col-sm-7 col-xs-12 ">
 									        	<input type="text" class="form-control" id="title" placeholder="CEO,CTO等">
 									        </div>
 										  </div>
 										</div>
 									    <div class="row">
-									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+									    	<div class="col-md-3 col-md-offset-3 col-sm-4 col-sm-offset-2 col-xs-6">
 									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addMember('{$info.project_id}','__URL__/queryUser')">&nbsp;提交&nbsp;</a>    
 									        </div>
-									        <div class="col-md-3 col-xs-6">
+									        <div class="col-md-3 col-sm-4 col-xs-6">
 									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</a>    
 									        </div>
 									    </div>
@@ -265,28 +267,30 @@
 					  	<div class="panel">
 				  			<div class="panel-body">
 				  				<div class='row'>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									<div class="col-lg-3 col-md-4 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 				  				<div class="collapse" id="collapseExample1">
 									<hr>
 									<div class="form-horizontal">
 									  <div class="form-group">
-									    <label for="round" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资轮次</label>
-									    <div class="col-md-4 col-xs-12">
+									    <label for="round" class="col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>投资轮次</label>
+									    <div class="col-md-4 col-sm-4 col-xs-12">
 						              		<select class="form-control" id="round">
 						              		</select>
 						              	</div>
 									  </div>
 
 									  <div class="form-group">
-									    <label for="currency1" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮投资金额</label>
-									    <div class="col-md-2 col-xs-6">
+									    <label for="currency1" class="col-md-2 col-md-offset-1  col-sm-2 col-sm-offset-1 col-xs-12 control-label">此轮投资金额</label>
+									    <div class="col-md-2 col-sm-2 col-xs-6">
 									    	<select class="form-control" id="currency1">
 									    	</select>
 									    </div>
-									    <div class="col-md-3 col-xs-6">
+									    <div class="col-md-3 col-sm-3 col-xs-6">
 							              	<div class="input-group">
 								              	<input type="text" class="form-control" id="amount">
 									            <span class="input-group-addon" id="basic-addon2">万</span>
@@ -295,12 +299,12 @@
 						  			  </div>
 
 									  <div class="form-group">
-									    <label for="currency2" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮估值</label>
-										<div class="col-md-2 col-xs-6">
+									    <label for="currency2" class="col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-12 control-label">此轮估值</label>
+										<div class="col-md-2 col-sm-2 col-xs-6">
 											<select class="form-control" id="currency2">
 						              		</select>
 						              	</div>
-						              	<div class="col-md-3 col-xs-6">
+						              	<div class="col-md-3 col-sm-3 col-xs-6">
 											<div class="input-group">
 												<input type="text" class="form-control" id="assess" >
 												<span class="input-group-addon" id="basic-addon2">万</span>
@@ -309,22 +313,22 @@
 									  </div>
 
 									  <div class="form-group">
-									    <label for="investor" class="col-md-3 col-xs-12 control-label"><span class="required">*</span>投资主体</label>
-									    <div class="col-md-7 col-xs-12">
+									    <label for="investor" class="col-md-3 col-sm-3 col-xs-12 control-label"><span class="required">*</span>投资主体</label>
+									    <div class="col-md-7 col-sm-7 col-xs-12">
 								        	<input type="text" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
 								        </div>
 									  </div>
 
 									  <div class="form-group">
-									    <label for="investyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资时间</label>
-									    <div class="col-md-3 col-xs-6">
+									    <label for="investyear" class="col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>投资时间</label>
+									    <div class="col-md-3 col-sm-3 col-xs-6">
 									    	<div class="input-group">
 									        	<select class="form-control" id="investyear">
 									            </select>
 									            <span class="input-group-addon" id="basic-addon2">年</span>
 									        </div>
 								        </div>
-								        <div class="col-md-2 col-xs-6">
+								        <div class="col-md-2 col-sm-2 col-xs-6">
 								        	<div class="input-group">
 								        		<select class="form-control" id="investmon">
 								            	</select>
@@ -335,11 +339,11 @@
 									</div>
 
 								    <div class="row">
-								    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+								    	<div class="col-md-3 col-md-offset-3 col-sm-3 col-sm-offset-3 col-xs-6">
 								        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="fi_submit('{$info.project_id}','{:U('Home/Case/profiAdd')}')">&nbsp;提交&nbsp;</button>    
 								        </div>
 								        <input type="hidden" id="editFi_input"/>
-								        <div class="col-md-3 col-xs-6">
+								        <div class="col-md-3 col-sm-3 col-xs-6">
 								        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
 								        </div>
 								    </div>
@@ -351,14 +355,14 @@
 				  				<volist name="filist" id="profi">
 				  					<div class='row hide-edit theme-well'>
 				  						<br>
-					  					<div class="col-md-6 col-xs-10">
+					  					<div class="col-md-6 col-sm-10 col-xs-12">
 											<p>
 												<span class="theme-h5 label label-warning">{$profi.round}</span>
 												<span class="theme-small">{$profi.invest_time}</span>
 											</p>
 											<p>{$profi.investor_name}&nbsp;|&nbsp;<span class="theme-small">投资金额&nbsp;</span>{$profi.invest_amount}万{$profi.invest_cur}</p>
 										</div>
-										<div class="col-md-2 col-md-offset-4 col-xs-2">
+										<div class="col-md-2 col-md-offset-4 col-sm-2 col-xs-6 col-xs-offset-6">
 											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editProFi('{$profi.id}','__URL__/editProFi/p/{:I(\'get.key\')}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
 											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delFi('{$profi.id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
 										</div>
@@ -393,14 +397,16 @@
 					  	<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
-									<div class="col-md-1 col-xs-3">
-										<input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/>
+									<div class="col-lg-4 col-md-6 col-sm-6">
+										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
+											<input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/>
+										</div>
 									</div>
 								</div>
 								<div class="row">
 									<volist name="investorlist" id="it">
 										<div class="investorField">
-											<div class="col-md-3 theme-well">
+											<div class="col-lg-4 col-md-6 col-sm-6 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
 													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
 												</div>
@@ -417,17 +423,17 @@
 										<hr>
 										<div class="form-horizontal">
 										  <div class="form-group">
-										    <label for="pro_investor" class="col-md-3 control-label"><span class="required">*</span>投资人账号</label>
-										    <div class="col-md-7">
+										    <label for="pro_investor" class="col-md-3 col-sm-3 col-xs-12 control-label"><span class="required">*</span>投资人账号</label>
+										    <div class="col-md-7 col-sm-7 col-xs-12">
 									        	<input type="text" class="form-control" id="pro_investor" placeholder="手机号或邮箱">
 									        </div>
 										  </div>
 										</div>
 									    <div class="row">
-									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+									    	<div class="col-md-3 col-md-offset-3 col-sm-3 col-sm-offset-3 col-xs-6">
 									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addInvestor('{$info.project_id}','__URL__/queryInvestor')">&nbsp;提交&nbsp;</a>    
 									        </div>
-									        <div class="col-md-3 col-xs-6">
+									        <div class="col-md-3 col-sm-3 col-xs-6">
 									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample3')">&nbsp;取消&nbsp;</a>    
 									        </div>
 									    </div>

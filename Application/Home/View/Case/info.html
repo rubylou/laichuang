@@ -26,21 +26,21 @@
 				<div class="panel panel-default theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-12 text-center">
+					  		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 text-center">
 					  			<if condition="strlen($info['project_logo']) gt 0">
 						      		<img src="{$info.project_logo}" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" />
 						      		<else />
 						      		<img src="__PUBLIC__/pic/project.png" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" />
 						      	</if>
 					  		</div>
-							<div class="col-md-11 col-xs-12">
+							<div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
 								<p class="theme-h3">&nbsp;&nbsp;{$info.project_name}</p>
 								<p>&nbsp;&nbsp;&nbsp;{$info.project_brief}</p>
 								<div class="row">
-									<div class="col-md-6 col-xs-12">
+									<div class="col-md-6 col-sm-6 col-xs-12">
 										<p id="interests" class="theme-small">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p>
 									</div>
-									<div class="col-md-2 col-md-offset-3 col-xs-12 text-right">
+									<div class="col-md-2 col-md-offset-3 col-sm-4 col-sm-offset-1 col-xs-6 col-xs-offset-3 text-right">
 										<if condition="$follow eq false">
 											<a class="btn btn-default theme-btn-inverse theme-nav form-control" onclick="followPro({$info.project_id},'FOLLOWING','__URL__/proFollow')">关注</a>
 											<else/>
@@ -81,10 +81,10 @@
 				  		<div class="panel">
 				  			<div class="panel-body">
 							  	<div class='row'>
-									<div class="col-md-1 col-xs-3">
+									<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
 										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
 									</div>
-									<div class="col-md-2 col-xs-8">
+									<div class="col-lg-3 col-md-4 col-sm-4 col-xs-8">
 										<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
 										<p>&nbsp;&nbsp;&nbsp;创始人<p>
 									</div>
@@ -92,14 +92,14 @@
 								<div class="row">
 									<volist name="memberlist" id="vo">
 										<div class="memberField">
-											<div class="col-md-1 col-xs-3 theme-nav">
+											<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 theme-nav">
 												<if condition="strlen($vo['portrait']) gt 0">
 													<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})"/>
 													<else />
 													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$vo.user_id})"/>
 												</if>
 											</div>
-											<div class="col-md-2 col-xs-8 theme-nav">
+											<div class="col-lg-3 col-md-4 col-sm-4 col-xs-8 theme-nav">
 												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
 												<p>&nbsp;&nbsp;&nbsp;{$vo.title}</p>
 											</div>
@@ -131,7 +131,7 @@
 				  				<volist name="filist" id="profi">
 					  				<div class='row theme-well'>
 					  					<br>
-					  					<div class="col-md-6 col-xs-12">
+					  					<div class="col-md-6 col-sm-12 col-xs-12">
 											<p>
 												<span class="theme-h5 label label-warning">{$profi.round}</span>
 												<span class="theme-small">{$profi.invest_time}</span>
@@ -166,10 +166,10 @@
 								<div class="row">
 									<volist name="investorlist" id="it">
 										<div class="investorField">
-											<div class="col-md-1 col-xs-3 theme-nav">
+											<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 theme-nav">
 												<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
 											</div>
-											<div class="col-md-2 col-xs-8 theme-nav">
+											<div class="col-lg-3 col-md-4 col-sm-4 col-xs-8 theme-nav">
 												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
 												<p class="theme-h4">&nbsp;</p>
 											</div>

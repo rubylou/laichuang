@@ -82,7 +82,7 @@
 										<label class="col-md-2 col-xs-12 control-label">上传头像</label>
 										<div class="col-md-7">
 											<form method="post" action="__URL__/profileSave" enctype="multipart/form-data" id="profile_form">
-											    <input type="file" name="profile" id="profile" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
+											    <input type="file" name="profile" id="profile" accept="image/jpg,image/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#profile','#profile_form')" style="display:none;"/>
 											</form>
 											<if condition="strlen($user['portrait']) gt 0">
 										    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
@@ -377,7 +377,7 @@
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-10">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small unescape">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
@@ -441,6 +441,11 @@
 							</div>
 						</div>
 						<div class="row">
+							<div class="col-md-12">
+								<span class="theme-small">.jpg .jpeg .png .gif, 小于3M</span>
+							</div>
+						</div>
+						<div class="row">
 							<div class="col-md-12 col-xs-12">
 								<if condition="strlen($user['mycard']) gt 0">
 									<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
@@ -469,20 +474,23 @@
 										    <if condition="strlen($auth['license']) gt 0">
 										    	<a href="{$auth.license}">已上传营业执照</a>
 										    </if>
-										    <input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+										    <p class="theme-small">.jpg .jpeg .png .gif .pdf, 小于3M</p>
+										    <input type="file" name="license" id="license" accept="image/jpg,image/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
 										</div>
 										<div class="form-group">
 							              	<label><span class="required">*</span>组织机构代码证</label>
 							              	<if condition="strlen($auth['company_code']) gt 0">
 							              		<a href="{$auth.company_code}">已上传机构代码证</a>
 							              	</if>
-											<input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+							              	<p class="theme-small">.jpg .jpeg .png .gif .pdf, 小于3M</p>
+											<input type="file" name="companyCode" id="companyCode" accept="image/jpg,image/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
 										</div>
 										<div class="form-group">
 							              	<label><span class="required">*</span>近三年财务报表</label>
 							              	<if condition="strlen($auth['fi_statement']) gt 0">
 							              		<a href="{$auth.fi_statement}">已上传财物报表</a>
 							              	</if>
+							              	<p class="theme-small">.pdf, 小于3M</p>
 											<input type="file" name="statement" id="statement" accept="application/pdf" height="0px" width="0px"/>
 										</div>
 									</if>
@@ -500,12 +508,13 @@
 							              	<if condition="strlen($auth['financial_doc']) gt 0">
 							              		<a href="{$auth.financial_doc}">已上传财产证明</a>
 							              	</if>
-											<input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
+							              	<p class="theme-small">.jpg .jpeg .png .gif .pdf, 小于3M</p>
+											<input type="file" name="finance" id="finance" accept="image/jpg,image/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/>
 										</div>
 										<div class="form-group">
 											<label><span class="required">*</span>说明</label>
 											<div id="financeInfo">
-							  					<textarea rows='5' name="pro_require" id="pro_require" class="form-control">{$auth.financial_info}</textarea>
+							  					<input name="pro_require" id="pro_require" class="form-control" value="{$auth.financial_info}"></input>
 											</div>
 										</div>
 									</if>
@@ -532,7 +541,7 @@
 	 							<div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
 	 								<div class="form-group">
 						              <label for="editSNS">新浪微博URL</label>
-						              <input type="text" name="company" class="form-control" id="editSNS" placeholder="" value="http://">
+						              <input type="text" name="company" class="form-control" id="editSNS" placeholder="" value="{$user.sns_id}">
 						            </div>
 						            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="editSNS()">&nbsp;保存&nbsp;</button>
 	 							</div>
@@ -601,6 +610,9 @@
 <script src="__PUBLIC__/js/util/init.js"></script>
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	$('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+	});
 
 	var field = {$field};
 	var rows = ({$fieldlen})/6;
