@@ -84,9 +84,9 @@
 											<p>&nbsp;&nbsp;&nbsp;创始人<p>
 										</div>
 									</div>
-									<div class="col-md-1 col-xs-3">
+									<!--div class="col-md-1 col-xs-3">
 										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
-									</div>
+									</div-->
 								</div>
 								<div class="row">
 									<volist name="memberlist" id="vo">
@@ -94,9 +94,9 @@
 											<div class="col-md-3 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
 													<if condition="strlen($vo['portrait']) gt 0">
-														<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+														<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
 														<else />
-														<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$vo.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+														<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$vo.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
 													</if>
 												</div>
 												<div class="col-md-8 col-xs-8 theme-nav">
@@ -165,7 +165,7 @@
 				  			<div class="panel-body">
 				  				<div class='row'>
 									<div class="col-md-1 col-xs-3">
-										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+										<!--input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/-->
 									</div>
 								</div>
 				  				<div class="collapse" id="collapseExample1">
@@ -259,7 +259,7 @@
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
 											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editProFi('{$profi.id}','__URL__/editProFi/p/{:I(\'get.key\')}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
-											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delFi('{$profi.id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a>
+											<!--a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delFi('{$profi.id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a-->
 										</div>
 					  				</div>
 					  			</volist>
@@ -293,7 +293,7 @@
 				  			<div class="panel-body">
 							  	<div class='row'>
 									<div class="col-md-1 col-xs-3">
-										<input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/>
+										<!--input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/-->
 									</div>
 								</div>
 								<div class="row">
@@ -301,7 +301,7 @@
 										<div class="investorField">
 											<div class="col-md-3 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
-													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
 												</div>
 												<div class="col-md-8 col-xs-8 theme-nav">
 													<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
@@ -381,17 +381,17 @@
 								</div>
 							</div>
 						</div>
-						<hr>
-						<div class="row">
+						<!--hr-->
+						<!--div class="row">
 							<div class="col-md-12 col-xs-12">
 								<p class="theme-h4">浏览量:&nbsp;&nbsp;{$info.project_visits}</p>
 							</div>
-						</div>
-						<div class="row">
+						</div-->
+						<!--div class="row">
 							<div class="col-md-12 col-xs-12">
 								<p class="theme-h4">关注量:&nbsp;&nbsp;{$info.project_watches}</p>
 							</div>
-						</div>
+						</div-->
 					</div>
 			  	</div>
 			</div>

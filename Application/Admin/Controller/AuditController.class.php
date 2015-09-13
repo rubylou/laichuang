@@ -64,7 +64,7 @@ class AuditController extends Controller {
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $id=$_GET['key'];
             $Form = new Model();
-            $_SESSION['type']=2;
+            $_SESSION['lctype']=2;
             $result = $Form->query('select project_info.*, name, portrait from project_info inner join entrepreneur_personal on project_admin = user_id where project_id="%s"',$id);
             foreach ($result as $key => $value) {
                 $result[$key]['project_type'] = C('INTEREST_FIELD')[$value['project_type']];
@@ -75,7 +75,7 @@ class AuditController extends Controller {
             $follow = $Form->query('select count(user_id) from relation_follow where object_type=%d and object_id="%s"',C(PROJECT_CODE),$id);
             $result[0]['project_watches'] = $follow[0]['count(user_id)'];
             $this->info = $result[0];
-            $_SESSION['id']=$this->info['project_admin'];
+            $_SESSION['lcid']=$this->info['project_admin'];
 
             //dump($this->info);
             //所属领域
@@ -103,7 +103,7 @@ class AuditController extends Controller {
 
             //关注信息
             $follow = $Form->query("select follow_status from relation_follow where user_id='%s' 
-                and object_id='%s' and object_type=%d",$_SESSION['id'],$_GET['key'],C(PROJECT_CODE));
+                and object_id='%s' and object_type=%d",$_SESSION['lcid'],$_GET['key'],C(PROJECT_CODE));
             if($follow[0]['follow_status']=='1'){
                 $this->follow = C('FOLLOWING');
             }
@@ -228,7 +228,7 @@ class AuditController extends Controller {
 
 
             //教育背景
-            $edu = $Form->query('select * from user_edu where user_id="%s"',$_SESSION['id']);
+            $edu = $Form->query('select * from user_edu where user_id="%s"',$id);
             if($edu){
                 $edu[0]['degree'] = C('DEGREE_CODE')[$edu[0]['degree']];
                 $edu[0]['year'] = intval(substr($edu[0]['start'],0,4));
@@ -237,7 +237,7 @@ class AuditController extends Controller {
             }
 
              //所在行业
-            $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $_SESSION['id']);
+            $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $id);
             if($result){
                 $fields = C('INTEREST_FIELD');
                 foreach ($result as $key => $value) {
@@ -258,8 +258,8 @@ class AuditController extends Controller {
 
 
              //set session to maintain current verify object
-            $_SESSION['type']=2;
-            $_SESSION['id']=$id;
+            $_SESSION['lctype']=2;
+            $_SESSION['lcid']=$id;
 
             $this->display();
         }else{
@@ -322,8 +322,8 @@ class AuditController extends Controller {
     public function auditInvestorPsVerify(){
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $id=$_GET['key'];
-            $_SESSION['id']=$id;
-            $_SESSION['type']=1;
+            $_SESSION['lcid']=$id;
+            $_SESSION['lctype']=1;
             //get all need information 
             //dump($user_id);
             $Form = new Model();
@@ -471,7 +471,7 @@ class AuditController extends Controller {
         if(session('?usertype') && session('?userid')){
             $Form = new Model();
             $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-            $user_id= $_SESSION['id'];
+            $user_id= $_SESSION['lcid'];
             if(count($_POST['c'])>0){
                 $job = $_POST['c'];
                 if($_POST['key8']==='true'){
@@ -526,29 +526,19 @@ class AuditController extends Controller {
         //dump($_SESSION);
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
-            if(count($_POST['name'])>0 && $_SESSION['type']==1){
-                $result = $Form->execute('update investor_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['id']);
+            if(count($_POST['name'])>0 && $_SESSION['lctype']==1){
+                $result = $Form->execute('update investor_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
-                    $_SESSION['user'] = $_POST['name'];
+                    $_SESSION['lcuser'] = $_POST['name'];
                 }
                 else {
                     echo 400;
                 }
             }
 
-            if(count($_POST['brief'])>0 && $_SESSION['type']==1){
-                $result = $Form->execute('update investor_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['id']);
-                if($result){
-                    echo 200;
-                }
-                else {
-                    echo 400;
-                }
-            }
-
-            if(count($_POST['sns'])>0 && $_SESSION['type']==1){
-                $result = $Form->execute('update investor_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['id']);
+            if(count($_POST['brief'])>0 && $_SESSION['lctype']==1){
+                $result = $Form->execute('update investor_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -557,14 +547,24 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['field'])>0 && $_SESSION['type']==1){
+            if(count($_POST['sns'])>0 && $_SESSION['lctype']==1){
+                $result = $Form->execute('update investor_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['lcid']);
+                if($result){
+                    echo 200;
+                }
+                else {
+                    echo 400;
+                }
+            }
+
+            if(count($_POST['field'])>0 && $_SESSION['lctype']==1){
                 $interests = $_POST['field'];
                 $interests = explode(',', $interests);
 
-                $result = $Form->execute('delete from interest_investor where id="%s"',$_SESSION['id']);
+                $result = $Form->execute('delete from interest_investor where id="%s"',$_SESSION['lcid']);
 
                 for($i=0;$i<count($interests)-1;$i++){
-                    $temp = $Form->execute('replace into interest_investor (id, interest_field) values ("%s",%d)',$_SESSION['id'],$interests[$i]);
+                    $temp = $Form->execute('replace into interest_investor (id, interest_field) values ("%s",%d)',$_SESSION['lcid'],$interests[$i]);
                 }
                 if($result){
                     echo 200;
@@ -574,8 +574,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['company'])>0 && $_SESSION['type']==1){
-                $result = $Form->execute('update investor_personal set company="%s" where user_id="%s"',$_POST['company'],$_SESSION['id']);
+            if(count($_POST['company'])>0 && $_SESSION['lctype']==1){
+                $result = $Form->execute('update investor_personal set company="%s" where user_id="%s"',$_POST['company'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -584,8 +584,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['title'])>0 && $_SESSION['type']==1){
-                $result = $Form->execute('update investor_personal set title="%s" where user_id="%s"',$_POST['title'],$_SESSION['id']);
+            if(count($_POST['title'])>0 && $_SESSION['lctype']==1){
+                $result = $Form->execute('update investor_personal set title="%s" where user_id="%s"',$_POST['title'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -594,19 +594,19 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['name'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['id']);
+            if(count($_POST['name'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set name="%s" where user_id="%s"',$_POST['name'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
-                    $_SESSION['user'] = $_POST['name'];
+                    $_SESSION['lcuser'] = $_POST['name'];
                 }
                 else {
                     echo 400;
                 }
             }
 
-            if(count($_POST['brief'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['id']);
+            if(count($_POST['brief'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set brief="%s" where user_id="%s"',$_POST['brief'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -615,14 +615,14 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['field'])>0 && $_SESSION['type']==2){
+            if(count($_POST['field'])>0 && $_SESSION['lctype']==2){
                 $interests = $_POST['field'];
                 $interests = explode(',', $interests);
 
-                $result = $Form->execute('delete from interest_entrepreneur where id="%s"',$_SESSION['id']);
+                $result = $Form->execute('delete from interest_entrepreneur where id="%s"',$_SESSION['lcid']);
 
                 for($i=0;$i<count($interests)-1;$i++){
-                    $temp = $Form->execute('replace into interest_entrepreneur (id, interest_field) values ("%s",%d)',$_SESSION['id'],$interests[$i]);
+                    $temp = $Form->execute('replace into interest_entrepreneur (id, interest_field) values ("%s",%d)',$_SESSION['lcid'],$interests[$i]);
                 }
                 if($result){
                     echo 200;
@@ -632,8 +632,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['sns'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['id']);
+            if(count($_POST['sns'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set sns_id="%s" where user_id="%s"',$_POST['sns'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -642,8 +642,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['gender'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set gender="%s" where user_id="%s"',$_POST['gender'],$_SESSION['id']);
+            if(count($_POST['gender'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set gender="%s" where user_id="%s"',$_POST['gender'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -652,8 +652,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['birth'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set birthday="%s" where user_id="%s"',$_POST['birth'],$_SESSION['id']);
+            if(count($_POST['birth'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set birthday="%s" where user_id="%s"',$_POST['birth'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -662,8 +662,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['city'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update entrepreneur_personal set city="%s" where user_id="%s"',$_POST['city'],$_SESSION['id']);
+            if(count($_POST['city'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update entrepreneur_personal set city="%s" where user_id="%s"',$_POST['city'],$_SESSION['lcid']);
                 if($result){
                     echo 200;
                 }
@@ -696,8 +696,8 @@ class AuditController extends Controller {
     public function editCaseInfo(){
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
-            if(count($_POST['name'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_name="%s" where project_admin="%s" and project_id="%s"',$_POST['name'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['name'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_name="%s" where project_admin="%s" and project_id="%s"',$_POST['name'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -706,8 +706,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['brief'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_brief="%s" where project_admin="%s" and project_id="%s"',$_POST['brief'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['brief'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_brief="%s" where project_admin="%s" and project_id="%s"',$_POST['brief'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -716,8 +716,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['member'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_member="%s" where project_admin="%s" and project_id="%s"',$_POST['member'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['member'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_member="%s" where project_admin="%s" and project_id="%s"',$_POST['member'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -726,8 +726,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['fi'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_fi="%s" where project_admin="%s" and project_id="%s"',$_POST['fi'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['fi'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_fi="%s" where project_admin="%s" and project_id="%s"',$_POST['fi'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -736,8 +736,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['recruit'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_recruit="%s" where project_admin="%s" and project_id="%s"',$_POST['recruit'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['recruit'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_recruit="%s" where project_admin="%s" and project_id="%s"',$_POST['recruit'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -746,8 +746,8 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['require'])>0 && $_SESSION['type']==2){
-                $result = $Form->execute('update project_info set project_require="%s" where project_admin="%s" and project_id="%s"',$_POST['require'],$_SESSION['id'],$_GET['p']);
+            if(count($_POST['require'])>0 && $_SESSION['lctype']==2){
+                $result = $Form->execute('update project_info set project_require="%s" where project_admin="%s" and project_id="%s"',$_POST['require'],$_SESSION['lcid'],$_GET['p']);
                 if($result){
                     echo 200;
                 }
@@ -756,7 +756,7 @@ class AuditController extends Controller {
                 }
             }
 
-            if(count($_POST['field'])>0 && $_SESSION['type']==2){
+            if(count($_POST['field'])>0 && $_SESSION['lctype']==2){
                 $interests = $_POST['field'];
                 $interests = explode(',', $interests);
 
@@ -780,7 +780,7 @@ class AuditController extends Controller {
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
             $result = $Form->execute('replace into user_edu (user_id, school, degree, start) 
-            values ("%s","%s",%d,"%s")',$_SESSION['id'],$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00');
+            values ("%s","%s",%d,"%s")',$_SESSION['lcid'],$_POST['key1'],$_POST['key2'],$_POST['key3'].'-'.$_POST['key4'].'-00');
             if($result){
                 echo 200;
             }
@@ -802,7 +802,7 @@ class AuditController extends Controller {
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
             $seed = rand(C(RANDOM_CASE_MIN),C(RANDOM_CASE_MAX));
-            $user_id= $_SESSION['id'];
+            $user_id= $_SESSION['lcid'];
             if(count($_POST['c'])>0){
                 $caseid = $_POST['c'];
                 $result = $Form->execute('update investor_case set company = "%s",round = %d,
@@ -846,8 +846,8 @@ class AuditController extends Controller {
             $upload->maxSize = 3145728 ;// 设置附件上传大小
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
             $upload->rootPath = './Public/upload/pic/card/'; // 设置附件上传根目录
-            $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
-            $upload->saveName = $_SESSION['id']."card";
+            $upload->savePath = $_SESSION['lcid'].'/'; // 设置附件上传（子）目录
+            $upload->saveName = $_SESSION['lcid']."card";
             $upload->replace = true;
             $upload->subName = '';
             // 上传文件 
@@ -864,16 +864,16 @@ class AuditController extends Controller {
                 $result = $image->thumb(288, 162,\Think\Image::IMAGE_THUMB_CENTER)->save($thumbName);
                 if($result){
                     $Form = new Model();
-                    if($_SESSION['type']=="1"){
+                    if($_SESSION['lctype']=="1"){
                         $success = $Form->execute('update investor_personal set mycard="%s" 
-                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        header("Location: auditInvestorPsVerify?key=".$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['lcid']);
+                        header("Location: auditInvestorPsVerify?key=".$_SESSION['lcid']);
                         
                     }
                     else{
                         $success = $Form->execute('update entrepreneur_personal set mycard="%s" 
-                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['id']);
-                        header("Location: auditInnovatorVerify?key=".$_SESSION['id']);
+                            where user_id="%s"',C(UPLOAD).'pic/card/'.$upload->savePath.'thumb_'.$filename,$_SESSION['lcid']);
+                        header("Location: auditInnovatorVerify?key=".$_SESSION['lcid']);
                     }
                 }
             }
@@ -892,16 +892,16 @@ class AuditController extends Controller {
 
             $upload = new \Think\Upload();// 实例化上传类
             $upload->maxSize = 3145728 ;// 设置附件上传大小
-            $upload->savePath = $_SESSION['id'].'/'; // 设置附件上传（子）目录
+            $upload->savePath = $_SESSION['lcid'].'/'; // 设置附件上传（子）目录
             $upload->rootPath = './Public/upload/authorization/'; // 设置附件上传根目录
             $upload->replace = true;
             $upload->subName = '';
 
-            $Form->execute('update investor_company set company_type = %d where user_id="%s"',$company_type,$_SESSION['id']);
+            $Form->execute('update investor_company set company_type = %d where user_id="%s"',$company_type,$_SESSION['lcid']);
 
             if(strlen($_FILES['license']['name'])>0){
                 $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-                $upload->saveName = $_SESSION['id']."_license";
+                $upload->saveName = $_SESSION['lcid']."_license";
                 // 上传文件 
                 $info = $upload->uploadOne($_FILES['license']);
                 if(!$info) {// 上传错误提示错误信息
@@ -909,50 +909,50 @@ class AuditController extends Controller {
                 }else{// 上传成功
                     //dump($info);
                     $result = $Form->execute('update investor_company set license = "%s" 
-                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['lcid']);
                 }
             }
 
             if(strlen($_FILES['companyCode']['name'])>0){
                 $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-                $upload->saveName = $_SESSION['id']."_companyCode";
+                $upload->saveName = $_SESSION['lcid']."_companyCode";
                 // 上传文件 
                 $info = $upload->uploadOne($_FILES['companyCode']);
                 if(!$info) {// 上传错误提示错误信息
                     $this->error($upload->getError());
                 }else{// 上传成功
                     $result = $Form->execute('update investor_company set company_code = "%s" 
-                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['lcid']);
                 }
             }
 
             if(strlen($_FILES['statement']['name'])>0){
                 $upload->exts = array('pdf');// 设置附件上传类型
-                $upload->saveName = $_SESSION['id']."_statement";
+                $upload->saveName = $_SESSION['lcid']."_statement";
                 // 上传文件 
                 $info = $upload->uploadOne($_FILES['statement']);
                 if(!$info) {// 上传错误提示错误信息
                     $this->error($upload->getError());
                 }else{// 上传成功
                     $result = $Form->execute('update investor_company set fi_statement = "%s" 
-                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['id']);
+                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$_SESSION['lcid']);
                 }
             }
             
             if(strlen($_FILES['finance']['name'])>0){
                 $upload->exts = array('jpg', 'gif', 'png', 'jpeg','pdf');// 设置附件上传类型
-                $upload->saveName = $_SESSION['id']."_finance";
+                $upload->saveName = $_SESSION['lcid']."_finance";
                 // 上传文件 
                 $info = $upload->uploadOne($_FILES['finance']);
                 if(!$info) {// 上传错误提示错误信息
                     $this->error($upload->getError());
                 }else{// 上传成功
                     $result = $Form->execute('update investor_fi set financial_doc = "%s", financial_type=%d, financial_info = "%s" 
-                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$fi_type,$fi_info,$_SESSION['id']);
+                        where user_id = "%s"',C(UPLOAD).'authorization/'.$upload->savePath.$info['savename'],$fi_type,$fi_info,$_SESSION['lcid']);
                 }
             } 
 
-            header("Location: auditInvestorPsVerify?key=".$_SESSION['id']);
+            header("Location: auditInvestorPsVerify?key=".$_SESSION['lcid']);
         }
 
     }

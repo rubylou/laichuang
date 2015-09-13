@@ -62,6 +62,30 @@ class SuperController extends Controller {
     	
     }
 
+
+    public function adminUpdate(){
+        if(session('?userid')&&session('?usertype')&&$_SESSION['usertype']==1){
+            //dump($_POST);
+            $Form = new Model();
+            //$exist = $Form->query('select admin_id from admin_personal where admin_id = "%s"',$_POST['id']);
+         
+            $result = $Form->execute('replace into admin_personal (admin_id,admin_pwd,admin_type) 
+                values ("%s","%s",%d)',$_POST['id'],$_POST['key1'],$_POST['key3']);
+            if($result){
+                echo 2;
+            }
+            else {
+                echo -1;
+            }
+
+        }else
+        {
+             $this->redirect('Index/index');
+
+        }
+        
+    }
+
     public function adminEdit(){
         if(session('?userid')&&session('?usertype')&&$_SESSION['usertype']==1){
         	$Form = M('admin_personal');
@@ -77,18 +101,22 @@ class SuperController extends Controller {
 
     public function adminDel(){
          if(session('?userid')&&session('?usertype')&&$_SESSION['usertype']==1){
+            //dump($_POST);
             $Form = M('admin_personal');
             if($_SESSION['usertype']==1){
-            	$result = $Form->where('admin_id = "%s"',$_GET['key'])->delete();
+            	$result = $Form->where('admin_id = "%s"',$_POST['key'])->delete();
     	        if($result){
-    	        	header("Location: index"); 
+    	        	//header("Location: index");
+                    echo 200; 
     	        }
     	        else{
     	        	header("Location: index"); 
     	        }
+
+
             }
             else{
-            	header("Location: index"); 
+                header("Location: index"); 
             }
         }else
         {

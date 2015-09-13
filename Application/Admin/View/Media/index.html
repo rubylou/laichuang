@@ -32,6 +32,7 @@
                  <tr>
                     <th class="text-center">文章id</th>
                     <th class="text-center">文章题目</th>
+                    <th class="text-center">文章管理员</th>
                     <th class="text-center">文章作者</th>
                     <th class="text-center">文章板块</th>
                     <th class="text-center">发布时间</th>
@@ -42,6 +43,7 @@
                     <td class="text-center">{$x.article_id}</td>
                     <td class="text-center">{$x.article_title}</td>
                     <td class="text-center">{$x.admin_id}</td>
+                    <td class="text-center">{$x.admin_nickname}</td>
                     <td class="text-center">{$x.article_type}</td>
                     <td class="text-center">{$x.article_time}</td>
                     <td class="text-center">
@@ -107,7 +109,7 @@
     var data='key='+$("#delArtid_input").val();
     request(xmlHttp,data,"articleDel");
     if(xmlHttp.responseText==200){
-      document.location.reload();
+       document.location.reload();
     }
   });
 
