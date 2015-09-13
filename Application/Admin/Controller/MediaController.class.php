@@ -9,11 +9,12 @@ class MediaController extends Controller {
         {
             $Form = new Model();
 
-            $articlesRaw=$Form->query("select article_id,article_title,article_type,article_time,admin_id 
-                from admin_articles order by article_time desc");
+            $articlesRaw=$Form->query("select article_id,article_title,article_type,article_time,admin_articles.admin_id,admin_nickname
+                from admin_articles inner join admin_personal on admin_articles.admin_id=admin_personal.admin_id order by article_time desc");
             if($articlesRaw){
                 foreach ($articlesRaw as $key => $value) {
                     $articlesRaw[$key]['article_type'] = C('MODULE_CODE')[$articlesRaw[$key]['article_type']];
+
                 }
                 $this->x = $articlesRaw;
                 $this->assign('articlelist',$articlesRaw);
@@ -77,9 +78,7 @@ class MediaController extends Controller {
     	
     }
 
-    public function articleView(){
-
-    }
+   
 
     public function articleSave(){
         if(session('?userid')&&session('?usertype')&&($_SESSION[usertype]==1||$_SESSION[usertype]==2)){
@@ -178,6 +177,33 @@ class MediaController extends Controller {
 
     }
 
+    public function articleView(){
+        if(session('?userid')&&session('?usertype')&&($_SESSION[usertype]==1||$_SESSION[usertype]==2)){
+
+            $article_id=$_GET['key'];
+            //dump($_GET);
+            if($article_id)
+            {
+
+                
+                $Form = new Model();
+                $result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
+                    inner join admin_personal on admin_articles.admin_id = admin_personal.admin_id
+                    where article_id="%s"',$article_id);
+                if($result){
+                    $result[0]['article_type'] = C('MODULE_CODE')[$result[0]['article_type']];
+                    $this->p = $result[0];
+                }
+                //dump($this->article);
+            }
+             $this->display();
+            
+        }
+        else{
+            $this->redirect('Index/index');
+        }
+       
+    }
    
 
 }

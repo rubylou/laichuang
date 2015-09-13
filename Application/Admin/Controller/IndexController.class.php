@@ -42,7 +42,7 @@ class IndexController extends Controller {
 
     public function logout(){
     	$_SESSION = array();
-    	header("Location: index"); 
+        header("Location: index"); 
     }
    
 }

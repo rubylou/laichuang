@@ -30,7 +30,8 @@
       <div class="col-md-4 col-md-offset-4 col-xs-12">   
         <div class="form-group">
           <label for="regUser"><span class="required">*</span>用户名</label>
-          <input type="text" name="user" class="form-control" id="regUser" placeholder="由字母、数字、下划线组成,首位为字母" value="{$data.admin_id}">
+
+          <input type="text" name="user" class="form-control" id="regUser" placeholder="由字母、数字、下划线组成,首位为字母" value="{$data.admin_id}" disabled>
         </div>
         
         <div class="form-group">
@@ -49,7 +50,7 @@
             <option value="3">审核管理员</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="regsubmit()">&nbsp;提交&nbsp;</button>   
+        <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="regupdate()">&nbsp;提交&nbsp;</button>   
           
     </div>
     <!-- Modal -->
@@ -72,5 +73,5 @@
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   $('option[value="{$data.admin_type}"]').attr('selected',true);
 </script>
-
+<script src="__PUBLIC__/js/Admin/Super/reg.js"></script>
 </html>

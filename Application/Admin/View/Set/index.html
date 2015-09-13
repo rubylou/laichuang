@@ -56,7 +56,8 @@
             <h4 id="alert_content" class="theme-color"></h4>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm">确定</button>
+            <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm" >确定</button>
+            
           </div>
         </div>
       </div>
@@ -66,6 +67,9 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 
 <script>
+$("#modal_confirm").click(function() {
+   window.history.back(-2); 
+});
 $("#nickname").val("{$user.admin_nickname}");
 function submitSetNK(){
   if(checkNickname('#nickname'))

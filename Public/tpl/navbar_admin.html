@@ -9,12 +9,61 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <if condition="$_SESSION['usertype'] eq 1">
+        <a class="navbar-brand" href="{:U('Admin/Super/index')}">Brand</a>
+      </if>
+      <if condition="$_SESSION['usertype'] eq 2">
+        <a class="navbar-brand" href="{:U('Admin/Media/index')}">Brand</a>
+      </if>
+      <if condition="$_SESSION['usertype'] eq 3">
+        <a class="navbar-brand" href="{:U('Admin/Audit/index')}">Brand</a>
+      </if>
+      
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
+      <ul class="nav navbar-nav">
+
+          <if condition="$_SESSION['usertype'] eq 1">
+            <li>
+              <a href="{:U('Admin/Super/index')}" class="theme-nav">
+                <span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span class="text-default theme-color">超级管理员</span>
+              </a>
+            </li>
+          </if>
+
+          <if condition="($_SESSION['usertype'] eq 3) OR ($_SESSION['usertype'] eq 1)">
+            <li>
+              <a href="{:U('Admin/Audit/index')}" class="theme-nav">
+                <span class="glyphicon glyphicon-th text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span class="text-default theme-color">审核管理员</span>
+              </a>
+            </li>
+          </if>
+
+          <if condition="($_SESSION['usertype'] eq 2) OR ($_SESSION['usertype'] eq 1)">
+            <li>
+              <a href="{:U('Admin/Media/index')}" class="theme-nav">
+                <span class="glyphicon glyphicon-list-alt text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span class="theme-color">资讯管理员</span>
+              </a>
+            </li>
+          </if>
+          <if condition="($_SESSION['usertype'] eq 3) OR ($_SESSION['usertype'] eq 1)">
+            <li>
+              <a href="{:U('Admin/Message/index')}" class="theme-nav">
+                <span class="glyphicon glyphicon-envelope text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
+                <span class="text-default theme-color">消息</span>
+                <span class="theme-small">{$unreadcount}&nbsp;</span>
+              </a>
+            </li>
+          </if>
+          
+      </a>
+         
+      </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{:U('Admin/Index/logout')}">注销</a></li>
         
