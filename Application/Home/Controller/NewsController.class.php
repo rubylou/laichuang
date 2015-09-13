@@ -7,7 +7,7 @@ class NewsController extends Controller {
 		$Form = new Model();
 		$result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
 			inner join admin_personal on admin_personal.admin_id = admin_articles.admin_id 
-			where article_type = 1');
+			where article_type = 1 order by article_time desc');
 		foreach ($result as $key => $value) {
 			$result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
@@ -20,7 +20,7 @@ class NewsController extends Controller {
 
 		$result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
 			inner join admin_personal on admin_personal.admin_id = admin_articles.admin_id 
-			where article_type = 2');		
+			where article_type = 2 order by article_time desc');		
 		foreach ($result as $key => $value) {
 			$result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
@@ -33,7 +33,7 @@ class NewsController extends Controller {
 
 		$result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
 			inner join admin_personal on admin_personal.admin_id = admin_articles.admin_id 
-			where article_type = 3');
+			where article_type = 3 order by article_time desc');
 		foreach ($result as $key => $value) {
 			$result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
@@ -46,7 +46,7 @@ class NewsController extends Controller {
 
 		$result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
 			inner join admin_personal on admin_personal.admin_id = admin_articles.admin_id 
-			where article_type = 4');
+			where article_type = 4 order by article_time desc');
 		foreach ($result as $key => $value) {
 			$result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];
@@ -59,7 +59,7 @@ class NewsController extends Controller {
 
 		$result = $Form->query('select admin_articles.*, admin_nickname from admin_articles 
 			inner join admin_personal on admin_personal.admin_id = admin_articles.admin_id 
-			where article_type = 5');
+			where article_type = 5 order by article_time desc');
 		foreach ($result as $key => $value) {
 			$result[$key]['article_field'] = C('INTEREST_FIELD')[$value['article_field']];
 			$result[$key]['article_type'] = C('MODULE_CODE')[$value['article_type']];

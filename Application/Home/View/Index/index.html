@@ -98,7 +98,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 col-md-offset-4">
+                <div class="col-sm-4 col-sm-offset-4">
                   <if condition="session('?id')">
                      <button class="form-control theme-btn-alpha" onclick="javascript:window.location.href='{:U('Home/User/innovatorEdit')}'" role="button">个人主页</button>
                     <else />
@@ -123,10 +123,10 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-3 col-md-offset-3 col-xs-6">
+                <div class="col-sm-3 col-sm-offset-3 col-xs-6">
                   <button class="form-control theme-btn-alpha" onclick="javascript:window.location.href='{:U('Home/Index/register')}'" role="button">免费注册</button>
                 </div>
-                <div class="col-md-3 col-xs-6">
+                <div class="col-sm-3 col-xs-6">
                   <button class="form-control theme-btn-alpha" role="button">了解我们</button>
                 </div>
               </div>
@@ -147,7 +147,7 @@
     <iframe src='__URL__/news.html' frameborder='0' class='sourceView' noresize='noresize' style="height:800px;width:100%;"></iframe>
     <br>
     <div class="row" style="margin-top:20px">
-      <div class="col-md-2 col-md-offset-5">
+      <div class="col-sm-2 col-sm-offset-5">
         <a class="btn btn-default theme-btn form-control" href="{:U('Home/News/index')}">更多资讯</a>
       </div>
     </div>
@@ -173,16 +173,16 @@
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
                 <volist name="proslist" id="vo" offset="0" length="3">
-                  <div class="col-md-4 col-xs-12">
+                  <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="col-md-10 col-md-offset-1 theme-item">
-                      <div class="col-md-4 col-xs-4">
+                      <div class="col-md-5 col-xs-4">
                         <if condition="$vo['project_logo'] neq ''">
                           <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                           <else />
                           <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                         </if>
                       </div>
-                      <div class="col-md-8 col-xs-8">
+                      <div class="col-md-7 col-xs-8">
                         <p class="theme-h4 theme-color">{$vo.project_name}</p>
                         <p class="theme-h5-small">{$vo.project_brief}</p>
                       </div>
@@ -203,16 +203,16 @@
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
                 <volist name="proslist" id="vo" offset="3" length="3">
-                  <div class="col-md-4 col-xs-12">
+                  <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="col-md-10 col-md-offset-1 theme-item">
-                      <div class="col-md-4 col-xs-4">
+                      <div class="col-md-5 col-xs-4">
                         <if condition="$vo['project_logo'] neq ''">
                           <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                           <else />
                           <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                         </if>
                       </div>
-                      <div class="col-md-8 col-xs-8">
+                      <div class="col-md-7 col-xs-8">
                         <p class="theme-h4 theme-color">{$vo.project_name}</p>
                         <p class="theme-h5-small">{$vo.project_brief}</p>
                       </div>
@@ -233,16 +233,16 @@
             <div class="row">
               <div class="col-md-10 col-md-offset-1">
                 <volist name="proslist" id="vo" offset="6" length="3">
-                  <div class="col-md-4 col-xs-12">
+                  <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="col-md-10 col-md-offset-1 theme-item">
-                      <div class="col-md-4 col-xs-4">
+                      <div class="col-md-5 col-xs-4">
                         <if condition="$vo['project_logo'] neq ''">
                           <input type="image" class="thumbnail theme-profile" src="{$vo.project_logo}" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                           <else />
                           <input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" width="56px" height="56px" onclick="openProject('{$vo.project_id}')" style="margin-left:auto;margin-right:auto"/>
                         </if>
                       </div>
-                      <div class="col-md-8 col-xs-8">
+                      <div class="col-md-7 col-xs-8">
                         <p class="theme-h4 theme-color">{$vo.project_name}</p>
                         <p class="theme-h5-small">{$vo.project_brief}</p>
                       </div>
@@ -262,7 +262,7 @@
       </a>
       <br>
       <div class="row">
-        <div class="col-md-2 col-md-offset-5">
+        <div class="col-sm-2 col-sm-offset-5">
           <a class="btn btn-default theme-btn form-control" href="{:U('Home/Case/index')}">更多项目</a>
         </div>
       </div>
@@ -274,14 +274,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-1 col-md-offset-2">
+      <div class="col-md-1 col-md-offset-2 col-sm-2 col-sm-offset-2 col-xs-4">
         <a class="thumbnail" data-toggle="popover" data-container="body" data-html="true" data-placement="bottom" data-content="<img src='/lcb/Public/pic/profile.png' width='80px' height='80px'></img><strong>姓名</strong><hr><p>他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍他的介绍</p>">
           <img src="__PUBLIC__/pic/profile.png" alt="头像">
         </a>
       </div>
     </div>
     <div class='row'>
-      <div class="col-md-3 col-md-offset-2">
+      <div class="col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2 col-xs-12">
         <div class="panel">
           <img src='/lcb/Public/pic/profile.png' width='80px' height='80px'/>
           <strong>姓名</strong>

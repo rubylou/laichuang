@@ -87,22 +87,22 @@
 			  		<div class="panel-body">
 						<table class="table table-hover">
 							<tr>
-								<th class="text-center theme-h5-small" width="60%">投资人</th>
-								<th class="text-center theme-h5-small" width="20%">投资领域</th>
-								<th class="text-center theme-h5-small" width="20%">投资的项目</th>
+								<th class="text-center theme-h5-small" width="50%">投资人</th>
+								<th class="text-center theme-h5-small" width="25%">投资领域</th>
+								<th class="text-center theme-h5-small" width="25%">投资的项目</th>
 							</tr>
 							<volist name="list" id="vo">
 								<tr>
 									<td>
 										<div class="row">
-							    			<div class="col-md-2 col-xs-4">
+							    			<div class="col-md-2 col-sm-4 col-xs-12">
 							    				<if condition="$vo['portrait'] neq ''">
 									    			<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" width="56px" height="56px" onclick="openInvestor('{$vo.user_id}')" style="margin-left:auto;margin-right:auto"/>
 									    			<else />
 									    			<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/investor.png" width="56px" height="56px" onclick="openInvestor('{$vo.user_id}')" style="margin-left:auto;margin-right:auto"/>
 									    		</if>
 									    	</div>
-							    			<div class="col-md-6 col-xs-8">
+							    			<div class="col-md-6 col-sm-8 col-xs-12">
 									    		<p><a class="theme-h4 theme-color" href="__URL__/investor?val={$vo.user_id}">{$vo.name}</a></p>
 									    	</div>
 								    	</div>
@@ -117,7 +117,7 @@
 									<td class="text-center">
 										<div class="row theme-nav">
 											<volist name="vo['cases']" id="k">
-												&nbsp;<a class="theme-color" onclick="openProject('{$k.project_id}')">{$k.project_name}</a>&nbsp;
+												&nbsp;<a class="theme-color" onclick="openProject('{$k.project_id}')" style="cursor:pointer">{$k.project_name}</a>&nbsp;<br>
 											</volist>
 										</div>
 									</td>

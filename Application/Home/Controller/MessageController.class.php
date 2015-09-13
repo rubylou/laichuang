@@ -177,6 +177,7 @@ class MessageController extends Controller {
 					$data['to_id'] = $value;
 					$result = $Form->add($data);
 				}
+				echo 200;
 			}
 		}
 
@@ -205,6 +206,7 @@ class MessageController extends Controller {
 					$data['to_id'] = $value;
 					$result = $Form->add($data);
 				}
+				echo 200;
 			}
 		}
 
@@ -225,6 +227,7 @@ class MessageController extends Controller {
 					$result = $Form->add($data);
 					//dump($result);
 				}
+				echo 200;
 			}
 		}
 
@@ -247,6 +250,7 @@ class MessageController extends Controller {
 					$result = $Form->add($data);
 					//dump($result);
 				}
+				echo 200;
 			}
 		}
 

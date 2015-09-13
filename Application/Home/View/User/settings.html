@@ -32,36 +32,36 @@
 				  			<p class="theme-h5">修改密码</p>
 				  			<div class="form-horizontal">
 							  	<div class="form-group">
-							    	<label for="pwd1" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>原密码</label>
-							    	<div class="col-md-6">
+							    	<label for="pwd1" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>原密码</label>
+							    	<div class="col-sm-6">
 						        		<input type="password" class="form-control" id="pwd1">
 						        	</div>
 							  	</div>
 							  	<div class="form-group">
-							    	<label for="pwd2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>新密码</label>
-							    	<div class="col-md-6">
+							    	<label for="pwd2" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>新密码</label>
+							    	<div class="col-sm-6">
 						        		<input type="password" class="form-control" id="pwd2">
 						        	</div>
 							  	</div>
 							  	<div class="form-group">
-							    	<label for="pwd3" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>重复新密码</label>
-							    	<div class="col-md-6">
+							    	<label for="pwd3" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>重复新密码</label>
+							    	<div class="col-sm-6">
 						        		<input type="password" class="form-control" id="pwd3">
 						        	</div>
 							  	</div>
 							  	<div class="form-group">
 							  		<input type="hidden" value="{$info.mobile}" id="mobile" />
-							    	<label for="checkCode2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
-							    	<div class="col-md-3 col-xs-7">
+							    	<label for="checkCode2" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+							    	<div class="col-sm-3 col-xs-7">
 						        		<input type="text" class="form-control" id="checkCode2">
 						        	</div>
-						        	<div class="col-md-2 col-xs-4">
+						        	<div class="col-sm-2 col-xs-4">
 						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#mobile')"/>
 						        	</div>
 							  	</div>
 							</div>
 							<div class="row">
-						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						    	<div class="col-sm-2 col-sm-offset-3 col-xs-6 col-xs-offset-3">
 						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitSecure()">&nbsp;保存&nbsp;</button>    
 						        </div>
 						    </div>
@@ -70,29 +70,29 @@
 				  		<div class="panel">
 				  			<p class="theme-h5">更改手机号码</p>
 				  			<div class="row">
-				  				<div class="col-md-6 col-md-offset-3">
+				  				<div class="col-sm-6 col-sm-offset-3">
 				  					<span><strong>{$info.mobile}</strong></span>
 				  				</div>
 				  			</div>
 				  			<div class="form-horizontal">
 							  	<div class="form-group">
-							    	<label for="phone" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>修改手机</label>
-							    	<div class="col-md-6">
+							    	<label for="phone" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>修改手机</label>
+							    	<div class="col-sm-6">
 						        		<input type="text" class="form-control" id="phone">
 						        	</div>
 							  	</div>
 							  	<div class="form-group">
-							    	<label for="checkCode" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
-							    	<div class="col-md-3 col-xs-7">
+							    	<label for="checkCode" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>验证码</label>
+							    	<div class="col-sm-3 col-xs-7">
 						        		<input type="text" class="form-control" id="checkCode">
 						        	</div>
-						        	<div class="col-md-2 col-xs-4">
+						        	<div class="col-sm-2 col-xs-4">
 						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#phone')"/>
 						        	</div>
 							  	</div>
 							</div>
 							<div class="row">
-						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						    	<div class="col-sm-2 col-sm-offset-3 col-xs-6 col-xs-offset-3">
 						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitMobile('{:U('Home/Index/logout')}')">&nbsp;保存&nbsp;</button>    
 						        </div>
 						    </div>
@@ -100,7 +100,7 @@
 				  		<div class="panel">
 				  			<p class="theme-h5">更改邮箱地址</p>
 				  			<div class="row">
-				  				<div class="col-md-6 col-md-offset-3">
+				  				<div class="col-sm-6 col-sm-offset-3">
 				  					<span><strong>{$info.email}</strong></span>
 				  					<if condition="$info['active_status']">
 				  						<span class="label label-info">已激活</span>
@@ -114,14 +114,14 @@
 				  			</div>
 				  			<div class="form-horizontal">
 							  	<div class="form-group">
-							    	<label for="email" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
-							    	<div class="col-md-6">
+							    	<label for="email" class="col-sm-2 col-sm-offset-1 col-xs-12 control-label"><span class="required">*</span>邮箱</label>
+							    	<div class="col-sm-6">
 						        		<input type="text" class="form-control" id="email">
 						        	</div>
 							  	</div>
 							</div>
 							<div class="row">
-						    	<div class="col-md-2 col-md-offset-3 col-xs-6 col-xs-offset-3">
+						    	<div class="col-sm-2 col-sm-offset-3 col-xs-6 col-xs-offset-3">
 						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="submitEmail('#email')">&nbsp;激活邮箱&nbsp;</button>    
 						        </div>
 						    </div>

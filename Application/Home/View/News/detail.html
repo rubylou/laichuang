@@ -32,15 +32,17 @@
           </div>
           <hr>
           <div class="row">
-            <div class="col-md-2 text-right">
-              <label class="theme-color">关联内容</lable>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
+              <label class="theme-color">关联<if condition="$p.article_about eq 1">项目
+                  <elseif condition="$p.article_about eq 2"/>投资人<elseif condition="$p.article_about eq 3"/>创业者</if>
+              </lable>
             </div>
-            <div class="col-md-2">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
               <div class="img-responsive">
-                <input type="image" class="thumbnail theme-profile" src='{$obj.portrait}' alt="头像" height="64px" width="64px">
+                <input type="image" class="thumbnail theme-profile" src='{$obj.portrait}' alt="头像" height="64px" width="64px" onclick="openObject('{$p.article_object}')">
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$p.article_visits}&nbsp;)&nbsp;</small></h5>
             </div>
           </div>
@@ -55,5 +57,29 @@
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   $("#contents")[0].innerHTML = unescape('{$p.article_content}');
   $('img').addClass('img-responsive');
+
+  function openObject(id){
+    if('{$p.article_about}'=='1'){
+      openProject(id);
+    }
+    else if('{$p.article_about}'=='2'){
+      openInvestor(id);
+    }
+    else if('{$p.article_about}'=='3'){
+      openUser(id);
+    }
+  }
+
+  function openUser(id){
+    window.open("{:U('Home/User/innovator/val/"+id+"')}");
+  }
+
+  function openInvestor(id){
+    window.open("{:U('Home/User/investor/val/"+id+"')}");
+  }
+
+  function openProject(id){
+      window.open("{:U('Home/Case/info/key/"+id+"')}");
+  }
 </script>
 </html>

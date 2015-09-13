@@ -203,12 +203,12 @@
 						</div>
 						<div class="row">
 							<if condition="session('type') eq 1">
-								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+								<div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
 									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$info.project_id},'INVEST','PROJECT')">我要投资</a>
 								</div>
 							</if>
 							<if condition="session('type') eq 2">
-								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+								<div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
 									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$info.project_id},'JOIN','PROJECT')">我要加入</a>
 								</div>
 							</if>
@@ -245,15 +245,15 @@
 					</div>
 				  	<div class="panel-body">
 				  		<volist name="prolist" id="familiar">
-				  			<div class="row">
-					  			<div class="col-md-2 col-xs-3 theme-nav">
+				  			<div class="row theme-well-radius">
+					  			<div class="col-sm-2 col-xs-3 theme-nav">
 					  				<if condition="strlen($familiar['project_logo']) gt 0">
 										<input type="image" class="thumbnail theme-profile" src="{$familiar.project_logo}" height="60px" width="60px" onclick="openProject('{$familiar.project_id}')"/>
 										<else />
 										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$familiar.project_id}')"/>
 									</if>
 								</div>
-								<div class="col-md-9 col-xs-8 theme-nav">
+								<div class="col-sm-9 col-xs-8 theme-nav">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$familiar.project_name}</p>
 								</div>
 							</div>

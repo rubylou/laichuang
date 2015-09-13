@@ -131,7 +131,7 @@ class UserController extends Controller {
         $this->user = $user[0];
 
         //所在行业
-        $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $_SESSION['id']);
+        $result = $Form->query('select interest_field from interest_entrepreneur where id="%s"', $id);
         if($result){
             $fields = C('INTEREST_FIELD');
             foreach ($result as $key => $value) {
@@ -277,7 +277,7 @@ class UserController extends Controller {
         }
 
         $Form = new Model();
-        $result = $Form->query('select interest_field from interest_investor where id="%s"', $_SESSION['id']);
+        $result = $Form->query('select interest_field from interest_investor where id="%s"', $id);
         if($result){
             $fields = C('INTEREST_FIELD');
             foreach ($result as $key => $value) {

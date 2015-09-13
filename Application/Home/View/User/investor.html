@@ -23,20 +23,20 @@
 				<div class="panel panel-default theme-outline">
 				  	<div class="panel-body">
 					  	<div class='row'>
-					  		<div class="col-md-1 col-xs-12 text-center">
+					  		<div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 text-center">
 							    <if condition="strlen($user['portrait']) gt 0">
 							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
 							    	<else />
 							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/investor.png' alt="头像" height="90px" width="90px">
 							    </if>
 					  		</div>
-							<div class="col-md-11 col-xs-12">
+							<div class="col-lg-11 col-md-10 col-sm-10 col-xs-12">
 								<p class="theme-h3 hide-edit">&nbsp;&nbsp;{$user.name}</p>
 								<p class="hide-edit">
 									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
 								</p>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 										<p id="interests" class="hide-edit theme-small">
 											&nbsp;&nbsp;&nbsp;
 											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
@@ -72,7 +72,7 @@
 			  				<div class="panel-body">
 								<div class="row">
 									<volist name="prolist" id="pros">
-										<div class="col-md-3 theme-well">
+										<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 theme-well">
 											<div class="col-md-4 col-xs-3 theme-nav">
 												<if condition="strlen($pros['project_logo']) gt 0">
 													<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
@@ -93,10 +93,10 @@
 				  			<div class="panel">
 				  				<div class="panel-body theme-well">
 								  	<div class='row'>
-								  		<div class="col-md-2 col-xs-4">
+								  		<div class="col-sm-2 col-xs-12">
 										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="80px" width="80px">
 								  		</div>
-										<div class="col-md-6 col-xs-8">
+										<div class="col-sm-10 col-xs-12">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$cases.company}</p>
 											<p class="theme-small">&nbsp;&nbsp;&nbsp;{$cases.investor_name}</p>
 											<p class="theme-small">&nbsp;&nbsp;&nbsp;<span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
@@ -119,9 +119,9 @@
 							<div class="panel">
 					  			<div class="panel-body theme-well">
 								  	<div class='row'>
-										<div class="col-md-6 col-xs-12">
+										<div class="col-md-8 col-xs-12">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small unescape">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 									</div>
@@ -162,7 +162,7 @@
 						</div>
 						<div class="row">
 							<if condition="session('type') eq 2">
-								<div class="col-md-6 col-md-offset-3 col-xs-8 col-xs-offset-2">
+								<div class="col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
 									<a class="btn btn-default theme-btn-inverse form-control" onclick="request_message({$user.user_id},'REQUIRE','INVESTOR')">我需要你&nbsp;!</a>
 								</div>
 							</if>
@@ -177,15 +177,15 @@
 					</div>
 					<div class="panel-body">
 						<volist name="watchlist" id="watch">
-				  			<div class="row theme-well">
-					  			<div class="col-md-2 col-xs-3 theme-nav">
+				  			<div class="row theme-well-radius">
+					  			<div class="col-sm-2 col-xs-3 theme-nav">
 									<if condition="strlen($watch['project_logo']) gt 0">
 										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
 										<else />
 										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
 									</if>
 								</div>
-								<div class="col-md-9 col-xs-8 theme-nav">
+								<div class="col-sm-9 col-xs-8 theme-nav">
 									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
 								</div>
 							</div>
@@ -225,6 +225,10 @@
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	addInterests({$interests},"#interests");
+
+  	$('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+	});
 
  	$('#require_confirm').click(function(){
 		send_message($('#require_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
