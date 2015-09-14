@@ -97,7 +97,14 @@ class CaseController extends Controller {
 		foreach ($result as $key => $value) {
 			$result[$key]['project_type'] = C('INTEREST_FIELD')[$value['project_type']];
 			$result[$key]['project_intro'] = htmlspecialchars_decode($value['project_intro']);
+            $result[$key]['project_name'] = stripslashes(htmlspecialchars($value['project_name'],ENT_QUOTES));
+            $result[$key]['project_brief'] = stripslashes(htmlspecialchars($value['project_brief'],ENT_QUOTES));
+            $result[$key]['project_member'] = stripslashes(htmlspecialchars($value['project_member'],ENT_QUOTES));
+            $result[$key]['project_fi'] = stripslashes(htmlspecialchars($value['project_fi'],ENT_QUOTES));
+            $result[$key]['project_recruit'] = stripslashes(htmlspecialchars($value['project_recruit'],ENT_QUOTES));
+            $result[$key]['project_require'] = stripslashes(htmlspecialchars($value['project_require'],ENT_QUOTES));
 		}
+        //dump($result);
 
         //关注信息
         $follow = $Form->query('select count(user_id) from relation_follow where object_type=%d and object_id="%s"',C(PROJECT_CODE),$id);
@@ -185,6 +192,12 @@ class CaseController extends Controller {
         foreach ($result as $key => $value) {
             $result[$key]['project_type'] = C('INTEREST_FIELD')[$value['project_type']];
             $result[$key]['project_intro'] = htmlspecialchars_decode($value['project_intro']);
+            $result[$key]['project_name'] = stripslashes(htmlspecialchars($value['project_name'],ENT_QUOTES));
+            $result[$key]['project_brief'] = stripslashes(htmlspecialchars($value['project_brief'],ENT_QUOTES));
+            $result[$key]['project_member'] = stripslashes(htmlspecialchars($value['project_member'],ENT_QUOTES));
+            $result[$key]['project_fi'] = stripslashes(htmlspecialchars($value['project_fi'],ENT_QUOTES));
+            $result[$key]['project_recruit'] = stripslashes(htmlspecialchars($value['project_recruit'],ENT_QUOTES));
+            $result[$key]['project_require'] = stripslashes(htmlspecialchars($value['project_require'],ENT_QUOTES));
         }
 
         //关注量

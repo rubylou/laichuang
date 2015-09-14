@@ -58,7 +58,12 @@ class UserController extends Controller {
             $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
             $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
             $user[0]['reg_status'] = C('AUTH_STATUS')[$user[0]['reg_status']];
+            $user[0]['name'] = stripslashes(htmlspecialchars($user[0]['name'],ENT_QUOTES));
+            $user[0]['brief'] = stripslashes(htmlspecialchars($user[0]['brief'],ENT_QUOTES));
+
+
             $this->user = $user[0];
+            //dump($this->user);
             //dump($this->user);
            
             //工作经历
@@ -243,6 +248,8 @@ class UserController extends Controller {
             //用户信息
             $user = $Form->query("select * from investor_personal where user_id='%s'",$_SESSION['id']);
             $user[0]['reg_status'] = C('AUTH_STATUS')[$user[0]['reg_status']];
+            $user[0]['name'] = stripslashes(htmlspecialchars($user[0]['name'],ENT_QUOTES));
+            $user[0]['brief'] = stripslashes(htmlspecialchars($user[0]['brief'],ENT_QUOTES));
             $this->user = $user[0];
 
             //认证资料

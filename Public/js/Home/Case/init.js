@@ -38,24 +38,24 @@ function initializeField(rows,field){
 function initializeProject(intro,member,fi,recruit,require){
 	$("#details")[0].innerHTML = unescape(intro);
 	var str = unescape(member);
-	str = str.replace(/<br>/g,"\r");
+	str = str.replace(/&lt;br&gt;/g,"\r");
 	$("#pro_member")[0].innerHTML = (str);
-	$("#project_member")[0].innerHTML = (unescape(member));
+	$("#project_member")[0].innerHTML = (unescape(member).replace(/&lt;br&gt;/g,"<br>"));
 
 	str = unescape(fi);
-	str = str.replace(/<br>/g,"\r");
+	str = str.replace(/&lt;br&gt;/g,"\r");
 	$("#pro_fi")[0].innerHTML = (str);
-	$("#project_fi")[0].innerHTML = (unescape(fi));
+	$("#project_fi")[0].innerHTML = (unescape(fi).replace(/&lt;br&gt;/g,"<br>"));
 
 	str = unescape(recruit);
-	str = str.replace(/<br>/g,"\r");
+	str = str.replace(/&lt;br&gt;/g,"\r");
 	$("#pro_recruit")[0].innerHTML = (str);
-	$("#project_recruit")[0].innerHTML = (unescape(recruit));
+	$("#project_recruit")[0].innerHTML = (unescape(recruit).replace(/&lt;br&gt;/g,"<br>"));
 
 	str = unescape(require);
-	str = str.replace(/<br>/g,"\r");
+	str = str.replace(/&lt;br&gt;/g,"\r");
 	$("#pro_require")[0].innerHTML = (str);
-	$("#project_require")[0].innerHTML = (unescape(require));
+	$("#project_require")[0].innerHTML = (unescape(require).replace(/&lt;br&gt;/g,"<br>"));
 }
 
 

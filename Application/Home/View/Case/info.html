@@ -304,11 +304,12 @@
 	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	
-	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
-	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
-	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
-	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
-	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
+	$("#details")[0].innerHTML = unescape('{$info.project_intro}').replace(/&lt;br&gt;/g,"<br>");
+	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}')).replace(/&lt;br&gt;/g,"<br>");
+	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}')).replace(/&lt;br&gt;/g,"<br>");
+	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}')).replace(/&lt;br&gt;/g,"<br>");
+	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}')).replace(/&lt;br&gt;/g,"<br>");
+	
 	addInterests({$interests},"#interests");
 
 	$('#details').find('img').addClass('img-responsive');

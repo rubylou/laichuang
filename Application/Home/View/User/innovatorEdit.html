@@ -472,7 +472,7 @@
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	$('.unescape').each(function(){
-		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML).replace(/&lt;br&gt;/g,"<br>");
 	});
 
   	addYM('#startyear','#startmon',1960);
@@ -521,8 +521,8 @@
 	    }
 	});
 
-	$('#edit_name').val('{:session("user")}');
-	$('#edit_brief').val('{$user.brief}');
+	$('#edit_name').val(unescape('{$user.name}'));
+	$('#edit_brief').val(unescape('{$user.brief}'));
 	if('{:I("get.action")}'=="crop"){
 		$("#collapseExample0").collapse('show');
 	}
