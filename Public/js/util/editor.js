@@ -3,7 +3,7 @@ function editorInitialize(id,content){
 	var um = UE.getEditor(id);
 	UE.getEditor(id).ready(function() {
 	  //this是当前创建的编辑器实例
-	  var text = content?content:'项目图文介绍';
+	  var text = content?content:'项目图文介绍, 上传图片大小不能超过2M';
 	  this.setContent(text);
 	});
 	return um;
