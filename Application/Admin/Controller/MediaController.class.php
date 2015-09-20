@@ -177,12 +177,12 @@ class MediaController extends Controller {
 
     }
 
-    public function articleView(){
+    public function articleViewold(){
         if(session('?userid')&&session('?usertype')&&($_SESSION[usertype]==1||$_SESSION[usertype]==2)){
 
-            $article_id=$_GET['key'];
-            //dump($_GET);
-            if($article_id)
+            $article_content=$_GET['key'];
+            dump($_GET);
+            /*if($article_id)
             {
 
                 
@@ -195,7 +195,7 @@ class MediaController extends Controller {
                     $this->p = $result[0];
                 }
                 //dump($this->article);
-            }
+            }*/
              $this->display();
             
         }

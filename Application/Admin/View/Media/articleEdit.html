@@ -197,11 +197,13 @@
     });
 
      function preview(){
-        var result = unescape(getContent(um));
+        var result = getContent(um);
         //document.write(result);
-        var OpenWindow=window.open('articleView.html','newwindow' ); 
-  
+        var OpenWindow=window.open('articleView','newwindow' ); 
+        //OpenWindow.document.getElementById("contents").value=result;
 
+       
+        
         OpenWindow.document.write(result) ; 
         
         OpenWindow.document.close() ;
