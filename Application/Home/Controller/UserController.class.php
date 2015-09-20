@@ -1021,7 +1021,7 @@ class UserController extends Controller {
                 echo 409;
             }
             else{
-                //$result = send_msg(I('post.mobile'));
+                $result = send_msg(I('post.mobile'));
                 echo $result;
             }
         }
@@ -1034,7 +1034,7 @@ class UserController extends Controller {
                 echo 409;
             }
             else{
-                //$result = send_msg(I('post.mobile'));
+                $result = send_msg(I('post.mobile'));
                 echo $result;
             }
         }
@@ -1066,6 +1066,9 @@ class UserController extends Controller {
             else{
                 echo 401;
             }
+        }
+        else{
+            echo 409;
         }
     }
 
@@ -1114,39 +1117,84 @@ class UserController extends Controller {
         }
     }
 
+    public function queryCheckCode1(){
+        //dump($_POST);
+        if($_SESSION['type']==1){
+            $Form = M('investor_personal');
+            $data['user_id'] = session('id');
+            $data['mobile'] = I('post.mobile');
+            $exist = $Form->where('mobile="%s" and user_id = "%s"',$data['mobile'],$data['user_id'])->select();
+            if($exist){
+                $result = send_msg(I('post.mobile'));
+                echo $result;
+            }
+        }
+        else if($_SESSION['type']==2){
+            $Form = M('entrepreneur_personal');
+            $data['user_id'] = session('id');
+            $data['phone'] = I('post.mobile');
+            $exist = $Form->where('phone="%s" and user_id = "%s"',$data['phone'],$data['user_id'])->select();
+            if($exist){
+                $result = send_msg(I('post.mobile'));
+                echo $result;
+            }
+        }
+        else{
+            echo 401;
+        }
+    }
+
     public function saveChange(){
         //dump($_POST);
         $Form = new Model();
         if($_SESSION['type']==1){
-            $check = $Form->query('select * from investor_security where user_id = "%s"',$_SESSION['id']);
-            if($check[0]['user_pwd']===I('post.key1')){
-                $result = $Form->execute('update investor_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
-                if($result){
-                    echo 200;
-                    session('[destroy]');
+            if(check_mobile(I('post.key5'),I('post.key4'))==200){
+                $check = $Form->query('select * from investor_security where user_id = "%s"',$_SESSION['id']);
+                if($check[0]['user_pwd']===I('post.key1')){
+                    $result = $Form->execute('update investor_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
+                    if($result){
+                        echo 200;
+                        session('[destroy]');
+                        exit();
+                    }
+                    else{
+                        echo 400;
+                        exit();
+                    }
                 }
                 else{
-                    echo 400;
+                    echo 404;
+                    exit();
                 }
             }
             else{
-                echo 404;
+                echo 409;
+                exit();
             }
+                        
         }
         else if($_SESSION['type']==2){
-            $check = $Form->query('select * from entrepreneur_security where user_id = "%s"',$_SESSION['id']);
-            if($check[0]['user_pwd']===I('post.key1')){
-                $result = $Form->execute('update entrepreneur_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
-                if($result){
-                    echo 200;
-                    session('[destroy]');
+            if(check_mobile(I('post.key5'),I('post.key4'))==200){
+                $check = $Form->query('select * from entrepreneur_security where user_id = "%s"',$_SESSION['id']);
+                if($check[0]['user_pwd']===I('post.key1')){
+                    $result = $Form->execute('update entrepreneur_security set user_pwd = "%s" where user_id = "%s"',I('post.key2'),$_SESSION['id']);
+                    if($result){
+                        echo 200;
+                        session('[destroy]');
+                    }
+                    else{
+                        echo 400;
+                        exit();
+                    }
                 }
                 else{
-                    echo 400;
+                    echo 404;
+                    exit();
                 }
             }
             else{
-                echo 404;
+                echo 409;
+                exit();
             }
         }
         else{

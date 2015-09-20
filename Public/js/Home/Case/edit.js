@@ -168,8 +168,10 @@ function editProFi(id,url){
 function saveMember(url){
   var str = $('#pro_member').val();
   str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
+  str = (str.replace(/\s/g,"&nbsp;"));
+  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'member='+escape(str)+'&';
+  var data = 'member='+(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -183,8 +185,10 @@ function saveMember(url){
 function saveFi(url){
   var str = $('#pro_fi').val();
   str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
+  str = (str.replace(/\s/g,"&nbsp;"));
+  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'fi='+escape(str)+'&';
+  var data = 'fi='+(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -198,8 +202,10 @@ function saveFi(url){
 function saveRecruit(url){
   var str = $('#pro_recruit').val();
   str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
+  str = (str.replace(/\s/g,"&nbsp;"));
+  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'recruit='+escape(str)+'&';
+  var data = 'recruit='+(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -212,8 +218,10 @@ function saveRecruit(url){
 function saveRequire(url){
   var str = $('#pro_require').val();
   str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
+  str = (str.replace(/\s/g,"&nbsp;"));
+  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'require='+escape(str)+'&';
+  var data = 'require='+(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();

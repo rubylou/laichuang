@@ -8,13 +8,14 @@
     <meta name="author" content="">
     <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="__PUBLIC__/Jcrop/css/jquery.Jcrop.css" type="text/css" />
-
+    
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
     <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
     <script src="__PUBLIC__/Jcrop/js/jquery.Jcrop.js"></script>
+    
   </head>
 
 <body>
@@ -339,7 +340,12 @@
 						            </div>
 						            <div class="form-group">
 						              <label for="editBirth"><span class="required">*</span>生日</label>
-						              <input type="text" class="form-control" id="editBirth" placeholder="格式: yyyy-mm-dd">
+						              <div class="input-group">
+							              <input type="text" class="form-control" id="editBirth" placeholder="格式: yyyy-mm-dd" readonly="true">
+							              <span class="input-group-btn">
+							                <button class="btn btn-default" type="button" id="editBirth_btn"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>
+							              </span>
+							          </div>
 						            </div>
 						            <div class="form-group">
 						              <label for="editCity"><span class="required">*</span>地区</label>
@@ -469,11 +475,14 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/User/init.js"></script>
 <script src="__PUBLIC__/js/util/init.js"></script>
+
+<!-- this should go after your </body> -->
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/datetimepicker/jquery.datetimepicker.css"/>
+<script src="__PUBLIC__/datetimepicker/jquery.datetimepicker.js"></script>
+
+
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  	$('.unescape').each(function(){
-		$(this)[0].innerHTML = unescape($(this)[0].innerHTML).replace(/&lt;br&gt;/g,"<br>");
-	});
 
   	addYM('#startyear','#startmon',1960);
   	addYM('#endyear','#endmon',1960);
@@ -526,6 +535,16 @@
 	if('{:I("get.action")}'=="crop"){
 		$("#collapseExample0").collapse('show');
 	}
+
+	$('#editBirth').datetimepicker({
+	  timepicker:false,
+	  format:'Y-m-d',
+	  lang:"zh"
+	});
+
+	$('#editBirth_btn').click(function(){
+	    $('#editBirth').datetimepicker('show'); //support hide,show and destroy command
+	});
 
 	function submitAuth(id){
 		var xmlHttp = createRequest();

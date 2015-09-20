@@ -12,7 +12,9 @@ function submitJob(){
 
     var info = $("#job_info").val();
     info = (info.replace(/(\n|\r|(\r\n))/g,"<br>"));
-    info = "key7="+ escape(info) +"&";
+    info = (info.replace(/\s/g,"&nbsp;"));
+    info = (info.replace(/&/g,"%26"));
+    info = "key7="+ (info) +"&";
     var now = "key8="+document.getElementById('untilnow').checked+'&';
     var data = title+company+startyear+startmon+endyear+endmon+info+now;
     if(id.length>0){
@@ -221,8 +223,10 @@ function editJob(id){
     }
   });
 
-  str = unescape(info.job_info);
+  str = (info.job_info);
+  str = str.replace(/&nbsp;/g," ");
   str = str.replace(/<br>/g,"\r");
+  
   $('#job_info').val(str);
   $('#editJob_input').val(id);
 }

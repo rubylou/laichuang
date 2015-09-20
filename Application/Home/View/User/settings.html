@@ -56,7 +56,7 @@
 						        		<input type="text" class="form-control" id="checkCode2">
 						        	</div>
 						        	<div class="col-sm-2 col-xs-4">
-						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#mobile')"/>
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#mobile','PPP')"/>
 						        	</div>
 							  	</div>
 							</div>
@@ -87,7 +87,7 @@
 						        		<input type="text" class="form-control" id="checkCode">
 						        	</div>
 						        	<div class="col-sm-2 col-xs-4">
-						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#phone')"/>
+						        		<input type="button" class="btn btn-default theme-btn" value="获取验证码" onclick="settime(this,'#phone','MMM')"/>
 						        	</div>
 							  	</div>
 							</div>
@@ -157,7 +157,7 @@
 </script>
 <script>
 	var wait=60;
-	function settime(o,val) {
+	function settime(o,val,type) {
 		if (wait == 0) {
             o.removeAttribute("disabled");            
             o.value="获取验证码";
@@ -166,7 +166,7 @@
         else {
         	if (wait == 60){
         		if(checkPhone(val)){
-	        		if(!queryCheckCode(val)){
+	        		if(!queryCheckCode(val,type)){
 	        			wait = 10;
 	        		}
 	        	}
