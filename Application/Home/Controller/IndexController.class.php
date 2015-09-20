@@ -185,6 +185,11 @@ class IndexController extends Controller {
                 (user_id,name,email,phone,nickname,gender,birthday,city,reg_time,reg_status)
                 values ("%s","%s","%s","%s","%s",%d,"%s",%d,
                 "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$regTime,0);
+            
+            //感兴趣领域
+            $interests = $_POST['key9'];
+            $temp = $Form->execute('replace into interest_entrepreneur (id, interest_field) values ("%s",%d)',$id,$interests);
+
             if($result){
                 $safety = $Form->execute('insert into entrepreneur_security (user_id,user_pwd) 
                     values ("%s","%s")',$id,$_POST['key11']);
