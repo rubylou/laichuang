@@ -10,13 +10,13 @@
         <span class="icon-bar"></span>
       </button>
       <if condition="$_SESSION['usertype'] eq 1">
-        <a class="navbar-brand" href="{:U('Admin/Super/index')}">Brand</a>
+        <a class="navbar-brand" href="{:U('Startbugs/Super/index')}">Brand</a>
       </if>
       <if condition="$_SESSION['usertype'] eq 2">
-        <a class="navbar-brand" href="{:U('Admin/Media/index')}">Brand</a>
+        <a class="navbar-brand" href="{:U('Startbugs/Media/index')}">Brand</a>
       </if>
       <if condition="$_SESSION['usertype'] eq 3">
-        <a class="navbar-brand" href="{:U('Admin/Audit/index')}">Brand</a>
+        <a class="navbar-brand" href="{:U('Startbugs/Audit/index')}">Brand</a>
       </if>
       
     </div>
@@ -27,7 +27,7 @@
 
           <if condition="$_SESSION['usertype'] eq 1">
             <li>
-              <a href="{:U('Admin/Super/index')}" class="theme-nav">
+              <a href="{:U('Startbugs/Super/index')}" class="theme-nav">
                 <span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
                 <span class="text-default theme-color">超级管理员</span>
               </a>
@@ -36,7 +36,7 @@
 
           <if condition="($_SESSION['usertype'] eq 3) OR ($_SESSION['usertype'] eq 1)">
             <li>
-              <a href="{:U('Admin/Audit/index')}" class="theme-nav">
+              <a href="{:U('Startbugs/Audit/index')}" class="theme-nav">
                 <span class="glyphicon glyphicon-th text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
                 <span class="text-default theme-color">审核管理员</span>
               </a>
@@ -45,7 +45,7 @@
 
           <if condition="($_SESSION['usertype'] eq 2) OR ($_SESSION['usertype'] eq 1)">
             <li>
-              <a href="{:U('Admin/Media/index')}" class="theme-nav">
+              <a href="{:U('Startbugs/Media/index')}" class="theme-nav">
                 <span class="glyphicon glyphicon-list-alt text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
                 <span class="theme-color">资讯管理员</span>
               </a>
@@ -53,7 +53,7 @@
           </if>
           <if condition="($_SESSION['usertype'] eq 3) OR ($_SESSION['usertype'] eq 1)">
             <li>
-              <a href="{:U('Admin/Message/index')}" class="theme-nav">
+              <a href="{:U('Startbugs/Message/index')}" class="theme-nav">
                 <span class="glyphicon glyphicon-envelope text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
                 <span class="text-default theme-color">消息</span>
                 <span class="theme-small">{$unreadcount}&nbsp;</span>
@@ -90,14 +90,14 @@
                   <li class="dropdown-header"><span class="theme-h4">{:session('userid')}</span></li>
                   <li role="separator" class="divider"></li>
                   
-                  <li><a href="{:U('Admin/Set/index')}"><span class="glyphicon glyphicon-home text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">账号设置</span></a></li>
-                  <li><a href="{:U('Admin/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>
+                  <li><a href="{:U('Startbugs/Set/index')}"><span class="glyphicon glyphicon-home text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">账号设置</span></a></li>
+                  <li><a href="{:U('Startbugs/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>
                 </ul>
               </li>
               
               
           <else/>
-              <li><a href="{:U('Admin/Index/')}" class="theme-nav"><span class="glyphicon glyphicon-log-in text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">登录</span></a></li>
+              <li><a href="{:U('Startbugs/Index/')}" class="theme-nav"><span class="glyphicon glyphicon-log-in text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">登录</span></a></li>
               <!--<li><a href="{:U('Home/Index/register')}"><span class="glyphicon glyphicon-plus text-success" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-success">注册</span></a></li>-->
           </if>
           

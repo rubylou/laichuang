@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;投资人管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/js/util/angular.min.js"></script>
+    <script src="__PUBLIC__/js/util/angular-route.js"></script>
+    <script src="__PUBLIC__/js/Admin/Audit/auditInvestorPsVerify.js"></script>
+    <script type="text/javascript">init({$userid});</script>
+  </head>
+
+<body  >
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="well" ng-app="myinvespapp" ng-controller="userController">
+  	<div class="container" style="margin-top:70px">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-default theme-outline">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-1 col-xs-12 text-center">
+							    <if condition="strlen($user['portrait']) gt 0">
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='{$user.portrait}' alt="头像" height="90px" width="90px">
+							    	<else />
+							    	<input type="image" class="thumbnail theme-profile" onclick="upload('#profile')" src='__PUBLIC__/pic/investor.png' alt="头像" height="90px" width="90px">
+							    </if>
+					  		</div>
+							<div class="col-md-11 col-xs-12">
+								<p class="theme-h3 hide-edit">&nbsp;&nbsp;{$user.name}</p>
+								<p class="hide-edit">
+									<span>&nbsp;&nbsp;&nbsp;{$user.brief}</span>
+								</p>
+								<div class="row">
+									<div class="col-md-6">
+										<!--p id="interests" class="hide-edit theme-small">
+											&nbsp;&nbsp;&nbsp;
+											<span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+										</p-->
+									</div>
+									<!--<div class="col-md-2 col-md-offset-3 text-right">
+										<if condition="$follow eq false">
+											<a class="btn btn-default form-control theme-nav theme-btn-inverse" onclick="followPro({$info.project_id},'FOLLOWING')">关注</a>
+											<else/>
+											<a class="btn btn-default form-control theme-nav theme-btn" onclick="followPro({$info.project_id},'UNFOLLOW')">已关注</a>
+										</if>
+									</div>-->
+								</div>
+							</div>
+
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;投资案例&nbsp;</span>
+							<!--a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1">
+								<span class="glyphicon glyphicon-plus theme-color" aria-hidden="true"></span>
+							</a-->
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="collapse" id="collapseExample1">
+							<hr>
+							<div class="form-horizontal">
+							  <div class="form-group">
+							    <label for="company" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>公司简称</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="company" placeholder="例: 来创">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="round" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资轮次</label>
+							    <div class="col-md-4">
+				              		<select class="form-control" id="round">
+				              		</select>
+				              	</div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="currency1" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮投资金额</label>
+							    <div class="col-md-2 col-xs-6">
+							    	<select class="form-control" id="currency1">
+							    	</select>
+							    </div>
+							    <div class="col-md-3 col-xs-6">
+					              	<div class="input-group">
+						              	<input type="text" class="form-control" id="amount">
+							            <span class="input-group-addon" id="basic-addon2">万</span>
+							        </div>
+							    </div>
+				  			  </div>
+
+							  <div class="form-group">
+							    <label for="currency2" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮估值</label>
+								<div class="col-md-2 col-xs-6">
+									<select class="form-control" id="currency2">
+				              		</select>
+				              	</div>
+				              	<div class="col-md-3 col-xs-6">
+									<div class="input-group">
+										<input type="text" class="form-control" id="assess" >
+										<span class="input-group-addon" id="basic-addon2">万</span>
+									</div>
+								</div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="investor" class="col-md-3 col-xs-12 control-label"><span class="required">*</span>我代表的投资主体</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="investyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资时间</label>
+							    <div class="col-md-3 col-xs-6">
+							    	<div class="input-group">
+							        	<select class="form-control" id="investyear">
+							            </select>
+							            <span class="input-group-addon" id="basic-addon2">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6">
+						        	<div class="input-group">
+						        		<select class="form-control" id="investmon">
+						            	</select>
+						            	<span class="input-group-addon" id="basic-addon2">月</span>
+						            </div>
+						        </div>
+							  </div>
+							</div>
+
+						    <div class="row">
+						    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+						        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="case_submit()">&nbsp;提交&nbsp;</button>    
+						        </div>
+						        <input type="hidden" id="editCase_input"/>
+						        <div class="col-md-3 col-xs-6">
+						        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
+						        </div>
+						    </div>
+						    <hr>
+						</div>
+						<div class="panel">
+			  				<div class="panel-body">
+								<div class="row">
+									<volist name="prolist" id="pros">
+										<div class="col-md-3 theme-well">
+											<div class="col-md-4 col-xs-3 theme-nav">
+												<if condition="strlen($pros['project_logo']) gt 0">
+													<input type="image" class="thumbnail theme-profile" src="{$pros.project_logo}" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+													<else />
+													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$pros.project_id}')"/>
+												</if>
+											</div>
+											<div class="col-md-8 col-xs-8 theme-nav">
+												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$pros.project_name}</p>
+												<p class="theme-h4">&nbsp;</p>
+											</div>
+										</div>
+									</volist>
+								</div>
+							</div>
+						</div>
+				  		<volist name="caselist" id="cases">
+				  			<div class="panel">
+				  				<div class="panel-body hide-edit theme-well">
+								  	<div class='row'>
+								  		<div class="col-md-1 col-xs-3">
+										    <img class="thumbnail theme-profile" src='__PUBLIC__/pic/case.png' alt="Logo" height="70px" width="70px">
+								  		</div>
+										<div class="col-md-6 col-md-offset-1 col-xs-9">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$cases.company}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;{$cases.investor_name}</p>
+											<p class="theme-small">&nbsp;&nbsp;&nbsp;<span class="label label-warning">{$cases.round}</span>&nbsp;&nbsp;<span>{$cases.invest_time}</span>&nbsp;|&nbsp;投资金额&nbsp;<span class="theme-color">{$cases.invest_amount}万{$cases.invest_cur}</span></p>
+										</div>
+										<div class="col-md-2 col-md-offset-2 col-xs-6 col-xs-offset-6">
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editCase('{$cases.case_id}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<!--a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delCase('{$cases.case_id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</volist>
+			  		</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;工作经历&nbsp;</span>
+							<!--a data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2">
+								<span class="glyphicon glyphicon-plus theme-color" aria-hidden="true"></span>
+							</a-->
+						</p>
+					</div>
+				  	<div class="panel-body">
+		  				<div class="collapse" id="collapseExample2">
+							<hr>
+					        <div class="form-horizontal">
+							  <div class="form-group">
+							    <label for="title" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>职位</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="title">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="company2" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>公司名称</label>
+							    <div class="col-md-7">
+						        	<input type="text" class="form-control" id="company2" placeholder="例: 来创">
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="startyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>开始日期</label>
+							    <div class="col-md-3 col-xs-6">
+							    	<div class="input-group">
+							        	<select class="form-control" id="startyear">
+							            </select>
+							            <span class="input-group-addon">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6">
+						        	<div class="input-group">
+						        		<select class="form-control" id="startmon">
+						            	</select>
+						            	<span class="input-group-addon">月</span>
+						            </div>
+						        </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="endyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>结束日期</label>
+							    <div class="col-md-3 col-xs-6">
+							    	<div class="input-group">
+							        	<select class="form-control" id="endyear">
+							            </select>
+							            <span class="input-group-addon">年</span>
+							        </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6">
+						        	<div class="input-group">
+						        		<select class="form-control" id="endmon">
+						            	</select>
+						            	<span class="input-group-addon">月</span>
+						            </div>
+						        </div>
+						        <div class="col-md-2 col-xs-6">
+							      <div class="checkbox">
+							        <label>
+							          <input type="checkbox" id="untilnow" onclick="disableEnd(this.checked)">至今
+							        </label>
+							      </div>
+							    </div>
+							  </div>
+
+							  <div class="form-group">
+							    <label for="job_info" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>职位描述</label>
+							    <div class="col-md-7">
+						        	<textarea rows="3" class="form-control" id="job_info"></textarea>
+						        </div>
+							  </div>
+							</div>
+						    <div class="row">
+						    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+						        	<button type="submit" class="btn btn-default form-control theme-btn-inverse" onclick="submitJob()">&nbsp;提交&nbsp;</button>    
+						        </div>
+						        <input type="hidden" id="editJob_input"/>
+						        <div class="col-md-3 col-xs-6">
+						        	<button type="submit" class="btn btn-default form-control theme-btn" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</button>    
+						        </div>
+						    </div>
+						    <hr>
+						</div>
+						<volist name="joblist" id="jobs">
+							<div class="panel">
+					  			<div class="panel-body hide-edit theme-well">
+								  	<div class='row'>
+										<div class="col-md-6 col-xs-10">
+											<p class="theme-h4">{$jobs.job_title}</p>
+											<p class="theme-h5-small unescape">{$jobs.job_info}</p>
+											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
+										</div>
+										<div class="col-md-2 col-md-offset-4 col-xs-2">
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editJob({$jobs.job_id})"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<!--a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delJob({$jobs.job_id})"><span class="glyphicon glyphicon-trash theme-color"></span></a-->
+										</div>
+									</div>
+								</div>
+							</div>
+						</volist>
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">个人资料</span>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="row hide-edit">
+							<div class="col-md-9 col-xs-12">
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;公司:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.company}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;职位:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.title}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;姓名:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.name}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;电话:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.mobile}</span>
+								</p>
+								<p class="theme-h5">
+									<span class="theme-small">&nbsp;&nbsp;邮箱:&nbsp;&nbsp;&nbsp;</span>
+									<span>{$user.email}</span>
+								</p>
+								
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" style="display:none"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+							</div>
+
+						</div>
+
+						<div class="collapse" id="collapseExample3">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1 col-xs-12">
+									<div class="form-group">
+						              <label for="editCompany"><span class="required">*</span>公司</label>
+						              <input type="text" name="company" class="form-control" id="editCompany" placeholder="">
+						            </div>
+						            <div class="form-group">
+						              <label for="editTitle"><span class="required">*</span>职位</label>
+						              <input type="text" name="title" class="form-control" id="editTitle" placeholder="">
+						            </div>
+						            <button type="submit" class="theme-btn-inverse form-control" onclick="editBasics()">&nbsp;保存&nbsp;</button>
+						        </div>
+							</div>
+						</div>
+
+						<hr>
+				  		<!--form method="post" action="__URL__/cardSave" enctype="multipart/form-data" id="card_form" style="display:none">
+						    <input type="file" name="mycard" id="mycard" accept="image/jpg,imapge/jpeg,image/png,image/gif" height="0px" width="0px" onchange="finish_upload('#mycard','#card_form')"/>
+						</form-->
+						<br>
+						<div class="row">
+							<!--div class="col-md-4 col-xs-6">
+								<a class="btn btn-default theme-btn form-control" onclick="upload('#mycard')">上传名片</a>
+							</div-->
+						</div>
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<if condition="strlen($user['mycard']) gt 0">
+									<img class="thumbnail img-responsive" src="{$user.mycard}" height="162" width="288"></img>
+									<else />
+									<img class="thumbnail img-responsive" src="__PUBLIC__/pic/mycard.png" height="162" width="288"></img>
+								</if>
+							</div>
+						</div>
+						<hr>
+						
+
+                        
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">社交账号</p>
+								<p>&nbsp;&nbsp;
+									<span class="glyphicon glyphicon-link theme-color"></span>
+	 								<a class="btn theme-logo" href="{$user.sns_id}">{$user.sns_id}<!--img src="__PUBLIC__/pic/weibo-on.png" height="32px" width="32px"/--></a>
+								</p>
+							</div>
+						</div>
+
+                        <hr>
+						
+
+						<div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">财产信息或公司信息</p>
+					            <form method="post" action="__URL__/authSave" enctype="multipart/form-data" id="finance_form">
+					            	<if condition="$user.user_type eq 1">
+						            	<div class="form-group">
+							              <label for="companyType"><span class="required">*</span>公司性质</label>
+							              <select class="form-control" name="companyType" id="companyType">
+							                <option value="1">国有企业</option>
+							                <option value="2">民营企业</option>
+							                <option value="3">三资企业</option>
+							                <option value="4">其他企业</option>
+							              </select>
+							            </div>
+						            	<div class="form-group">
+						              		<label><span class="required">*</span>营业执照</label>
+										    <if condition="strlen($auth['license']) gt 0">
+										    	<a href="{$auth.license}">已上传营业执照</a>
+										    </if>
+										    <!--input type="file" name="license" id="license" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>组织机构代码证</label>
+							              	<if condition="strlen($auth['company_code']) gt 0">
+							              		<a href="{$auth.company_code}">已上传机构代码证</a>
+							              	</if>
+											<!--input type="file" name="companyCode" id="companyCode" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>近三年财务报表</label>
+							              	<if condition="strlen($auth['fi_statement']) gt 0">
+							              		<a href="{$auth.fi_statement}">已上传财物报表</a>
+							              	</if>
+											<!--input type="file" name="statement" id="statement" accept="application/pdf" height="0px" width="0px"/-->
+										</div>
+									</if>
+									<if condition="$user.user_type eq 2">
+										<div class="form-group">
+							              <label for="fiType"><span class="required">*</span>财产证明类型</label>
+							              <select class="form-control" name="fiType" id="fiType">
+							                <option value="1">税单(年收入>100万证明)</option>
+							                <option value="2">房产证明(固定资产>1000万证明)</option>
+							                <option value="3">证券类资产>100万证明</option>
+							              </select>
+							            </div>
+										<div class="form-group">
+							              	<label><span class="required">*</span>财产证明</label>
+							              	<if condition="strlen($auth['financial_doc']) gt 0">
+							              		<a href="{$auth.financial_doc}">已上传财产证明</a>
+							              	</if>
+											<!--input type="file" name="finance" id="finance" accept="image/jpg,imapge/jpeg,image/png,image/gif,application/pdf" height="0px" width="0px"/-->
+										</div>
+										<div class="form-group">
+											<label><span class="required">*</span>说明</label>
+											<div id="financeInfo">
+							  					<textarea rows='5' name="pro_require" id="pro_require" class="form-control">{$auth.financial_info}</textarea>
+											</div>
+										</div>
+									</if>
+									<!--input type="submit" class="btn theme-btn" value="保存"/-->
+								</form>
+							</div>
+						</div>
+						
+
+
+
+						
+						
+					</div>
+			  	</div>
+			  	<!--div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-h4 theme-heading">关注项目</span>
+						</p>
+					</div>
+					<div class="panel-body">
+						<volist name="watchlist" id="watch">
+				  			<div class="row">
+					  			<div class="col-md-2 col-xs-3 theme-nav">
+									<if condition="strlen($watch['project_logo']) gt 0">
+										<input type="image" class="thumbnail theme-profile" src="{$watch.project_logo}" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+										<else />
+										<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/project.png" height="60px" width="60px" onclick="openProject('{$watch.object_id}')"/>
+									</if>
+								</div>
+								<div class="col-md-9 col-xs-8 theme-nav">
+									<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$watch.project_name}</p>
+								</div>
+							</div>
+				  		</volist>
+					</div>
+				</div-->
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+				<h4 id="alert_content" style="color:#5B5B5B"></h4>
+				<div id="editField" style="display:none">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+						  	<div class="form-group">
+					            <div id="conditions">
+					            </div>
+					            <div class="row"></div>
+					            <label for="choices">已选择:</label>
+					            <div id="choices">
+					            </div>
+					        </div>
+				    	</div>
+					</div>
+				</div>
+			    <div class="modal-footer">
+			      <div id="alertBtn">
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+			      </div>
+			      <div id="verifyRequest">
+			      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="verify_confirm">确定</button>
+				    <input type="hidden" id="verify_input" />
+			      </div>
+			      <div id="delCaseBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delCase_confirm">确定</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="delCase_cancel">取消</button>
+				      <input type="hidden" id="delCase_input" />
+				  </div>
+				  <div id="delJobBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delJob_confirm">确定</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="delJob_cancel">取消</button>
+				      <input type="hidden" id="delJob_input" />
+				  </div>
+				  <div id="editFieldBtn">
+				      <button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+				      <button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+				  </div>
+			    </div>
+		  	</div>
+		</div>
+	</div>
+  </div>
+
+  	<!--======================verify==========================================================-->
+	<div class="container">
+		<form>
+  			<div class="form-group">
+    			<label for="verifyresult">审核结果</label>
+    			<br>
+    			<div id="verifyresult" class="btn-group" role="group" aria-label="...">
+  					<button id="agreeBtn" type="button" class="btn btn-default" ng-click="result=2;btn1=1;btn2=0" ng-class="{'active': btn1,'btn-primary':btn1}">审核通过</button>
+  					<button id="denyBtn" type="button" class="btn btn-default" ng-click="result=0;btn1=0;btn2=1"  ng-class="{'active': btn2,'btn-primary':btn2}">审核不通过</button>
+				</div>
+  			</div>
+  			<div class="form-group">
+   			 	<label for="note">审核意见</label>
+    			<input type="text" class="form-control" id="note" placeholder="审核通过"  ng-model="verifynote">
+ 			</div>
+  			
+  			<button  class="btn btn-default" ng-click="submit()">提交结果</button>
+		</form>
+		
+	</div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
+<script src="__PUBLIC__/js/Admin/User/edit.js"></script>
+<script src="__PUBLIC__/js/Admin/User/init.js"></script>
+<script type="text/javascript">
+	function openProject(id){
+	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
+
+ 	}
+
+ 	$('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
+
+$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	var field = {$field};
+	var rows = ({$fieldlen})/6;
+	initializeField(rows,field);
+	addInterests({$interests},"#interests");
+	addRound({$rounds},"#round");
+	addCur({$currency},"#currency1");
+	addCur({$currency},"#currency2");
+	addYM('#investyear','#investmon',1980);
+	addYM('#startyear','#startmon',1960);
+	addYM('#endyear','#endmon',1960);
+
+	function openProject(id){
+	  window.open("{:U('Home/Case/info/key/"+id+"')}");
+	}
+
+	$('#fiType').children('option').each(function(){
+		if($(this).val()=='{$auth.financial_type}'){
+		  $(this).attr('selected','selected');
+		}
+	});
+
+	$('#companyType').children('option').each(function(){
+		if($(this).val()=='{$auth.company_type}'){
+		  $(this).attr('selected','selected');
+		}
+	});
+
+</script>
+</html>

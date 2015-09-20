@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>编辑管理员</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <style type="text/css">
+      .required {
+        color:#CD0000;
+      }
+    </style>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="container">
+    <div class="page-header">
+      <!-- 页面标题 -->
+      <h3>编辑管理员</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4 col-xs-12">   
+        <div class="form-group">
+          <label for="regUser"><span class="required">*</span>用户名</label>
+
+          <input type="text" name="user" class="form-control" id="regUser" placeholder="由字母、数字、下划线组成,首位为字母" value="{$data.admin_id}" disabled>
+        </div>
+        
+        <div class="form-group">
+          <label for="regPwd"><span class="required">*</span>密码</label>
+          <input type="password" name="pwd" class="form-control" id="regPwd" placeholder="密码">
+        </div>
+        <div class="form-group">
+          <label for="regPwdfirm"><span class="required">*</span>确认密码</label>
+          <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm" placeholder="确认密码">
+        </div>
+        <div class="form-group">
+          <label for="regType"><span class="required">*</span>管理员类别</label>
+          <select class="form-control" name="type" id="regType">
+            <option value="1">超级管理员</option>
+            <option value="2">内容管理员</option>
+            <option value="3">审核管理员</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-default form-control" style="background:#5B5B5B;color:#FFFFFF" onclick="regupdate()">&nbsp;提交&nbsp;</button>   
+          
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h4 id="alert_content" style="color:#5B5B5B"></h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+  $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+  $('option[value="{$data.admin_type}"]').attr('selected',true);
+</script>
+<script src="__PUBLIC__/js/Admin/Super/reg.js"></script>
+</html>

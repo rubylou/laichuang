@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Admin &middot; Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+
+    <style type="text/css">
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 0 auto;
+        width: 100%;
+        height: 50%;
+        color: #ffffff;
+        background-color: #428bca;
+        border-color: #357ebd;
+      }
+    </style>
+  </head>
+
+  <body> 
+      <div class="jumbotron">
+        <h2>来创吧 <small>Admin</small></h2>
+        <div class="row">
+          <div class="col-xs-5 col-md-5">
+            <h1 class="text-right">创业</h1>
+          </div>
+          <div class="col-xs-12 col-md-12">
+            <h1 class="text-center">与你走得更近</h1>
+          </div>
+        </div>
+        
+        <div class="form-inline text-center">
+          <div class="form-group">
+            <input class="form-control" type="text" id="loginuser" name="loginuser" placeholder="用户名">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="password" id="loginpwd" name="loginpwd" placeholder="密码">
+          </div>
+          <button type="submit" class="btn btn-default" onclick="loginsubmit('{:U('Startbugs/Index/login')}','{:U('Startbugs/Super/index')}','{:U('Startbugs/Media/index')}','{:U('Startbugs/Audit/index')}')" style="background:#5B5B5B;color:#FFFFFF">&nbsp;登陆&nbsp;</button>   
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <h4 id="alert_content" style="color:#5B5B5B"></h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+  <script src="__PUBLIC__/js/util/form_validate.js"></script>
+  <script src="__PUBLIC__/js/Admin/Index/login.js"></script>
+</html>
