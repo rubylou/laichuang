@@ -420,11 +420,11 @@
 								<div class="col-md-10 col-md-offset-1 col-sm-8 col-sm-offset-2 col-xs-12">
 									<div class="form-group">
 						              <label for="editCompany"><span class="required">*</span>公司</label>
-						              <input type="text" name="company" class="form-control" id="editCompany" placeholder="">
+						              <input type="text" name="company" class="form-control" id="editCompany" value="{$user.company}">
 						            </div>
 						            <div class="form-group">
 						              <label for="editTitle"><span class="required">*</span>职位</label>
-						              <input type="text" name="title" class="form-control" id="editTitle" placeholder="">
+						              <input type="text" name="title" class="form-control" id="editTitle" value="{$user.title}">
 						            </div>
 						            <button type="submit" class="theme-btn-inverse form-control" onclick="editBasics()">&nbsp;保存&nbsp;</button>
 						        </div>

@@ -10,7 +10,7 @@
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
-    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script> 
   </head>
   <style>
     .jumbotron{
@@ -196,9 +196,10 @@
             <div class="form-group">
               <label for="regBirth2" class="col-sm-2 col-sm-offset-2 col-xs-12 control-label"><span class="required">*</span>生日</label>
               <div class="col-sm-4">
-                <input type="text" name="birth" class="form-control" id="regBirth2" placeholder="格式: yyyy-mm-dd">
+                <input type="text" name="birth" class="form-control" id="regBirth2">
               </div>
             </div>
+
             <div class="form-group">
               <label for="regCity2" class="col-sm-2 col-sm-offset-2 col-xs-12 control-label"><span class="required">*</span>地区</label>
               <div class="col-sm-4">
@@ -226,6 +227,7 @@
                 <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm2" placeholder="确认密码">
               </div>
             </div>
+
             <div class="form-group">
               <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
                 <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitInnovator()">&nbsp;注册&nbsp;</button>  
@@ -257,6 +259,7 @@
 </body>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script src="__PUBLIC__/js/Home/Index/reg.js"></script>
+
 <script>
   $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   var field = {$field};
@@ -266,6 +269,7 @@
   initailizeCity(city);
 
   var wait=60;
+
   function settime(o,val) {
     if (wait == 0) {
             o.removeAttribute("disabled");            

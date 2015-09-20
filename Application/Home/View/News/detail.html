@@ -33,14 +33,18 @@
           <hr>
           <div class="row">
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 text-center">
-              <label class="theme-color">关联<if condition="$p.article_about eq 1">项目
-                  <elseif condition="$p.article_about eq 2"/>投资人<elseif condition="$p.article_about eq 3"/>创业者</if>
-              </lable>
+              <if condition="$obj">
+                <label class="theme-color">关联<if condition="$p.article_about eq 1">项目
+                    <elseif condition="$p.article_about eq 2"/>投资人<elseif condition="$p.article_about eq 3"/>创业者</if>
+                </lable>
+              </if>
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-              <div class="img-responsive">
-                <input type="image" class="thumbnail theme-profile" src='{$obj.portrait}' alt="头像" height="64px" width="64px" onclick="openObject('{$p.article_object}')">
-              </div>
+              <if condition="$obj">
+                <div class="img-responsive">
+                  <input type="image" class="thumbnail theme-profile" src='{$obj.portrait}' alt="头像" height="64px" width="64px" onclick="openObject('{$p.article_object}')">
+                </div>
+              </if>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
               <h5 class="text-right"><small>阅读:&nbsp;(&nbsp;{$p.article_visits}&nbsp;)&nbsp;</small></h5>
