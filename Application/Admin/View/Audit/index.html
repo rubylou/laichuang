@@ -81,7 +81,7 @@
                   <tr ><!--ng-repeat="x in unverifiedProjects" -->
                     <td class="text-center"><image class="thumbnail theme-profile" src={$x.project_logo} alt="logo" height="40px" width="40px"></td>
                     <td class="text-center">{$x.project_id}</td>
-                    <td class="text-center">{$x.project_name}</td>
+                    <td class="text-center">{$x.project_name}&nbsp;&nbsp;<span class="label label-success">未审核</span></td>
                     <td class="text-center">{$x.project_admin}</td>
                     <td class="text-center">{$x.project_brief}</td>
                     <td class="text-center">
@@ -109,7 +109,7 @@
                     <tr ><!--ng-repeat="x in unverifiedProjects" -->
                       <td class="text-center"><image class="thumbnail theme-profile" src={$x.project_logo} alt="logo" height="40px" width="40px"></td>
                       <td class="text-center">{$x.project_id}</td>
-                      <td class="text-center">{$x.project_name}</td>
+                      <td class="text-center">{$x.project_name}&nbsp;&nbsp;<span class="label label-info">已通过</span></td>
                       <td class="text-center">{$x.project_admin}</td>
                       <td class="text-center">{$x.project_brief}</td>
                       <td class="text-center">
@@ -135,7 +135,7 @@
                   <volist name="unInvestor" id="x">
                      <tr>
                       <td class="text-center">{$x.user_id}</td>
-                      <td class="text-center">{$x.name}</td>
+                      <td class="text-center">{$x.name}&nbsp;&nbsp;<span class="label label-success">未审核</span></td>
                       <td class="text-center">{$x.company}</td>
                       <td class="text-center">{$x.mobile}</td>
                       <td class="text-center">
@@ -160,7 +160,7 @@
                   <volist name="investor" id="x">
                     <tr>
                       <td class="text-center">{$x.user_id}</td>
-                      <td class="text-center">{$x.name}</td>
+                      <td class="text-center">{$x.name}&nbsp;&nbsp;<span class="label label-info">已通过</span></td>
                       <td class="text-center">{$x.company}</td>
                       <td class="text-center">{$x.mobile}</td>
                       <td class="text-center">
@@ -185,7 +185,7 @@
                   <volist name="unInnovator" id="x">
                     <tr >
                       <td class="text-center">{$x.user_id}</td>
-                      <td class="text-center">{$x.nickname}</td>
+                      <td class="text-center">{$x.nickname}&nbsp;&nbsp;<span class="label label-success">未审核</span></td>
                       <td class="text-center">{$x.name}</td>
                       <td class="text-center">{$x.phone}</td>
                       <td class="text-center">
@@ -210,7 +210,7 @@
                   <volist name="innovator" id="x">
                     <tr >
                       <td class="text-center">{$x.user_id}</td>
-                      <td class="text-center">{$x.nickname}</td>
+                      <td class="text-center">{$x.nickname}&nbsp;&nbsp;<span class="label label-info">已通过</span></td>
                       <td class="text-center">{$x.name}</td>
                       <td class="text-center">{$x.phone}</td>
                       <td class="text-center">
