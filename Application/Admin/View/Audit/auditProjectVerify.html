@@ -486,7 +486,11 @@
 <script src="__PUBLIC__/js/util/init.js"></script>
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
+    
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	$('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+	});
 	$('input[data-toggle=popover]').popover({'html':true});
 	$('input[data-toggle=popover]').mouseover(function(){$(this).popover('show');}); 
 	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});

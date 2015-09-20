@@ -64,10 +64,49 @@
       </a>
          
       </ul>
+
+
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{:U('Admin/Index/logout')}">注销</a></li>
-        
-      </ul>
+          <!--<form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control theme-nav" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default theme-btn theme-nav">搜索</button>
+          </form>-->
+          
+
+          <if condition="session('?userid')">
+              <!--<li><a href="{:U('Home/User/index')}"><span class="glyphicon glyphicon-user text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="theme-color">{:session('user')}</span></a></li>-->
+              <li class="dropdown">
+                
+
+                <a class="dropdown-toggle" data-toggle="dropdown">
+
+
+                  <img class=" thumbnail theme-profile" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAADrklEQVRoQ+2ZjZEOQRCG34vAiYCLABEgAkSACBABIkAEiAARnIvgTgSIABFQj5pXza39m+muW776uurq9m52Zvrt/+490I7QwY7g0B7IgiavS7op6VASz9BZ+TmR9D3bErI18kjSY0lXZxgFxBNJbzLBZAFB8seV9L9Kel8kjyYgNHOraIq/AfJW0scMQBlAAHFatPCpaGSOOTT2omIewA+j5pYB5KUkTAoQSHyN/WN6vMveS0UrtyOaiQKBoc+FgSNJXxqZYT+mBxiAdJtZFIjNBFt/0AjCrz+T9FTSB0l3O88I5xHs+06x8d4oRBDAxzDJy1sBwRTIFyGzkPSzAOi2kO6N5WIkiUT/eyA46jVJN4rT9lrG5hrJMC1Hvh+lpOkSRtS07Oz3SibvYYJ8QlVADcZzF0WBOHQ+l8RzD/mMV6Uq6DkjHH4zpGnzjGg1DIQk+DqQA6jTvhUVbArE4ZeynLqph/6JzO6w2VNnGXSGeYZNK8O+bZ6Rei0MxEyQGIk6rfUW+ykYySX0JK37/5hyNPxykLUCGDJ8C+HoOHwoh3BhBhDOoXKlp6B6XdNYscdVLw2ZBxQtQjj3bhYQZ/iW6OXOMpQIjSYLCA3Ru9IhYl5LWsGc6Cz5HYl4qT7iw1wJox2S2xTVE5dQV1hfkKWR2uaXfM95g5ERvrGkvVV+kwmEC9f0FSkJcIhuD2RC39YIfkIEG46HSHwM5wgOrOHoKZSpEeeFmjFCLL0KRAZnfFRTSsRacsoWSQGC8IvEqZmg++W3nZloBbHOM2MktEKE83y45c5z70Y1AgDGpR7O1WNT1mhhDQBATFtgmv9R2jC4gKixSIzdgHqBIG2YH/bYdWZ3n1FLrl4fDrN5D3Ce0jdppwUIUvT3D0uZyQeOjSQ9YUfqrGNqY+RhNdqCAIf2CADUaxDaw7/Q0qo8sxYIAJCwAZDM+NvfQLjcGqh9AkasNaTNOfV6PbTgbMCgKZsc73Iu58zSEhBL1sxQbnPw1NTcxSOXuvyop/Vj62MMch/3MI61yREUJrUzB6SuiTAhfAJG5shOzDswg4QZTkA0Tuy3ENZ8S2E/PoPJYb6Y5SiYOSAuszEjLm399gHzHk7w3NN4sY+QDvgrxcSGuei3lKaA1B9wegfU9RnWYm8CdH3GOaNnTAGxNiJl9lh4bWm8hiZs/xptxKaAuA+PDARqxzZTEcF40DHa308BcfG3FPW2Wv+L750HspWku+9dSojdB1/0xj2Qi5b40n2/AO6q2TOK5S+/AAAAAElFTkSuQmCC" width="40px" height="40px">
+
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header"><span class="theme-h4">{:session('userid')}</span></li>
+                  <li role="separator" class="divider"></li>
+                  
+                  <li><a href="{:U('Admin/Set/index')}"><span class="glyphicon glyphicon-home text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">账号设置</span></a></li>
+                  <li><a href="{:U('Admin/Index/logout')}"><span class="glyphicon glyphicon-log-out text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">注销</span></a></li>
+                </ul>
+              </li>
+              
+              
+          <else/>
+              <li><a href="{:U('Admin/Index/')}" class="theme-nav"><span class="glyphicon glyphicon-log-in text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-default theme-color">登录</span></a></li>
+              <!--<li><a href="{:U('Home/Index/register')}"><span class="glyphicon glyphicon-plus text-success" aria-hidden="true"></span>&nbsp;&nbsp;<span class="text-success">注册</span></a></li>-->
+          </if>
+          
+          
+            
+        </ul>
+
+      
+     
     </div><!-- /.navbar-collapse -->
     <!-- JiaThis Button BEGIN -->
     <!--div id="ckepop">

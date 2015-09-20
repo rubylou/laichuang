@@ -143,7 +143,7 @@
 								  	<div class='row'>
 										<div class="col-md-6 col-xs-10">
 											<p class="theme-h4">{$jobs.job_title}</p>
-											<p class="theme-h5-small">{$jobs.job_info}</p>
+											<p class="theme-h5-small unescape">{$jobs.job_info}</p>
 											<p>{$jobs.job_company}&nbsp;|&nbsp;{$jobs.job_start}&nbsp;至&nbsp;{$jobs.job_end}</p>
 										</div>
 										<div class="col-md-2 col-md-offset-4 col-xs-2">
@@ -372,6 +372,9 @@
 <script src="__PUBLIC__/js/Admin/User/init.js"></script>
 <script>
     $('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+    $('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML).replace(/&lt;br&gt;/g,"<br>");
+	});
     $('#verify_confirm').click(function(){
 		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
 		window.location.href="index";
