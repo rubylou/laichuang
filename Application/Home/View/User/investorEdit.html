@@ -610,9 +610,6 @@
 <script src="__PUBLIC__/js/util/init.js"></script>
 <script>
 	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-	$('.unescape').each(function(){
-		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
-	});
 
 	var field = {$field};
 	var rows = ({$fieldlen})/6;

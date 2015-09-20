@@ -63,7 +63,7 @@ class MessageController extends Controller {
 			$innovator = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
 			if($innovator[0]['phone']){
 				$sms = sprintf('您的项目%s收到了投资人%s的投资意愿，请登录查看消息。',$project_name,$name);
-	            //send_forward_msg($innovator[0]['phone'],$sms);
+	            send_forward_msg($innovator[0]['phone'],$sms);
 	        }
 	        if($innovator[0]['email']){
 	        	$url = "http://localhost/lcb/index.php";
@@ -107,7 +107,7 @@ class MessageController extends Controller {
 			$admin = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
 			if($admin[0]['phone']){
 				$sms = sprintf('您的项目%s收到了创业者%s的合伙意愿，请登录查看消息。',$project_name,$name);
-	            //send_forward_msg($admin[0]['phone'],$sms);
+	            send_forward_msg($admin[0]['phone'],$sms);
 	        }
 	        if($admin[0]['email']){
 	        	$url = "http://localhost/lcb/index.php";
@@ -143,7 +143,7 @@ class MessageController extends Controller {
 			$investor = $model->query('select name, mobile, email from investor_personal where user_id = "%s"',$to);
 			if($investor[0]['mobile']){
 				$sms = sprintf('尊敬的投资人: 您收到了创业者%s的投资申请，请登录查看详情。',$name);
-	            //send_forward_msg($investor[0]['mobile'],$sms);
+	            send_forward_msg($investor[0]['mobile'],$sms);
 	        }
 	        if($investor[0]['email']){
 	        	$url = "http://localhost/lcb/index.php";

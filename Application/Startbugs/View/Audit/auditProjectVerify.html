@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;项目主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/util/angular.min.js"></script>
+    <script src="__PUBLIC__/js/util/angular-route.js"></script>
+    <script src="__PUBLIC__/js/Admin/Audit/auditProjectVerify.js"></script>
+    <script type="text/javascript">init({$project_id});</script>
+  </head>
+
+<body>
+  <include file="./Public/tpl/navbar_admin.html" />
+  <div class="well">
+  	<div class="container" style="margin-top:70px">
+	    <div class="row">
+			<div class="col-md-12 col-xs-12">
+				<div class="panel panel-default theme-outline">
+				  	<div class="panel-body">
+					  	<div class='row'>
+					  		<div class="col-md-1">
+						      	<image src="{$info.project_logo}" class="thumbnail theme-profile" alt="头像" height="90px" width="90px" />
+							   
+					  		</div>
+							<div class="col-md-11 col-xs-8">
+								<p class="theme-h3">&nbsp;&nbsp;{$info.project_name}</p>
+								<p>&nbsp;&nbsp;&nbsp;{$info.project_brief}</p>
+								<div class="row">
+									<div class="col-md-6">
+										<!--p id="interests">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-tag" aria-hidden="true"></span></p-->
+									</div>
+									<div class="col-md-2 col-md-offset-3 text-right">
+										
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-8 col-xs-12">
+			  	<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;项目介绍&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" href="__URL__/introEdit/p/{$info.project_id}"><span class="glyphicon glyphicon-edit theme-color" aria-hidden="true"></span></a>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="row">
+				  			<div class="col-md-12 col-xs-12">
+				  				<p id="details"></p>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;创业团队&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editMembers')"><span class="glyphicon glyphicon-edit theme-color" aria-hidden="true"></span></a>
+						</p>
+					</div>
+				  	<div class="panel-body">
+				  		<div class="panel">
+				  			<div class="panel-body">
+							  	<div class='row'>
+							  		<div class="col-md-3 theme-well">
+										<div class="col-md-4 col-xs-3 theme-nav">
+											<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+										</div>
+										<div class="col-md-8 col-xs-8 theme-nav">
+											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
+											<p>&nbsp;&nbsp;&nbsp;创始人<p>
+										</div>
+									</div>
+									<!--div class="col-md-1 col-xs-3">
+										<input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample2" href="#collapseExample2" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/>
+									</div-->
+								</div>
+								<div class="row">
+									<volist name="memberlist" id="vo">
+										<div class="memberField">
+											<div class="col-md-3 theme-well">
+												<div class="col-md-4 col-xs-3 theme-nav">
+													<if condition="strlen($vo['portrait']) gt 0">
+														<input type="image" class="thumbnail theme-profile" src="{$vo.portrait}" height="60px" width="60px" onclick="openUser({$vo.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
+														<else />
+														<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$vo.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delMember({$vo.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
+													</if>
+												</div>
+												<div class="col-md-8 col-xs-8 theme-nav">
+													<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$vo.nickname}</p>
+													<p>&nbsp;&nbsp;&nbsp;{$vo.title}<p>
+												</div>
+											</div>
+										</div>
+									</volist>
+								</div>
+								<div class="row">
+									<div class="collapse" id="collapseExample2">
+										<hr>
+										<div class="form-horizontal">
+										  <div class="form-group">
+										    <label for="member" class="col-md-3 control-label"><span class="required">*</span>成员账号</label>
+										    <div class="col-md-7">
+									        	<input type="text" class="form-control" id="member" placeholder="手机号或邮箱">
+									        </div>
+										  </div>
+										  <div class="form-group">
+										    <label for="title" class="col-md-3 control-label"><span class="required">*</span>成员职位</label>
+										    <div class="col-md-7">
+									        	<input type="text" class="form-control" id="title" placeholder="CEO,CTO等">
+									        </div>
+										  </div>
+										</div>
+									    <div class="row">
+									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addMember('{$info.project_id}','__URL__/queryUser')">&nbsp;提交&nbsp;</a>    
+									        </div>
+									        <div class="col-md-3 col-xs-6">
+									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample2')">&nbsp;取消&nbsp;</a>    
+									        </div>
+									    </div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<div class="col-md-12">
+					  					<p id="project_member"></p>
+					  					<div id="editMembers" style="display:none">
+						  					<textarea rows='8' id="pro_member" class="theme-form-control-6"></textarea>
+											<a id="saveMember" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveMember('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+												<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+											</a>
+										</div>
+									</div>
+				  				</div>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+			  		<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;融资情况&nbsp;</span>
+							<a data-toggle="tooltip" data-placement="top" title="编辑" onclick="showEditPanel('#editFi')"><span class="glyphicon glyphicon-edit theme-color" aria-hidden="true"></span></a>
+						</p>
+					</div>
+				  	<div class="panel-body">
+					  	<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+									<div class="col-md-1 col-xs-3">
+										<!--input type="image" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample1" href="#collapseExample1" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" height="60px" width="60px"/-->
+									</div>
+								</div>
+				  				<div class="collapse" id="collapseExample1">
+									<hr>
+									<div class="form-horizontal">
+									  <div class="form-group">
+									    <label for="round" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资轮次</label>
+									    <div class="col-md-4 col-xs-12">
+						              		<select class="form-control" id="round">
+						              		</select>
+						              	</div>
+									  </div>
+
+									  <div class="form-group">
+									    <label for="currency1" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮投资金额</label>
+									    <div class="col-md-2 col-xs-6">
+									    	<select class="form-control" id="currency1">
+									    	</select>
+									    </div>
+									    <div class="col-md-3 col-xs-6">
+							              	<div class="input-group">
+								              	<input type="text" class="form-control" id="amount">
+									            <span class="input-group-addon" id="basic-addon2">万</span>
+									        </div>
+									    </div>
+						  			  </div>
+
+									  <div class="form-group">
+									    <label for="currency2" class="col-md-2 col-md-offset-1 col-xs-12 control-label">此轮估值</label>
+										<div class="col-md-2 col-xs-6">
+											<select class="form-control" id="currency2">
+						              		</select>
+						              	</div>
+						              	<div class="col-md-3 col-xs-6">
+											<div class="input-group">
+												<input type="text" class="form-control" id="assess" >
+												<span class="input-group-addon" id="basic-addon2">万</span>
+											</div>
+										</div>
+									  </div>
+
+									  <div class="form-group">
+									    <label for="investor" class="col-md-3 col-xs-12 control-label"><span class="required">*</span>投资主体</label>
+									    <div class="col-md-7 col-xs-12">
+								        	<input type="text" class="form-control" id="investor" placeholder="个人名称、机构名称或公司名称">
+								        </div>
+									  </div>
+
+									  <div class="form-group">
+									    <label for="investyear" class="col-md-2 col-md-offset-1 col-xs-12 control-label"><span class="required">*</span>投资时间</label>
+									    <div class="col-md-3 col-xs-6">
+									    	<div class="input-group">
+									        	<select class="form-control" id="investyear">
+									            </select>
+									            <span class="input-group-addon" id="basic-addon2">年</span>
+									        </div>
+								        </div>
+								        <div class="col-md-2 col-xs-6">
+								        	<div class="input-group">
+								        		<select class="form-control" id="investmon">
+								            	</select>
+								            	<span class="input-group-addon" id="basic-addon2">月</span>
+								            </div>
+								        </div>
+									  </div>
+									</div>
+
+								    <div class="row">
+								    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+								        	<button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="fi_submit('{$info.project_id}','{:U('Startbugs/Audit/profiAdd')}')">&nbsp;提交&nbsp;</button>    
+								        </div>
+								        <input type="hidden" id="editFi_input"/>
+								        <div class="col-md-3 col-xs-6">
+								        	<button type="submit" class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample1')">&nbsp;取消&nbsp;</button>    
+								        </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<volist name="filist" id="profi">
+				  					<div class='row hide-edit theme-well'>
+				  						<br>
+					  					<div class="col-md-6 col-xs-10">
+											<p>
+												<span class="theme-h5 label label-warning">{$profi.round}</span>
+												<span class="theme-small">{$profi.invest_time}</span>
+											</p>
+											<p>{$profi.investor_name}&nbsp;|&nbsp;<span class="theme-small">投资金额&nbsp;</span>{$profi.invest_amount}万{$profi.invest_cur}</p>
+										</div>
+										<div class="col-md-2 col-md-offset-4 col-xs-2">
+											<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="editProFi('{$profi.id}','__URL__/editProFi/p/{:I(\'get.key\')}')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+											<!--a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="删除" style="display:none" onclick="delFi('{$profi.id}')"><span class="glyphicon glyphicon-trash theme-color"></span></a-->
+										</div>
+					  				</div>
+					  			</volist>
+				  			</div>
+				  		</div>
+						<div class="panel">
+				  			<div class="panel-body">
+				  				<div class='row'>
+				  					<div class="col-md-12">
+					  					<p id="project_fi"></p>
+					  					<div id="editFi" style="display:none">
+						  					<textarea rows='8' id="pro_fi" class="theme-form-control-6"></textarea>
+											<a id="saveFi" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveFi('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+												<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+											</a>
+										</div>
+									</div>
+				  				</div>
+				  			</div>
+				  		</div>
+					</div>
+			  	</div>
+			  	<div class="panel panel-default theme-outline">
+					<div class="theme-panel-heading">
+						<p class="panel-title">
+							<span class="theme-heading theme-h4">&nbsp;已有投资人&nbsp;</span>
+						</p>
+					</div>
+				  	<div class="panel-body">
+					  	<div class="panel">
+				  			<div class="panel-body">
+							  	<div class='row'>
+									<div class="col-md-1 col-xs-3">
+										<!--input type="image" class="thumbnail theme-btn" src="__PUBLIC__/pic/plus.png" data-toggle="collapse" aria-expanded="false" aria-controls="collapseExample3" href="#collapseExample3" height="60px" width="60px"/-->
+									</div>
+								</div>
+								<div class="row">
+									<volist name="investorlist" id="it">
+										<div class="investorField">
+											<div class="col-md-3 theme-well">
+												<div class="col-md-4 col-xs-3 theme-nav">
+													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" /><!--data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/-->
+												</div>
+												<div class="col-md-8 col-xs-8 theme-nav">
+													<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
+													<p class="theme-h4">&nbsp;</p>
+												</div>
+											</div>
+										</div>
+									</volist>
+								</div>
+								<div class="row">
+									<div class="collapse" id="collapseExample3">
+										<hr>
+										<div class="form-horizontal">
+										  <div class="form-group">
+										    <label for="pro_investor" class="col-md-3 control-label"><span class="required">*</span>投资人账号</label>
+										    <div class="col-md-7">
+									        	<input type="text" class="form-control" id="pro_investor" placeholder="手机号或邮箱">
+									        </div>
+										  </div>
+										</div>
+									    <div class="row">
+									    	<div class="col-md-3 col-md-offset-3 col-xs-6">
+									        	<a class="btn btn-default theme-btn-inverse form-control" onclick="addInvestor('{$info.project_id}','__URL__/queryInvestor')">&nbsp;提交&nbsp;</a>    
+									        </div>
+									        <div class="col-md-3 col-xs-6">
+									        	<a class="btn btn-default theme-btn form-control" onclick="hideCollapse('#collapseExample3')">&nbsp;取消&nbsp;</a>    
+									        </div>
+									    </div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+			<div class="col-md-4 col-xs-12">
+				<div class="panel panel-default theme-outline">
+					<div class="panel-heading">
+						<h3 class="panel-title">其他说明</h3>
+					</div>
+				  	<div class="panel-body">
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
+								<p class="theme-h4">招聘信息</p>
+								<p class="theme-h5-small" id="project_recruit"></p>
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="showEditPanel('#editRecruit')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div id="editRecruit" style="display:none">
+				  					<textarea rows='5' id="pro_recruit" class="theme-form-control-8"></textarea>
+									<a id="saveRecruit" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRecruit('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="row hide-edit">
+							<div class="col-md-9 col-xs-9">
+								<p class="theme-h4">融资需求</p>
+								<p class="theme-h5-small" id="project_require"></p>
+							</div>
+							<div class="col-md-2 col-xs-2">
+								<a class="btn theme-icon-btn show-edit" data-toggle="tooltip" data-placement="top" title="编辑" style="display:none" onclick="showEditPanel('#editRequire')"><span class="glyphicon glyphicon-edit theme-color"></span></a>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div id="editRequire" style="display:none">
+				  					<textarea rows='5' id="pro_require" class="theme-form-control-8"></textarea>
+									<a id="saveRequire" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="保存" onclick="saveRequire('__URL__/editCaseInfo?p={$info.project_id}')" style="vertical-align: bottom;">
+										<span class="glyphicon glyphicon-floppy-disk theme-color"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!--hr-->
+						<!--div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">浏览量:&nbsp;&nbsp;{$info.project_visits}</p>
+							</div>
+						</div-->
+						<!--div class="row">
+							<div class="col-md-12 col-xs-12">
+								<p class="theme-h4">关注量:&nbsp;&nbsp;{$info.project_watches}</p>
+							</div>
+						</div-->
+					</div>
+			  	</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-body">
+		      <h4 id="alert_content" style="color:#5B5B5B"></h4>
+		      <div id="editField" style="display:none">
+		      	<div class="row">
+		      		<div class="col-md-10 col-md-offset-1">
+					  	<div class="form-group">
+			                <div id="conditions">
+			                </div>
+			                <div class="row"></div>
+			                <label for="choices">已选择:</label>
+			                <div id="choices">
+			                </div>
+			            </div>
+			        </div>
+			  </div>
+		    </div>
+		    <div class="modal-footer">
+		      	<div id="alertBtn">
+		      		<button type="button" class="btn btn-default" data-dismiss="modal" id="modal_confirm">确定</button>
+		      	</div>
+				<div id="delFiBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delFi_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delFi_cancel">取消</button>
+				  	<input type="hidden" id="delFi_input" />
+				</div>
+				<div id="delMemberBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delMember_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delMember_cancel">取消</button>
+				  	<input type="hidden" id="delMember_input" />
+				</div>
+				<div id="delInvestorBtn">
+				  	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="delInvestor_confirm">确定</button>
+				  	<button type="button" class="btn btn-default" data-dismiss="modal" id="delInvestor_cancel">取消</button>
+				  	<input type="hidden" id="delInvestor_input" />
+				</div>
+			  	<div id="editFieldBtn">
+			      	<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="editField_confirm">保存</button>
+			      	<button type="button" class="btn btn-default" data-dismiss="modal" id="editField_cancel">取消</button>
+			  	</div>
+			   	<div id="membersRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="members_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="members_cancel">不发送</button>
+			    	<input type="hidden" id="members_input" />
+		      	</div>
+		      	<div id="financialRequest">
+		      		<button type="button" class="btn btn-default theme-btn-inverse" data-dismiss="modal" id="financial_confirm">发送</button>
+			    	<button type="button" class="btn btn-default" data-dismiss="modal" id="financial_cancel">不发送</button>
+			    	<input type="hidden" id="financial_input" />
+		      	</div>
+		    </div>
+		  </div>
+		</div>
+	</div>
+  </div>
+	
+
+	<div class="container" ng-app="myprojectpapp" ng-controller="projectController">
+		<form>
+  			<div class="form-group">
+    			<label for="verifyresult">审核结果</label>
+    			<br>
+    			<div id="verifyresult" class="btn-group" role="group" aria-label="...">
+  					<button id="agreeBtn" type="button" class="btn btn-default" ng-click="result=2;btn1=1;btn2=0" ng-class="{'active': btn1,'btn-primary':btn1}">审核通过</button>
+  					<button id="denyBtn" type="button" class="btn btn-default" ng-click="result=0;btn1=0;btn2=1"  ng-class="{'active': btn2,'btn-primary':btn2}">审核不通过</button>
+				</div>
+  			</div>
+  			<div class="form-group">
+   			 	<label for="note">审核意见</label>
+    			<input type="text" class="form-control" id="note" placeholder="审核通过"  ng-model="verifynote">
+ 			</div>
+  			
+  			<button  class="btn btn-default" ng-click="submit()">提交结果</button>
+		</form>
+		
+	</div>
+
+
+  </div>
+</body>
+<script src="__PUBLIC__/js/bootstrap/theme.js"></script>
+<script src="__PUBLIC__/js/Admin/Case/edit.js"></script>
+<script src="__PUBLIC__/js/Admin/Case/init.js"></script>
+<script src="__PUBLIC__/js/util/init.js"></script>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+<script>
+    
+	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
+	$('.unescape').each(function(){
+		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
+	});
+	$('input[data-toggle=popover]').popover({'html':true});
+	$('input[data-toggle=popover]').mouseover(function(){$(this).popover('show');}); 
+	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
+
+	$("#details")[0].innerHTML = unescape('{$info.project_intro}');
+	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}'));
+	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}'));
+	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}'));
+	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}'));
+	//addInterests({$interests},"#interests");
+
+	initializeProject('{$info.project_intro}','{$info.project_member}','{$info.project_fi}','{$info.project_recruit}','{$info.project_require}');
+	
+	var field = {$field};
+	var rows = ({$fieldlen})/8;
+	initializeField(rows,field);
+	addInterests({$interests},"#interests");
+	addRound({$rounds},"#round");
+	addCur({$currency},"#currency1");
+	addCur({$currency},"#currency2");
+	addYM('#investyear','#investmon',1980);
+
+	$('img').addClass('img-responsive');
+
+	function openUser(id){
+		window.open("{:U('Home/User/innovator/val/"+id+"')}");
+	}
+
+	function openInvestor(id){
+		window.open("{:U('Home/User/investor/val/"+id+"')}");
+	}
+
+	$('#verify_confirm').click(function(){
+		send_message($('#verify_input').val(),'{:U("Home/Message/receiver")}');
+		window.location.href="index";
+	});
+
+
+	$('#editField_confirm').click(function(){
+		var field = 'field=';
+		$('#choices').children().each(function(){
+			field = field + $(this).attr('value') + ',';
+		});
+		field = field + "&";
+		var xmlHttp = createRequest();
+		request(xmlHttp,field,"__URL__/editCaseInfo/p/{$info.project_id}");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	
+
+	$('#delMember_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'m='+$("#delMember_input").val()+"&p={:I('get.key')}","__URL__/delMember");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+	$('#delMember_cancel').click(function(){
+		$('#delMember_input').val('');
+	});
+
+	$('#delInvestor_confirm').click(function(){
+		var xmlHttp = createRequest();
+		request(xmlHttp,'key='+$('#delInvestor_input').val()+"&p={:I('get.key')}","__URL__/delInvestor");
+		if(xmlHttp.responseText==200){
+			document.location.reload();
+		}
+	});
+
+	$('#delInvestor_cancel').click(function(){
+		$('#delInvestor_input').val('');
+	});
+
+	$('#delFi_confirm').click(function(){
+	  var xmlHttp = createRequest();
+	  request(xmlHttp,'c='+$("#delFi_input").val(),"delFi?p={:I('get.key')}");
+	  if(xmlHttp.responseText==200){
+	    document.location.reload();
+	  }
+	});
+
+	$('#delFi_cancel').click(function(){
+	  $('#delFi_input').val('');
+	});
+	
+	$('#members_confirm').click(function(){
+		send_message($('#members_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#members_cancel').click(function(){
+		$('#members_input').val('');
+		document.location.reload();
+	});
+
+	$('#financial_confirm').click(function(){
+		send_message($('#financial_input').val(),'{:U("Home/Message/receiver")}');
+		document.location.reload();
+	});
+
+	$('#financial_cancel').click(function(){
+		$('#financial_input').val('');
+		document.location.reload();
+	});
+	
+</script>
+</html>

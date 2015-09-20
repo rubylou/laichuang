@@ -225,11 +225,7 @@
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
   	addInterests({$interests},"#interests");
-
-  	$('.unescape').each(function(){
-		$(this)[0].innerHTML = unescape($(this)[0].innerHTML);
-	});
-
+  	
  	$('#require_confirm').click(function(){
 		send_message($('#require_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
 	});

@@ -106,7 +106,7 @@ function checkValue(id,max,min,notice){
 	}
 	else if($(id).val().length>max){
 		$(id).val('');
-		$(id).attr('placeholder','超出字数要求:'+max+'字');
+		$(id).attr('placeholder','超出字符数要求:'+max);
 		$(id).focus();
 		return false;
 	}

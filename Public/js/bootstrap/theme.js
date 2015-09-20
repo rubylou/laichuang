@@ -19,3 +19,9 @@ $('.theme-label-btn').mousedown(function(){
 	$(this).parent().parent().find('.theme-label-btn.active').removeClass('active');
 	$(this).addClass('active');
 })
+
+$('.unescape').each(function(){
+	var str1 = ($(this)[0].innerHTML).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$(this)[0].innerHTML = (str1);
+});

@@ -37,25 +37,64 @@ function initializeField(rows,field){
 
 function initializeProject(intro,member,fi,recruit,require){
 	$("#details")[0].innerHTML = unescape(intro);
-	var str = unescape(member);
+	
+	var str = (member);
 	str = str.replace(/&lt;br&gt;/g,"\r");
+	str = str.replace(/&amp;nbsp;/g," ");
 	$("#pro_member")[0].innerHTML = (str);
-	$("#project_member")[0].innerHTML = (unescape(member).replace(/&lt;br&gt;/g,"<br>"));
 
-	str = unescape(fi);
+	var str1 = (member).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_member")[0].innerHTML = (str1);
+
+	str = (fi);
 	str = str.replace(/&lt;br&gt;/g,"\r");
+	str = str.replace(/&amp;nbsp;/g," ");
 	$("#pro_fi")[0].innerHTML = (str);
-	$("#project_fi")[0].innerHTML = (unescape(fi).replace(/&lt;br&gt;/g,"<br>"));
 
-	str = unescape(recruit);
+	str1 = (fi).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_fi")[0].innerHTML = (str1);
+
+	str = (recruit);
 	str = str.replace(/&lt;br&gt;/g,"\r");
+	str = str.replace(/&amp;nbsp;/g," ");
 	$("#pro_recruit")[0].innerHTML = (str);
-	$("#project_recruit")[0].innerHTML = (unescape(recruit).replace(/&lt;br&gt;/g,"<br>"));
 
-	str = unescape(require);
+	str1 = (recruit).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_recruit")[0].innerHTML = (str1);
+
+	str = (require);
 	str = str.replace(/&lt;br&gt;/g,"\r");
+	str = str.replace(/&amp;nbsp;/g," ");
 	$("#pro_require")[0].innerHTML = (str);
-	$("#project_require")[0].innerHTML = (unescape(require).replace(/&lt;br&gt;/g,"<br>"));
+
+	str1 = (require).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_require")[0].innerHTML = (str1);
+
+}
+
+function initializeProject1(intro,member,fi,recruit,require){
+	$("#details")[0].innerHTML = unescape(intro);
+
+	var str1 = (member).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_member")[0].innerHTML = (str1);
+
+	str1 = (fi).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_fi")[0].innerHTML = (str1);
+
+	str1 = (recruit).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_recruit")[0].innerHTML = (str1);
+
+	str1 = (require).replace(/&lt;br&gt;/g,"<br>");
+	str1 = str1.replace(/&amp;/g,"&");
+	$("#project_require")[0].innerHTML = (str1);
+	
 }
 
 

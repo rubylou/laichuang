@@ -127,7 +127,7 @@ class IndexController extends Controller {
 
     public function userSave(){
         $Form = new Model();
-        if(($_POST['value'])==='investor'){
+        if(I('post.value')==='investor'){
             $seed = rand(C(RANDOM_USER_MIN),C(RANDOM_USER_MAX));
             $id = '1'.substr(date('Y'),2).$seed;
             $regTime = date('Y-m-d');
@@ -171,7 +171,7 @@ class IndexController extends Controller {
                 echo 400;
             }
         }
-        else if(($_POST['value'])==='innovator'){
+        else if(I('post.value')==='innovator'){
             $seed = rand(C(RANDOM_USER_MIN),C(RANDOM_USER_MAX));
             $id = '2'.substr(date('Y'),2).$seed;
             $regTime = date('Y-m-d');
@@ -212,11 +212,18 @@ class IndexController extends Controller {
 
     public function validCheck(){
         $Form = new Model();
-        $result1 = $Form->query('select mobile from investor_personal where mobile = "%s"',$_POST['key2']);
-        $result2 = $Form->query('select email from investor_personal where email = "%s"',$_POST['key3']);
+        $result1 = $Form->query('select mobile from investor_personal where mobile = "%s"',I('post.key2'));
+        $result2 = $Form->query('select email from investor_personal where email = "%s"',I('post.key3'));
         if(!$result1&&!$result2){
-            echo 200;
-            exit();
+            if(check_mobile(I('post.key2'),I('post.c'))==200){
+                echo 200;
+                exit(); 
+            }
+            else{
+                echo 409;
+                exit();
+            }
+            
         }
         if($result1){
             echo 2002;
@@ -234,8 +241,15 @@ class IndexController extends Controller {
         $result2 = $Form->query('select phone from entrepreneur_personal where phone = "%s"',$_POST['key3']);
         $result3 = $Form->query('select nickname from entrepreneur_personal where nickname = "%s"',$_POST['key4']);
         if(!$result1&&!$result2&&!$result3){
-            echo 200;
-            exit();
+            if(check_mobile(I('post.key3'),I('post.c'))==200){
+                echo 200;
+                exit();
+            }
+            else{
+                echo 409;
+                exit();
+            }
+           
         }
         if($result1){
             echo 2002;
@@ -252,9 +266,9 @@ class IndexController extends Controller {
     }
 
     public function queryCheckCode(){
-        dump($_POST);
+        //dump($_POST);
         if(I('post.mobile')){
-            //$result = send_msg(I('post.mobile'));
+            $result = send_msg(I('post.mobile'));
             echo $result;
         }
     }

@@ -448,7 +448,7 @@ class CaseController extends Controller {
     }
 
     public function editInfo(){
-    	$Form = new Model();
+        $Form = new Model();
     	if(count($_POST['name'])>0 && $_SESSION['type']==2){
             $result = $Form->execute('update project_info set project_name="%s" where project_admin="%s" and project_id="%s"',$_POST['name'],$_SESSION['id'],$_GET['p']);
             if($result){

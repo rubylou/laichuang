@@ -10,6 +10,7 @@
     <script src="__PUBLIC__/js/jquery/jquery.js"></script>
     <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
     <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/Jcrop/js/jquery.Jcrop.js"></script>
   </head>
 
 <body>
@@ -304,12 +305,8 @@
 	$('.memberField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	$('.investorField').mouseleave(function(){$('input[data-toggle=popover]').popover('hide');});
 	
-	$("#details")[0].innerHTML = unescape('{$info.project_intro}').replace(/&lt;br&gt;/g,"<br>");
-	$("#project_member")[0].innerHTML = (unescape('{$info.project_member}')).replace(/&lt;br&gt;/g,"<br>");
-	$("#project_fi")[0].innerHTML = (unescape('{$info.project_fi}')).replace(/&lt;br&gt;/g,"<br>");
-	$("#project_recruit")[0].innerHTML = (unescape('{$info.project_recruit}')).replace(/&lt;br&gt;/g,"<br>");
-	$("#project_require")[0].innerHTML = (unescape('{$info.project_require}')).replace(/&lt;br&gt;/g,"<br>");
-	
+	initializeProject1('{$info.project_intro}','{$info.project_member}','{$info.project_fi}','{$info.project_recruit}','{$info.project_require}');
+
 	addInterests({$interests},"#interests");
 
 	$('#details').find('img').addClass('img-responsive');

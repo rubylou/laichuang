@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>来创吧&middot;账号设置</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="__PUBLIC__/css/bootstrap.css" rel="stylesheet">
+    <script src="__PUBLIC__/js/jquery/jquery.js"></script>
+    <script src="__PUBLIC__/js/bootstrap/bootstrap.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS.js"></script>
+    <script src="__PUBLIC__/js/util/send_msg.js"></script>
+    <script src="__PUBLIC__/js/security/cryptoJS_sha1.js"></script>
+  </head>
+  </style>
+<body>
+  <include file="./Public/tpl/navbar_admin.html" />
+
+  <div class="container">
+    
+      <div class="well">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4 col-xs-12">
+            <label for="nickname">管理员id:&nbsp;&nbsp;{$user.admin_id}</label>  
+            <hr> 
+            <div class="form-group">
+
+              <label for="nickname"><span class="required">*</span>新昵称</label>
+              <input type="text"  class="form-control" id="nickname" >
+            </div>  
+
+            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitSetNK()">&nbsp;更新昵称&nbsp;</button> 
+
+            <hr>
+            <div class="form-group">
+              <label for="regPwd1"><span class="required">*</span>新密码</label>
+              <input type="password" name="pwd" class="form-control" id="regPwd1" placeholder="密码">
+            </div>
+            <div class="form-group">
+              <label for="regPwdfirm1"><span class="required">*</span>确认密码</label>
+              <input type="password" name="pwdfirm" class="form-control" id="regPwdfirm1" placeholder="确认密码">
+            </div>  
+            <button type="submit" class="btn btn-default theme-btn-inverse form-control" onclick="submitSetPwd()">&nbsp;更新密码&nbsp;</button>    
+          </div>
+        </div>
+      </div>
+    
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h4 id="alert_content" class="theme-color"></h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default theme-btn" data-dismiss="modal" id="modal_confirm" >确定</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="__PUBLIC__/js/util/form_validate.js"></script>
+
+<script>
+$("#modal_confirm").click(function() {
+   window.history.back(-2); 
+});
+$("#nickname").val("{$user.admin_nickname}");
+function submitSetNK(){
+  if(checkNickname('#nickname'))
+  {
+    var nickname = "key1="+$("#nickname").val()+"&";
+    var xmlhttp = createRequest();
+
+     xmlhttp.onreadystatechange=function()
+     {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+               // alert(xmlhttp.responseText);
+                modalShow("alert_content","myModal","更改成功");
+            }
+      }
+      xmlhttp.open("POST","adminNKUpdate",true);
+      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.send(nickname);
+  }
+}
+function submitSetPwd(){
+  if(checkPwd('#regPwd1','#regPwdfirm1'))
+  {
+     
+     var newPwd='key1='+CryptoJS.SHA1($('#regPwdfirm1').val())+'&';
+     var data=newPwd;
+     var xmlhttp = createRequest();
+
+     xmlhttp.onreadystatechange=function()
+     {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                //alert(xmlhttp.responseText);
+                modalShow("alert_content","myModal","更改成功");
+            }
+      }
+      xmlhttp.open("POST","adminPwdUpdate",true);
+      xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      xmlhttp.send(data);
+        
+      //modalShow("alert_content","myModal","密码长度不能少于6位");
+  }
+}
+</script>
+</html>
