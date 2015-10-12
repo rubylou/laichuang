@@ -10,7 +10,10 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand theme-nav" href="{:U('Home/Index/index')}"><span class="theme-color">Brand</span></a>
+        <a class="navbar-brand theme-nav" href="{:U('Home/Index/index')}">
+          <!--<img alt="Brand" src="__PUBLIC__/pic/logo2.jpg">-->
+          <span class="theme-color" style="font-family:Georgia;font-weight:bold;">来创</span>
+        </a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
@@ -35,7 +38,7 @@
             </a>
           </li>
           <li>
-            <a href="#" class="theme-nav">
+            <a href="{:U('Home/Index/about')}" class="theme-nav">
               <span class="glyphicon glyphicon-info-sign text-default theme-color" aria-hidden="true"></span>&nbsp;&nbsp;
               <span class="text-default theme-color">关于我们</span>
             </a>
