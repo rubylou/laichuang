@@ -63,7 +63,7 @@ class IndexController extends Controller {
         $Form = new Model();
         if(intval($_POST['value'])===1){
             //echo 'aaa';
-            $name = ($_POST['key1']);
+            $name = encode($_POST['key1']);
             $pwd = ($_POST['key2']);
             $result = $Form->query('select user_id, name, portrait from investor_personal where mobile="%s" or email="%s"',$name,$name);
             if($result){
@@ -73,7 +73,7 @@ class IndexController extends Controller {
                     $_SESSION['user'] = $result[0]['name'];
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '1';
-                    $_SESSION['portrait'] = $result[0]['portrait'];
+                    $_SESSION['portrait'] = strlen($result[0]['portrait'])>0?$result[0]['portrait']:C(INVESTOR_PORTRAIT);
 
                     $msg = $Form->query('select count(*) as sum from messagebox where ifread = 0 and to_id = "%s"',$result[0]['user_id']);
                     if($msg[0]){
@@ -92,7 +92,7 @@ class IndexController extends Controller {
         }
         else if(intval($_POST['value'])===2){
             //echo 'bbb';
-            $name = ($_POST['key1']);
+            $name = encode($_POST['key1']);
             $pwd = ($_POST['key2']);
             $result = $Form->query('select user_id,name, portrait from entrepreneur_personal where phone="%s" or email="%s"',$name,$name);
             if($result){
@@ -102,7 +102,7 @@ class IndexController extends Controller {
                     $_SESSION['user'] = $result[0]['name'];
                     $_SESSION['id'] = $result[0]['user_id'];
                     $_SESSION['type'] = '2';
-                    $_SESSION['portrait'] = $result[0]['portrait'];
+                    $_SESSION['portrait'] = strlen($result[0]['portrait'])>0?$result[0]['portrait']:C(INNOVATOR_PORTRAIT);
 
                     $msg = $Form->query('select count(*) as sum from messagebox where ifread = 0 and to_id = "%s"',$result[0]['user_id']);
                     if($msg[0]){
@@ -140,7 +140,7 @@ class IndexController extends Controller {
             $result = $Form->execute('insert into investor_personal 
                 (user_id,name,mobile,email,company,title,user_type,reg_time,reg_status)
                 values ("%s","%s","%s","%s","%s","%s",%d,
-                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$regTime,0);
+                "%s",%d)',$id,$_POST['key1'],encode($_POST['key2']),encode($_POST['key3']),$_POST['key4'],$_POST['key5'],$_POST['key6'],$regTime,0);
             
             //感兴趣领域
             $interests = $_POST['key9'];
@@ -184,7 +184,7 @@ class IndexController extends Controller {
             $result = $Form->execute('insert into entrepreneur_personal 
                 (user_id,name,email,phone,nickname,gender,birthday,city,reg_time,reg_status)
                 values ("%s","%s","%s","%s","%s",%d,"%s",%d,
-                "%s",%d)',$id,$_POST['key1'],$_POST['key2'],$_POST['key3'],$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$regTime,0);
+                "%s",%d)',$id,$_POST['key1'],encode($_POST['key2']),encode($_POST['key3']),$_POST['key4'],$_POST['key5'],$_POST['key6'],$_POST['key7'],$regTime,0);
             
             //感兴趣领域
             $interests = $_POST['key9'];
@@ -212,8 +212,8 @@ class IndexController extends Controller {
 
     public function validCheck(){
         $Form = new Model();
-        $result1 = $Form->query('select mobile from investor_personal where mobile = "%s"',I('post.key2'));
-        $result2 = $Form->query('select email from investor_personal where email = "%s"',I('post.key3'));
+        $result1 = $Form->query('select mobile from investor_personal where mobile = "%s"',encode(I('post.key2')));
+        $result2 = $Form->query('select email from investor_personal where email = "%s"',encode(I('post.key3')));
         if(!$result1&&!$result2){
             if(check_mobile(I('post.key2'),I('post.c'))==200){
                 echo 200;
@@ -237,8 +237,8 @@ class IndexController extends Controller {
 
     public function validCheck1(){
         $Form = new Model();
-        $result1 = $Form->query('select email from entrepreneur_personal where email = "%s"',$_POST['key2']);
-        $result2 = $Form->query('select phone from entrepreneur_personal where phone = "%s"',$_POST['key3']);
+        $result1 = $Form->query('select email from entrepreneur_personal where email = "%s"',encode($_POST['key2']));
+        $result2 = $Form->query('select phone from entrepreneur_personal where phone = "%s"',encode($_POST['key3']));
         $result3 = $Form->query('select nickname from entrepreneur_personal where nickname = "%s"',$_POST['key4']);
         if(!$result1&&!$result2&&!$result3){
             if(check_mobile(I('post.key3'),I('post.c'))==200){

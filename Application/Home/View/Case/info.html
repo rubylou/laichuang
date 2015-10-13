@@ -83,7 +83,11 @@
 				  			<div class="panel-body">
 							  	<div class='row'>
 									<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
-										<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+										<if condition="strlen($info['portrait']) gt 0">
+											<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+											<else />
+											<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+										</if>
 									</div>
 									<div class="col-lg-3 col-md-4 col-sm-4 col-xs-8">
 										<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
@@ -168,7 +172,11 @@
 									<volist name="investorlist" id="it">
 										<div class="investorField">
 											<div class="col-lg-1 col-md-2 col-sm-2 col-xs-3 theme-nav">
-												<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
+												<if condition="strlen($it['portrait']) gt 0">
+													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
+													<else />
+													<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/investor.png" height="60px" width="60px" onclick="openInvestor({$it.user_id})"/>
+												</if>
 											</div>
 											<div class="col-lg-3 col-md-4 col-sm-4 col-xs-8 theme-nav">
 												<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>

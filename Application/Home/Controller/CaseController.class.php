@@ -387,7 +387,7 @@ class CaseController extends Controller {
 
     public function queryUser(){
     	$Form = new Model();
-    	$exist = $Form->query('select user_id, email, phone from entrepreneur_personal where email = "%s" or phone="%s"',$_POST['key1'],$_POST['key1']);
+    	$exist = $Form->query('select user_id, email, phone from entrepreneur_personal where email = "%s" or phone="%s"',encode($_POST['key1']),encode($_POST['key1']));
         if(!$exist){
         	echo 404; 
         }
@@ -410,7 +410,7 @@ class CaseController extends Controller {
 
     public function queryInvestor(){
     	$Form = new Model();
-    	$exist = $Form->query('select user_id, email, mobile from investor_personal where email = "%s" or mobile="%s"',$_POST['key1'],$_POST['key1']);
+    	$exist = $Form->query('select user_id, email, mobile from investor_personal where email = "%s" or mobile="%s"',encode($_POST['key1']),encode($_POST['key1']));
         if(!$exist){
         	echo 404; 
         }
@@ -582,12 +582,6 @@ class CaseController extends Controller {
             echo 400;
         }
     }
-
-    public function queryPro(){
-        dump($_POST);
-        if(I('post.city')){
-            
-        }
-    }
+    
 }
 ?>

@@ -126,3 +126,10 @@ function checkNickname(id){
 		return false;
 	}
 }
+
+function encodeFullTxt(str){
+	str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
+  	str = (str.replace(/\s/g,"&nbsp;"));
+  	str = (str.replace(/&/g,"%26"));
+  	return str;
+}

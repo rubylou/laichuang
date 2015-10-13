@@ -5,22 +5,18 @@ function submitProject(){
     var brief = "key3="+$("#proBrief").val()+"&";
 
     var member = $("#proMember").val();
-    member = (member.replace(/(\n|\r|(\r\n))/g,"<br>"));
-    member = "key4="+ escape(member) +"&";
+    member = "key4="+ encodeFullTxt(member) +"&";
 
     var fi = $("#proFi").val();
-    fi = (fi.replace(/(\n|\r|(\r\n))/g,"<br>"));
-    fi = "key5="+ escape(fi) +"&";
+    fi = "key5="+ encodeFullTxt(fi) +"&";
 
     var type = "key6="+$("#proField").val()+"&";
 
     var recruit = $("#proRecruit").val();
-    recruit = (recruit.replace(/(\n|\r|(\r\n))/g,"<br>"));
-    recruit = "key7="+ escape(recruit) +"&";
+    recruit = "key7="+ encodeFullTxt(recruit) +"&";
 
     var require = $('#proRequire').val();
-    require = (require.replace(/(\n|\r|(\r\n))/g,"<br>"));
-    require = "key8="+ escape(require) +"&";
+    require = "key8="+ encodeFullTxt(require) +"&";
 
     var content="key9="+getContent(um)+"&";
     var data = name+brief+member+fi+type+recruit+require+content;
@@ -167,11 +163,8 @@ function editProFi(id,url){
 
 function saveMember(url){
   var str = $('#pro_member').val();
-  str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-  str = (str.replace(/\s/g,"&nbsp;"));
-  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'member='+(str)+'&';
+  var data = 'member='+encodeFullTxt(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -184,11 +177,8 @@ function saveMember(url){
 
 function saveFi(url){
   var str = $('#pro_fi').val();
-  str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-  str = (str.replace(/\s/g,"&nbsp;"));
-  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'fi='+(str)+'&';
+  var data = 'fi='+encodeFullTxt(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -201,11 +191,8 @@ function saveFi(url){
 
 function saveRecruit(url){
   var str = $('#pro_recruit').val();
-  str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-  str = (str.replace(/\s/g,"&nbsp;"));
-  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'recruit='+(str)+'&';
+  var data = 'recruit='+encodeFullTxt(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();
@@ -217,11 +204,8 @@ function saveRecruit(url){
 
 function saveRequire(url){
   var str = $('#pro_require').val();
-  str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
-  str = (str.replace(/\s/g,"&nbsp;"));
-  str = (str.replace(/&/g,"%26"));
   var xmlHttp = createRequest();
-  var data = 'require='+(str)+'&';
+  var data = 'require='+encodeFullTxt(str)+'&';
   request(xmlHttp,data,url);
   if(xmlHttp.responseText==200){
     document.location.reload();

@@ -347,4 +347,16 @@ send_post('http://blog.snsgou.com', $post_data);
         $arr3 = array_merge($arr1,$arr2);
         return array_unique($arr3);
     }
+
+    function encode($data){
+        $des = \Think\Crypt\Driver\Des::encrypt($data, C(KEY_SEEDS));
+        return base64_encode($des);
+    }
+
+    function decode($data){
+        $des = base64_decode($data);
+        $des = \Think\Crypt\Driver\Des::decrypt($des, C(KEY_SEEDS));
+        return $des;
+
+    }
  ?>

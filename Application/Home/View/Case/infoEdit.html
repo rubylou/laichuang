@@ -178,7 +178,11 @@
 							  	<div class='row'>
 							  		<div class="col-lg-4 col-md-6 col-sm-6 theme-well">
 										<div class="col-md-4 col-sm-3 col-xs-3 theme-nav">
-											<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+											<if condition="strlen($info['portrait']) gt 0">
+												<input type="image" class="thumbnail theme-profile" src="{$info.portrait}" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+												<else />
+												<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/innovator.png" height="60px" width="60px" onclick="openUser({$info.project_admin})"/>
+											</if>
 										</div>
 										<div class="col-md-8 col-sm-8 col-xs-8 theme-nav">
 											<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$info.name}</p>
@@ -408,7 +412,11 @@
 										<div class="investorField">
 											<div class="col-lg-4 col-md-6 col-sm-6 theme-well">
 												<div class="col-md-4 col-xs-3 theme-nav">
-													<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+													<if condition="strlen($it['portrait']) gt 0">
+														<input type="image" class="thumbnail theme-profile" src="{$it.portrait}" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+														<else />
+														<input type="image" class="thumbnail theme-profile" src="__PUBLIC__/pic/investor.png" height="60px" width="60px" onclick="openInvestor({$it.user_id})" data-toggle="popover" data-content="<a class='btn btn-default btn-sm theme-btn' onclick='delInvestor({$it.user_id})'>删除</a>" data-placement="bottom" title="操作"/>
+													</if>
 												</div>
 												<div class="col-md-8 col-xs-8 theme-nav">
 													<p class="theme-h4">&nbsp;&nbsp;&nbsp;{$it.name}</p>
