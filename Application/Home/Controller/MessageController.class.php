@@ -46,8 +46,8 @@ class MessageController extends Controller {
 				$investor = $model -> query('select name, email, mobile from investor_personal where user_id = "%s"',$from);
 				if($investor){
 					$name = $investor[0]['name'];
-					$email = $investor[0]['email'];
-					$phone = $investor[0]['mobile'];
+					$email = decode($investor[0]['email']);
+					$phone = decode($investor[0]['mobile']);
 					$content = $content.'<p>姓名: '.$name.' 邮箱: '.$email.' 电话: '.$phone.'</p>';
 				}
 			}
@@ -63,14 +63,16 @@ class MessageController extends Controller {
 			$innovator = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
 			if($innovator[0]['phone']){
 				$sms = sprintf('您的项目%s收到了投资人%s的投资意愿，请登录查看消息。',$project_name,$name);
-	            send_forward_msg($innovator[0]['phone'],$sms);
+	            send_forward_msg(decode($innovator[0]['phone']),$sms);
 	        }
 	        if($innovator[0]['email']){
-	        	$url = "http://localhost/lcb/index.php";
-	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了投资人“%s”的投资意愿，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$innovator[0]['nickname'],$project_name,$name,$url);
-	        	think_send_mail($innovator[0]['email'], 'User', $subject = '您收到了新的投资意愿', $body);
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了投资人“%s”的投资意愿，
+	        	请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$innovator[0]['nickname'],$project_name,$name,C(MAIN_PAGE));
+	        	think_send_mail(decode($innovator[0]['email']), 'User', $subject = '您收到了新的投资意愿', $body);
 	        }
 
+	        $innovator[0]['phone'] = decode($innovator[0]['phone']);
+	        $innovator[0]['email'] = decode($innovator[0]['email']);
 			echo json_encode($innovator[0]);
 			//echo 400;
 			//dump($result);
@@ -88,8 +90,8 @@ class MessageController extends Controller {
 				$innovator = $model -> query('select nickname, email, phone from entrepreneur_personal where user_id = "%s"',$from);
 				if($innovator){
 					$name = $innovator[0]['nickname'];
-					$email = $innovator[0]['email'];
-					$phone = $innovator[0]['phone'];
+					$email = decode($innovator[0]['email']);
+					$phone = decode($innovator[0]['phone']);
 					$content = $content.'<p>昵称: '.$name.' 邮箱: '.$email.' 电话: '.$phone.'</p>';
 				}
 			}
@@ -107,12 +109,12 @@ class MessageController extends Controller {
 			$admin = $model->query('select nickname, phone, email from entrepreneur_personal where user_id = "%s"',$project_admin);
 			if($admin[0]['phone']){
 				$sms = sprintf('您的项目%s收到了创业者%s的合伙意愿，请登录查看消息。',$project_name,$name);
-	            send_forward_msg($admin[0]['phone'],$sms);
+	            send_forward_msg(decode($admin[0]['phone']),$sms);
 	        }
 	        if($admin[0]['email']){
-	        	$url = "http://localhost/lcb/index.php";
-	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了创业者“%s”的合伙意愿，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$admin[0]['nickname'],$project_name,$name,$url);
-	        	think_send_mail($admin[0]['email'], 'User', $subject = '您收到了新的合伙意愿', $body);
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您的项目“%s”收到了创业者“%s”的合伙意愿，
+	        	请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$admin[0]['nickname'],$project_name,$name,C(MAIN_PAGE));
+	        	think_send_mail(decode($admin[0]['email']), 'User', $subject = '您收到了新的合伙意愿', $body);
 	        }
 			//dump($result);
 
@@ -123,8 +125,8 @@ class MessageController extends Controller {
 				$innovator = $model -> query('select nickname, email, phone from entrepreneur_personal where user_id = "%s"',$from);
 				if($innovator){
 					$name = $innovator[0]['nickname'];
-					$email = $innovator[0]['email'];
-					$phone = $innovator[0]['phone'];
+					$email = decode($innovator[0]['email']);
+					$phone = decode($innovator[0]['phone']);
 					$content = '<p>您收到了创业者<a onclick="openUser(\''.$from.'\')">'.$name.'</a>的投资申请, 联系方式如下: </p>';
 					$content = $content.'<p>邮箱: '.$email.' 电话: '.$phone.'</p>';
 				}
@@ -143,12 +145,12 @@ class MessageController extends Controller {
 			$investor = $model->query('select name, mobile, email from investor_personal where user_id = "%s"',$to);
 			if($investor[0]['mobile']){
 				$sms = sprintf('尊敬的投资人: 您收到了创业者%s的投资申请，请登录查看详情。',$name);
-	            send_forward_msg($investor[0]['mobile'],$sms);
+	            send_forward_msg(decode($investor[0]['mobile']),$sms);
 	        }
 	        if($investor[0]['email']){
-	        	$url = "http://localhost/lcb/index.php";
-	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您收到了创业者“%s”的投资申请，请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$investor[0]['name'],$name,$url);
-	        	think_send_mail($investor[0]['email'], 'User', $subject = '您收到了新的投资申请', $body);
+	        	$body = $body=sprintf("尊敬的用户 %s：<br>  您收到了创业者“%s”的投资申请，
+	        	请登录来创吧并进入消息盒查看。<br><a href='%s'>点击查看</a>",$investor[0]['name'],$name,C(MAIN_PAGE));
+	        	think_send_mail(decode($investor[0]['email']), 'User', $subject = '您收到了新的投资申请', $body);
 	        }
 			//dump($result);
 		}

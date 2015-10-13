@@ -990,6 +990,8 @@ class UserController extends Controller {
                 left join email_active on investor_personal.user_id = email_active.user_id
                 where investor_personal.user_id = "%s"',$_SESSION['id']);
             if($result){
+                $result[0]['mobile'] = decode($result[0]['mobile']);
+                $result[0]['email'] = decode($result[0]['email']);
                 $this->info = $result[0];
             }
             //dump($result);
@@ -999,6 +1001,8 @@ class UserController extends Controller {
                 left join email_active on entrepreneur_personal.user_id = email_active.user_id
                 where entrepreneur_personal.user_id = "%s"',$_SESSION['id']);
             if($result){
+                $result[0]['mobile'] = decode($result[0]['mobile']);
+                $result[0]['email'] = decode($result[0]['email']);
                 $this->info = $result[0];
             }
             //dump($result);
@@ -1015,7 +1019,7 @@ class UserController extends Controller {
         if($_SESSION['type']==1){
             $Form = M('investor_personal');
             $data['user_id'] = session('id');
-            $data['mobile'] = I('post.mobile');
+            $data['mobile'] = encode(I('post.mobile'));
             $exist = $Form->where('mobile="%s" and user_id <> "%s"',$data['mobile'],$data['user_id'])->select();
             if($exist){
                 echo 409;
@@ -1028,7 +1032,7 @@ class UserController extends Controller {
         else if($_SESSION['type']==2){
             $Form = M('entrepreneur_personal');
             $data['user_id'] = session('id');
-            $data['phone'] = I('post.mobile');
+            $data['phone'] = encode(I('post.mobile'));
             $exist = $Form->where('phone="%s" and user_id <> "%s"',$data['phone'],$data['user_id'])->select();
             if($exist){
                 echo 409;
@@ -1048,7 +1052,7 @@ class UserController extends Controller {
             if($_SESSION['type']==1){
                 $Form = M('investor_personal');
                 $data['user_id'] = session('id');
-                $data['mobile'] = I('post.key1');
+                $data['mobile'] = encode(I('post.key1'));
                 $result = $Form->save($data);
                 if($result){
                     echo 200;
@@ -1057,7 +1061,7 @@ class UserController extends Controller {
             else if($_SESSION['type']==2){
                 $Form = M('entrepreneur_personal');
                 $data['user_id'] = session('id');
-                $data['phone'] = I('post.key1');
+                $data['phone'] = encode(I('post.key1'));
                 $result = $Form->save($data);
                 if($result){
                     echo 200;
@@ -1077,7 +1081,7 @@ class UserController extends Controller {
         if($_SESSION['type']==1){
             $Form = M('investor_personal');
             $data['user_id'] = session('id');
-            $data['email'] = I('post.key1');
+            $data['email'] = encode(I('post.key1'));
 
             $exist = $Form->where('email="%s" and user_id <> "%s"',$data['email'],$data['user_id'])->select();
             if($exist){
@@ -1097,7 +1101,7 @@ class UserController extends Controller {
         else if($_SESSION['type']==2){
             $Form = M('entrepreneur_personal');
             $data['user_id'] = session('id');
-            $data['email'] = I('post.key1');
+            $data['email'] = encode(I('post.key1'));
             $exist = $Form->where('email="%s" and user_id <> "%s"',$data['email'],$data['user_id'])->select();
             if($exist){
                 echo 409;
@@ -1122,7 +1126,7 @@ class UserController extends Controller {
         if($_SESSION['type']==1){
             $Form = M('investor_personal');
             $data['user_id'] = session('id');
-            $data['mobile'] = I('post.mobile');
+            $data['mobile'] = encode(I('post.mobile'));
             $exist = $Form->where('mobile="%s" and user_id = "%s"',$data['mobile'],$data['user_id'])->select();
             if($exist){
                 $result = send_msg(I('post.mobile'));
@@ -1132,7 +1136,7 @@ class UserController extends Controller {
         else if($_SESSION['type']==2){
             $Form = M('entrepreneur_personal');
             $data['user_id'] = session('id');
-            $data['phone'] = I('post.mobile');
+            $data['phone'] = encode(I('post.mobile'));
             $exist = $Form->where('phone="%s" and user_id = "%s"',$data['phone'],$data['user_id'])->select();
             if($exist){
                 $result = send_msg(I('post.mobile'));
