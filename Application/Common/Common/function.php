@@ -117,12 +117,12 @@ require 'PHPMailerAutoload.php';
         $uid=C(MSGUID);
         $pwd=C(MSGPWD);
         $code=generate_code();
-        $content=sprintf("欢迎加入来创，您的验证码为：%s ，请于60秒内输入验证码，过期失效。[来创]",$code);
+        $content=sprintf("欢迎加入来创，您的验证码为：%s ，30分钟内有效，过期失效。",$code);
         $res = sendSMS($uid,$pwd,$mobile,$content);
         if($res=="OK")
         {
             $Form = new Model();
-            $overtime=time()+120;//设定超时
+            $overtime=time()+1800;//设定超时
             $insert = $Form->execute('replace into mobile_check (mobile,check_code,over_time) 
             values ("%s","%s","%d")',
             $mobile,$code,$overtime);
