@@ -11,10 +11,6 @@ class IndexController extends Controller {
             where tag = 1');
         //dump($projects);
         $this->assign('proslist',$projects);
-        dump(encode('18801969715'));
-        dump(encode('18801969715'));
-        dump(encode('18801969715'));
-        dump(encode('18801969715'));
         $this->display();
     }
 

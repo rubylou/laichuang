@@ -1091,9 +1091,9 @@ class UserController extends Controller {
                 if(send_active_mail(session('id'),session('type'),I('post.key1'))){
                     $result = $Form->save($data);
                     if($result){
-                        echo 200;
                         session('[destroy]');
                     }
+                    echo 200;
                 }
                 
             }
@@ -1110,9 +1110,9 @@ class UserController extends Controller {
                 if(send_active_mail(session('id'),session('type'),I('post.key1'))){
                     $result = $Form->save($data);
                     if($result){
-                        echo 200;
                         session('[destroy]');
                     }
+                    echo 200;
                 }
             }
         }

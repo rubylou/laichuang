@@ -28,7 +28,7 @@
 
 
   	function submitMobile(url){
-  		if(checkPhone('#phone')){
+  		if(checkPhone('#phone') && $('#phone').val()!=$('#mobile').val()){
   			var mobile = "key1="+$('#phone').val()+"&";
 	  		var code = "key2="+$('#checkCode').val()+"&";
 	  		var data = mobile+code;
@@ -42,10 +42,12 @@
 			    $('#checkCode').attr('placeholder','验证码错误');
 			    $('#checkCode').focus();
 			}
-			else{
 
-			}
-
+  		}
+  		else{
+  			$('#phone').val('');
+			$('#phone').attr('placeholder','修改号码与原手机号相同');
+			$('#phone').focus();
   		}
   		
   	}
