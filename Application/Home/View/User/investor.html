@@ -227,7 +227,7 @@
   	addInterests({$interests},"#interests");
   	
  	$('#require_confirm').click(function(){
-		send_message($('#require_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
+		send_message($('#require_input').val()+"attach="+encodeFullTxt($('#request_info').val()),'{:U("Home/Message/receiver")}');
 	});
 
 	$('#require_cancel').click(function(){

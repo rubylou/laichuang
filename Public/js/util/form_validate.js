@@ -131,5 +131,12 @@ function encodeFullTxt(str){
 	str = (str.replace(/(\n|\r|(\r\n))/g,"<br>"));
   	str = (str.replace(/\s/g,"&nbsp;"));
   	str = (str.replace(/&/g,"%26"));
+  	str = (str.replace(/\+/g,"%2B"));
   	return str;
+}
+
+function decodeFullTxt(str){
+	str = (str).replace(/&lt;br&gt;/g,"<br>");
+	str = str.replace(/&amp;/g,"&");
+	return str;
 }

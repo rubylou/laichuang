@@ -320,7 +320,7 @@
 	$('#details').find('img').addClass('img-responsive');
 
 	$('#join_confirm').click(function(){
-		send_message($('#join_input').val()+"attach="+$('#request_info').val(),'{:U("Home/Message/receiver")}');
+		send_message($('#join_input').val()+"attach="+encodeFullTxt($('#request_info').val()),'{:U("Home/Message/receiver")}');
 	});
 
 	$('#join_cancel').click(function(){

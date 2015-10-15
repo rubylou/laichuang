@@ -58,7 +58,12 @@
 <script src="__PUBLIC__/js/util/form_validate.js"></script>
 <script>
   	$('a[data-toggle=tooltip]').mouseover(function(){$(this).tooltip('show');});
-  	
+
+  	$('blockquote').each(function(){
+  		$(this)[0].innerHTML = decodeFullTxt($(this)[0].innerHTML);
+	});
+
+	
   	function openProject(id){
 	  	window.open("{:U('Home/Case/info/key/"+id+"')}");
  	}
