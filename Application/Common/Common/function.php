@@ -356,7 +356,7 @@ send_post('http://blog.snsgou.com', $post_data);
     function decode($data){
         $des = base64_decode($data);
         $des = \Think\Crypt\Driver\Des::decrypt($des, C(KEY_SEEDS));
-        return $des;
-
+        return trim($des);
     }
+
  ?>
