@@ -125,7 +125,30 @@ require 'PHPMailerAutoload.php';
             $overtime=time()+1800;//设定超时
             $insert = $Form->execute('replace into mobile_check (mobile,check_code,over_time) 
             values ("%s","%s","%d")',
-            $mobile,$code,$overtime);
+            encode($mobile),$code,$overtime);
+            if($insert)
+                return 200;
+            else
+                return 400;
+        }else
+        {
+            return 400;
+        }
+    }
+    function send_find_msg($mobile)
+    {
+        $uid=C(MSGUID);
+        $pwd=C(MSGPWD);
+        $code=generate_code();
+        $content=sprintf("您找回密码的验证码为：%s ，30分钟内有效，过期失效。",$code);
+        $res = sendSMS($uid,$pwd,$mobile,$content);
+        if($res=="OK")
+        {
+            $Form = new Model();
+            $overtime=time()+1800;//设定超时
+            $insert = $Form->execute('replace into mobile_check (mobile,check_code,over_time) 
+            values ("%s","%s","%d")',
+            encode($mobile),$code,$overtime);
             if($insert)
                 return 200;
             else
@@ -138,7 +161,7 @@ require 'PHPMailerAutoload.php';
     function check_mobile($mobile,$code){
         $Form = new Model();
         $now=time();
-        $record=$Form->query("select * from mobile_check where mobile='%s' ",$mobile);
+        $record=$Form->query("select * from mobile_check where mobile='%s' ",decode($mobile));
         if($record)
         {
             $r=$record[0];

@@ -131,7 +131,7 @@ class AccountController extends Controller {
     public function sendMobileCheck(){
         $phone = $_POST["mobile"];
         $usertype=$_POST["usertype"];
-        send_msg($phone);
+        send_find_msg($phone);
     }
     public function checkMobile(){
         //dump($_POST);

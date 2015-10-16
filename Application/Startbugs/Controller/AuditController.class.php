@@ -19,18 +19,30 @@ class AuditController extends Controller {
 
             $status= C(VERIFIED);
             $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status=".$status);
+            foreach ($user as $key1 => $value1) {
+                    $user[$key1]['phone'] = decode($user[$key1]['phone']);
+                }
             $this->innovator=$user;
 
             $status=C(UNDERVIRIFIED);
             $user = $Form->query("select user_id,nickname,name,phone from entrepreneur_personal where reg_status = ".$status);
+            foreach ($user as $key1 => $value1) {
+                    $user[$key1]['phone'] = decode($user[$key1]['phone']);
+                }
             $this->unInnovator=$user;
 
             $status=C(UNDERVIRIFIED);
             $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status = ".$status);
+            foreach ($user as $key1 => $value1) {
+                    $user[$key1]['mobile'] = decode($user[$key1]['mobile']);
+                }
             $this->unInvestor=$user;
 
             $status= C(VERIFIED);
             $user = $Form->query("select user_id,name,company,mobile from investor_personal where reg_status=".$status);
+            foreach ($user as $key1 => $value1) {
+                    $user[$key1]['mobile'] = decode($user[$key1]['mobile']);
+                }
             $this->investor=$user;
 
 
@@ -213,6 +225,8 @@ class AuditController extends Controller {
             $user[0]['business'] = $fields[$user[0]['business']];
             $user[0]['gender'] = C('GENDER_CODE')[$user[0]['gender']];
             $user[0]['city'] = C('PROVINCE_CODE')[$user[0]['city']];
+            $user[0]['phone']=decode($user[0]['phone']);
+            $user[0]['email']=decode($user[0]['email']);
             $this->user = $user[0];
 
             $jobs = $Form->query('select * from user_job where user_id="%s" order by job_start',$id);
@@ -384,6 +398,8 @@ class AuditController extends Controller {
                 $this->assign('joblist',$jobs);
             }
             $user = $Form->query("select * from investor_personal where user_id='%s'",$id);
+            $user[0]['mobile']=decode($user[0]['mobile']);
+            $user[0]['email']=decode($user[0]['email']);
             $this->user = $user[0];
 
 
@@ -959,7 +975,7 @@ class AuditController extends Controller {
     public function queryUser(){
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
-            $exist = $Form->query('select user_id, email, phone from entrepreneur_personal where email = "%s" or phone="%s"',$_POST['key1'],$_POST['key1']);
+            $exist = $Form->query('select user_id, email, phone from entrepreneur_personal where email = "%s" or phone="%s"',encode($_POST['key1']),encode($_POST['key1']));
             if(!$exist){
                 echo 404; 
             }
@@ -1052,7 +1068,7 @@ class AuditController extends Controller {
     public function queryInvestor(){
         if(session('?userid')&&session('?usertype')&&($_SESSION['usertype']==1||$_SESSION['usertype']==3)){
             $Form = new Model();
-            $exist = $Form->query('select user_id, email, mobile from investor_personal where email = "%s" or mobile="%s"',$_POST['key1'],$_POST['key1']);
+            $exist = $Form->query('select user_id, email, mobile from investor_personal where email = "%s" or mobile="%s"',encode($_POST['key1']),encode($_POST['key1']));
             if(!$exist){
                 echo 404; 
             }
