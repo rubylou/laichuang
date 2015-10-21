@@ -411,3 +411,8 @@ li.theme-indicator{
   color:#253B58;
 }
 
+.theme-brand{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: -20px;
+  }
