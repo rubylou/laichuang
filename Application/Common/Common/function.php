@@ -161,7 +161,7 @@ require 'PHPMailerAutoload.php';
     function check_mobile($mobile,$code){
         $Form = new Model();
         $now=time();
-        $record=$Form->query("select * from mobile_check where mobile='%s' ",decode($mobile));
+        $record=$Form->query("select * from mobile_check where mobile='%s' ",encode($mobile));
         if($record)
         {
             $r=$record[0];
